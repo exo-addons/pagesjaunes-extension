@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Module>
+
+  <ModulePrefs author="eXoPlatform" 
+
+               title="PagesJaunes Recherche"
+
+               directory_title="PagesJaunes Recherche"
+
+               description="PagesJaunes - Recherche via l'utilisation des API">
+
+  </ModulePrefs>
+
+  
+
+  <Content type="html">
+
+  <![CDATA[
+  
+    <div id="searchForm">
+      <form method="post">
+		<table>
+			<tr>
+				<td>
+					<label for="quoiqui">Quoi, qui ?</label><br/>
+					<input type="text" name="quoiqui" id="quoiqui"/>
+				</td>
+						 
+				<td>
+					<label for="ou">Où ?</label><br />
+					<input type="text" name="ou" id="ou"/>
+				</td>
+				
+				<td>
+					<br />
+					<button title="Trouver sur PagesJaunes" id="btnValidSearch" value="Trouver" type="submit"><span>Trouver</span></button>
+				</td>
+				
+			</tr>		 
+		</table>
+	  </form>
+    </div>
+    <div id="searchResults">
+      Bienvenue sur le gadget d'affichage des résulats Pages Jaunes
+    </div>
+    <script type="text/javascript" src="skin/PagesJaunesRecherche.js"></script>
+  ]]>
+
+  </Content>
+
+</Module>

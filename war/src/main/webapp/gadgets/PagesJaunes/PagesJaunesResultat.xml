@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Module>
+
+  <ModulePrefs author="eXoPlatform" 
+
+               title="PagesJaunes Resulats"
+
+               directory_title="PagesJaunes Resulats"
+
+               description="PagesJaunes Affichage des resultats">
+
+  </ModulePrefs>
+
+  
+
+  <Content type="html">
+
+  <![CDATA[
+
+    <div id="searchResults">
+
+      Bienvenue sur le gadget d'affichage des résulats Pages Jaunes
+
+    </div>
+
+  ]]>
+
+  </Content>
+
+</Module>
