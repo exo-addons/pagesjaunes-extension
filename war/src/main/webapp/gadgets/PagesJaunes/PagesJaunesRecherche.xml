@@ -34,7 +34,7 @@
 				
 				<td>
 					<br />
-					<button title="Trouver sur PagesJaunes" id="btnValidSearch" value="Trouver" type="submit"><span>Trouver</span></button>
+					<button onClick="updateSearchResults()" title="Trouver sur PagesJaunes" id="btnValidSearch" value="Trouver" type="button"><span>Trouver</span></button>
 				</td>
 				
 			</tr>		 
@@ -44,6 +44,7 @@
     <div id="searchResults">
       Bienvenue sur le gadget d'affichage des résulats Pages Jaunes
     </div>
+    <script type="text/javascript" src="skin/jquery.js"></script>
     <script type="text/javascript" src="skin/PagesJaunesRecherche.js"></script>
     
   ]]>
