@@ -21,7 +21,7 @@ public class SearchManagement implements ResourceContainer {
     @GET
     @Path("getSearchResult/{quoiqui}/{ou}")
     public String  getSearchResult(@PathParam("quoiqui") String quoiqui, @PathParam("ou") String ou) {
-    	String url = "http://api.apipagesjaunes.fr/v2/pro/find.json?what="+ quoiqui + "&where=" + ou + "&app_id=e74d895a&app_key=5050ac249e48f00795c39a06a8af7235";
+    	String url = "http://api.apipagesjaunes.fr/v2/pro/find.json?max=4&what="+ quoiqui + "&where=" + ou + "&app_id=e74d895a&app_key=5050ac249e48f00795c39a06a8af7235";
     	return getData(url);
     }
 	
@@ -48,31 +48,46 @@ public class SearchManagement implements ResourceContainer {
             JsonNode searchNode = contextNode.path("search");
             JsonNode whatNode = searchNode.path("what");
             JsonNode whereNode = searchNode.path("where");
-            searchResults = new StringBuilder("<h2><b>" + whatNode.asText() + " à " + whereNode.asText() + "</b></h2><br/></br>");
+            JsonNode resultsNode = contextNode.path("results");
+            JsonNode totalListingNode = resultsNode.path("total_listing");
+            searchResults = new StringBuilder("<b>" + whatNode.asText() + " à " + whereNode.asText() + " : " + totalListingNode + " résultats" + "</b></br></br>");
             
             JsonNode searchResultsNode = rootNode.path("search_results");
             JsonNode listingsNode = searchResultsNode.path("listings");
-            Iterator<JsonNode> elements = listingsNode.elements();
+            Iterator<JsonNode> listingsNodeElements = listingsNode.elements();
             JsonNode listingNode;
             JsonNode merchantNameNode;
             JsonNode descriptionNode;
             JsonNode thumbnailUrlNode;
             JsonNode inscriptionsNode;
-            JsonNode adressStreetNode;
-            while(elements.hasNext()){
-            	listingNode = elements.next();
+            JsonNode inscriptionNode;
+            JsonNode adressStreetNode = null;
+            while(listingsNodeElements.hasNext()){
+            	listingNode = listingsNodeElements.next();
                 thumbnailUrlNode = listingNode.path("thumbnail_url");
-                searchResults.append("<img src='" + thumbnailUrlNode.asText() + "'/>");
+                if (thumbnailUrlNode != null){
+                	searchResults.append("<img src='" + thumbnailUrlNode.asText() + "'/>");
+                }
                 merchantNameNode = listingNode.path("merchant_name");
-                searchResults.append("<h3><b style='text-decoration:underline;'>" + merchantNameNode.asText() + "</b></h3></br>");
+                if (merchantNameNode != null){
+                	searchResults.append("<b style='text-decoration:underline;font-size:small;'>" + merchantNameNode.asText() + "</b></br>");
+                }
                 inscriptionsNode = listingNode.path("inscriptions");
-                adressStreetNode = inscriptionsNode.path("adress_street");
-                searchResults.append("<p style='color:grey;'>" + adressStreetNode.asText() + "</p></br>");
+                Iterator<JsonNode> inscriptionsNodeElements = inscriptionsNode.elements();
+                while(inscriptionsNodeElements.hasNext()){
+                	inscriptionNode = inscriptionsNodeElements.next();
+                	adressStreetNode = inscriptionNode.path("adress_street");
+                	break;
+                }	
+                if (adressStreetNode != null){
+                	searchResults.append("<span style='color:grey;font-size:small;'>" + adressStreetNode.asText() + "</span></br>");
+                }
                 descriptionNode = listingNode.path("description");
-                searchResults.append("<p>" + descriptionNode.asText() + "</p></br>");
-                searchResults.append("***********************************************");
+                if (adressStreetNode != null){
+                	searchResults.append("<span style='font-size:small;'>" + descriptionNode.asText() + "</span></br>");
+                }
+                searchResults.append("________________________________________________________________________</br>");
             }
-            
             return searchResults.toString();
         } catch (MalformedURLException e) {
             e.printStackTrace();

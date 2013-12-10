@@ -16,7 +16,7 @@ function updateSearchResults() {
     (
         function (result) 
         {
-             $("#searchResults").replaceWith( result );
+             $("div#searchResults").html( result );
         }
     );
 }
