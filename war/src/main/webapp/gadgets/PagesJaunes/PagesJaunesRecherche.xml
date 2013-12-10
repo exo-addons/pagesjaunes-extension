@@ -18,31 +18,37 @@
 
   <![CDATA[
   
-    <div id="searchForm">
+    <div style="position: absolute;">
+	    <a href="http://www.pagesjaunes.fr" title="PagesJaunes, retour à l'accueil" class="idTag_RETOUR-HP">
+	        <img src="http://static.pagesjaunes.fr/ilo/static_4.2.0.5/images/logo-pagesjaunes.png" alt="PagesJaunes" height="100" width="100">
+	    </a>
+    </div>
+    
+    <div id="searchForm" style="background-color: yellow;padding-left: 300px;height: 150px">
       <form method="post">
 		<table>
 			<tr>
 				<td>
-					<label for="quoiqui">Quoi, qui ?</label><br/>
-					<input type="text" name="quoiqui" id="quoiqui"/>
+					<label for="quoiqui"><b>Quoi, qui ?</b></label><br/>
+					<input size="50" type="text" name="quoiqui" id="quoiqui"/>
 				</td>
 						 
 				<td>
-					<label for="ou">Où ?</label><br />
-					<input type="text" name="ou" id="ou"/>
+					<label for="ou"><b>Où ?</b></label><br />
+					<input size="50" type="text" name="ou" id="ou"/>
 				</td>
 				
 				<td>
 					<br />
-					<button onClick="updateSearchResults()" title="Trouver sur PagesJaunes" id="btnValidSearch" value="Trouver" type="button"><span>Trouver</span></button>
+					<button style="background-color: purple; color: white;" onClick="updateSearchResults()" title="Trouver sur PagesJaunes" id="btnValidSearch" value="Trouver" type="button"><b>Trouver</b></button>
 				</td>
 				
 			</tr>		 
 		</table>
 	  </form>
     </div>
-    <div id="searchResults">
-      Bienvenue sur le gadget d'affichage des résulats Pages Jaunes
+    <div id="searchResults" >
+      <h2 style='text-align: center;font-weight:bold'>Bienvenue sur le gadget d'affichage des résulats Pages Jaunes<h2>
     </div>
     <script type="text/javascript" src="skin/jquery.js"></script>
     <script type="text/javascript" src="skin/PagesJaunesRecherche.js"></script>

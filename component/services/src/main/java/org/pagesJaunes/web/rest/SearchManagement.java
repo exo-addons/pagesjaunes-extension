@@ -24,10 +24,10 @@ public class SearchManagement implements ResourceContainer {
 	private static final Log LOGGER = ExoLogger.getLogger("SearchManagement.class");
 	
     @GET
-    @Path("getSearchResult/{quoiqui}/{ou}")
+    @Path("getSearchResult/{serviceUriParams : .+}")
     @Produces("application/json")
-    public Response  getSearchResult(@PathParam("quoiqui") String quoiqui, @PathParam("ou") String ou) {
-    	String url = "http://api.apipagesjaunes.fr/v2/pro/find.json?max=4&what="+ quoiqui + "&where=" + ou + "&app_id=e74d895a&app_key=5050ac249e48f00795c39a06a8af7235";
+    public Response  getSearchResult(@PathParam("serviceUriParams") String serviceUriParams) {
+    	String url = "http://api.apipagesjaunes.fr/v2/pro/find.json?" + serviceUriParams;
     	Response response;
     	String data = getData(url);
 		try {
