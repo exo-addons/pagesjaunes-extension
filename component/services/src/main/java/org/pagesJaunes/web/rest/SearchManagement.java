@@ -7,26 +7,74 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
+import org.exoplatform.social.core.activity.model.ExoSocialActivity;
+import org.exoplatform.social.core.activity.model.ExoSocialActivityImpl;
+import org.exoplatform.social.core.application.PeopleService;
+import org.exoplatform.social.core.identity.model.Identity;
+import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
+import org.exoplatform.social.webui.Utils;
+import org.exoplatform.social.webui.activity.UIDefaultActivity;
 import org.json.JSONObject;
 
 @Path("/searchManagement/")
 public class SearchManagement implements ResourceContainer {
-	
 	private static final Log LOGGER = ExoLogger.getLogger("SearchManagement.class");
 	
-    @GET
-    @Path("getSearchResult/{serviceUriParams : .+}")
+	private String getData(String url) {
+    	HttpURLConnection connection = null;
+        StringBuilder searchResults = null;
+        URL serverAddress = null;
+        BufferedReader bufferedReadere  = null;
+        String line = null;
+        try {
+        	serverAddress = new URL(url);
+            //set up out communications stuff
+            connection = null;
+            //Set up the initial connection
+            connection = (HttpURLConnection)serverAddress.openConnection();
+            connection.setRequestMethod("GET");
+            connection.setDoOutput(true);
+            connection.setReadTimeout(10000);
+            connection.connect();
+            //read the result from the server
+            bufferedReadere  = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
+            searchResults = new StringBuilder();
+            while ((line = bufferedReadere.readLine()) != null)
+            {
+            	searchResults.append(line + '\n');
+            }
+            return searchResults.toString();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            //close the connection, set all objects to null
+            connection.disconnect();
+            searchResults = null;
+            connection = null;
+            bufferedReadere = null;
+        }
+        return null;
+    }
+
+	@GET
+    @Path("getSearchResults/{serviceUriParams : .+}")
     @Produces("application/json")
-    public Response  getSearchResult(@PathParam("serviceUriParams") String serviceUriParams) {
+    public Response getSearchResults(@PathParam("serviceUriParams") String serviceUriParams) {
     	String url = "http://api.apipagesjaunes.fr/v2/pro/find.json?" + serviceUriParams;
     	Response response;
     	String data = getData(url);
@@ -50,44 +98,12 @@ public class SearchManagement implements ResourceContainer {
     	return response;
     }
 	
-    private String getData(String url) {
-    	HttpURLConnection connection = null;
-        StringBuilder searchResults = null;
-        URL serverAddress = null;
-        BufferedReader bufferedReadere  = null;
-        String line = null;
-        try {
-        	serverAddress = new URL(url);
-            //set up out communications stuff
-            connection = null;
-            //Set up the initial connection
-            connection = (HttpURLConnection)serverAddress.openConnection();
-            connection.setRequestMethod("GET");
-            connection.setDoOutput(true);
-            connection.setReadTimeout(10000);
-            connection.connect();
-            //read the result from the server
-            bufferedReadere  = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
-            searchResults = new StringBuilder();
-            while ((line = bufferedReadere.readLine()) != null)
-            {
-            	searchResults.append(line + '\n');
-            }
-            
-            return searchResults.toString();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally
-        {
-            //close the connection, set all objects to null
-            connection.disconnect();
-            searchResults = null;
-            connection = null;
-            bufferedReadere = null;
-        }
-        return null;
+	@GET
+    @Path("shareSearchResult/{postedMessage : .+}")
+    public void shareSearchResult(@Context HttpServletRequest request, @PathParam("postedMessage") String postedMessage) {
+	    Identity ownerIdentity = Utils.getIdentityManager().getOrCreateIdentity(OrganizationIdentityProvider.NAME, request.getRemoteUser(), false);
+	    ExoSocialActivity activity = new ExoSocialActivityImpl(Utils.getUserIdentity(request.getRemoteUser(), false).getId(), PeopleService.PEOPLE_APP_ID, postedMessage, null);
+	    activity.setType(UIDefaultActivity.ACTIVITY_TYPE);
+	    Utils.getActivityManager().saveActivityNoReturn(ownerIdentity, activity);
     }
 }

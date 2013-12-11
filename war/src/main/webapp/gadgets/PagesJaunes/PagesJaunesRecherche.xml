@@ -9,6 +9,7 @@
                directory_title="PagesJaunes Recherche"
 
                description="PagesJaunes - Recherche via l'utilisation des API">
+  	<Require feature="dynamic-height"/>
 
   </ModulePrefs>
 
