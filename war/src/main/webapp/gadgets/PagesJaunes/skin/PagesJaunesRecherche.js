@@ -3,7 +3,7 @@ function updateSearchResults(serviceUriParams) {
 	var ou = $("#ou").val();
 	var uri = "/rest/searchManagement/getSearchResults/";
 	uri += serviceUriParams !== undefined ? serviceUriParams :"max=4&what="+ quoiqui + "&where=" + ou;
-	uri += "&app_id=e74d895a&app_key=5050ac249e48f00795c39a06a8af7235";
+	uri += "&proximity=false&return_urls=true&app_id=e74d895a&app_key=5050ac249e48f00795c39a06a8af7235";
 	var html = "<h2 style='text-align: center;font-weight:bold'>Aucun résultat</h2>";
 	$.ajax ({
         cache: true,
@@ -24,6 +24,7 @@ function updateSearchResults(serviceUriParams) {
 	            var merchantName;
 	            var inscriptions;
 	            var adressStreet;
+	            var itineraryUrl;
 	            var description;
 	            for (i = 0; i < listings.length; i++){
 	            	thumbnailUrl = listings[i]["thumbnail_url"];
@@ -37,6 +38,7 @@ function updateSearchResults(serviceUriParams) {
 	            	inscriptions = listings[i]["inscriptions"];
 	            	for (j = 0; j < inscriptions.length; i++){
 	            		adressStreet = inscriptions[j]["adress_street"];
+	            		itineraryUrl = inscriptions[j]["urls"]["itinerary_url"];
 	            		break;
 	            	}
 	            	if (adressStreet != null) {
@@ -46,7 +48,8 @@ function updateSearchResults(serviceUriParams) {
 	            	if (description != null){
 	            		html += "<span style='font-size:small;'>" + description + "</span><br/>";
 	            	}
-	            	html += "<a onClick='shareSearchResult(\"" + escape(thumbnailUrl) + "\",\"" + escape(merchantName) + "\",\"" + escape(adressStreet) + "\",\"" + escape(description) + "\")' style='font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Partager</a><br/>";
+	            	html += "<a href='" + itineraryUrl + "' target='_blank' style='font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Itinéraire</a>";
+	            	html += "<a onClick='shareSearchResult(\"" + escape(thumbnailUrl) + "\",\"" + escape(merchantName) + "\",\"" + escape(adressStreet) + "\",\"" + escape(description) + "\")' style='margin-left: 200px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Partager</a><br/>";
 	            	html += "________________________________________________________________________<br/>";
 	            }
 	            var prevPageUrl = result["context"]["pages"]["prev_page_url"];
