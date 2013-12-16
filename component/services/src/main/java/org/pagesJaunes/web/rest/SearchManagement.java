@@ -23,6 +23,8 @@ import org.exoplatform.social.core.activity.model.ExoSocialActivityImpl;
 import org.exoplatform.social.core.application.PeopleService;
 import org.exoplatform.social.core.identity.model.Identity;
 import org.exoplatform.social.core.identity.provider.OrganizationIdentityProvider;
+import org.exoplatform.social.core.identity.provider.SpaceIdentityProvider;
+import org.exoplatform.social.core.space.spi.SpaceService;
 import org.exoplatform.social.webui.Utils;
 import org.exoplatform.social.webui.activity.UIDefaultActivity;
 import org.json.JSONObject;
@@ -50,8 +52,7 @@ public class SearchManagement implements ResourceContainer {
             //read the result from the server
             bufferedReadere  = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
             searchResults = new StringBuilder();
-            while ((line = bufferedReadere.readLine()) != null)
-            {
+            while ((line = bufferedReadere.readLine()) != null) {
             	searchResults.append(line + '\n');
             }
             return searchResults.toString();
@@ -60,8 +61,7 @@ public class SearchManagement implements ResourceContainer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        finally
-        {
+        finally {
             //close the connection, set all objects to null
             connection.disconnect();
             searchResults = null;
@@ -99,11 +99,20 @@ public class SearchManagement implements ResourceContainer {
     }
 	
 	@GET
-    @Path("shareSearchResult/{postedMessage : .+}")
-    public void shareSearchResult(@Context HttpServletRequest request, @PathParam("postedMessage") String postedMessage) {
-	    Identity ownerIdentity = Utils.getIdentityManager().getOrCreateIdentity(OrganizationIdentityProvider.NAME, request.getRemoteUser(), false);
-	    ExoSocialActivity activity = new ExoSocialActivityImpl(Utils.getUserIdentity(request.getRemoteUser(), false).getId(), PeopleService.PEOPLE_APP_ID, postedMessage, null);
-	    activity.setType(UIDefaultActivity.ACTIVITY_TYPE);
-	    Utils.getActivityManager().saveActivityNoReturn(ownerIdentity, activity);
+    @Path("shareSearchResult/{postedMessage : .+}+{postContext}")
+    public Response shareSearchResult(@Context HttpServletRequest request, @PathParam("postedMessage") String postedMessage, @PathParam("postContext") String postContext) {
+		if (postContext.equals("user")) {
+			Identity ownerIdentity = Utils.getIdentityManager().getOrCreateIdentity(OrganizationIdentityProvider.NAME, request.getRemoteUser(), false);
+		    ExoSocialActivity activity = new ExoSocialActivityImpl(Utils.getUserIdentity(request.getRemoteUser(), false).getId(), PeopleService.PEOPLE_APP_ID, postedMessage, null);
+		    activity.setType(UIDefaultActivity.ACTIVITY_TYPE);
+		    Utils.getActivityManager().saveActivityNoReturn(ownerIdentity, activity);
+		}
+		else {
+			Identity spaceIdentity = Utils.getIdentityManager().getOrCreateIdentity(SpaceIdentityProvider.NAME, "test", false);
+		    ExoSocialActivity activity = new ExoSocialActivityImpl(Utils.getUserIdentity(request.getRemoteUser(), false).getId(), SpaceService.SPACES_APP_ID, postedMessage, null);
+		    activity.setType(UIDefaultActivity.ACTIVITY_TYPE);
+		    Utils.getActivityManager().saveActivityNoReturn(spaceIdentity, activity);
+		}
+		return Response.ok().entity("OK").build();
     }
 }

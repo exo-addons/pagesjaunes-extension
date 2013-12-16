@@ -13,19 +13,37 @@
 
   </ModulePrefs>
 
-  
-
   <Content type="html">
 
   <![CDATA[
   
+    <!-- hidden inline form -->
+	<div id="inline">
+	    <form id="partage" method="post">
+	       <fieldset>
+		        <label for="type">Type</label>
+		        <select id="type" name="type"> 
+				  <option value="user" >Utilisateur</option>
+				  <option value="space" >Espace</option>
+				</select>
+		
+		        <br />
+		        <label for="message">Message</label>
+		        <textarea name="message" id="message"></textarea>
+		
+		        <button id="share-button" class="b-close" style="background-color: purple; color: white;">Partager</button>
+		        <button id="annuler" type="button" class="b-close">Annuler</button>
+	        </fieldset>
+	    </form>
+	</div>
+	
     <div style="position: absolute;">
 	    <a href="http://www.pagesjaunes.fr" title="PagesJaunes, retour à l'accueil" class="idTag_RETOUR-HP">
 	        <img src="http://static.pagesjaunes.fr/ilo/static_4.2.0.5/images/logo-pagesjaunes.png" alt="PagesJaunes" height="100" width="100">
 	    </a>
     </div>
     
-    <div id="searchForm" style="background-color: yellow;padding-left: 300px;height: 150px">
+    <div id="searchForm" style="background-color: yellow;padding-left: 300px;height: 100px">
       <form method="post">
 		<table>
 			<tr>
@@ -51,9 +69,11 @@
     <div id="searchResults" >
       <h2 style='text-align: center;font-weight:bold'>Bienvenue sur le gadget d'affichage des résulats Pages Jaunes<h2>
     </div>
+	
+	<link rel="stylesheet" type="text/css" media="all" href="skin/style.css">
     <script type="text/javascript" src="skin/jquery.js"></script>
+    <script type="text/javascript" src="skin/jquery.bpopup-0.9.4.min.js"></script>
     <script type="text/javascript" src="skin/PagesJaunesRecherche.js"></script>
-    
   ]]>
 
   </Content>
