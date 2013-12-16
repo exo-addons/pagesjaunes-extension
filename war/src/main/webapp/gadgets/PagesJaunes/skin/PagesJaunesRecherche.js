@@ -1,3 +1,11 @@
+$(document).keypress(function(event){
+	var keycode = (event.keyCode ? event.keyCode : event.which);
+	if(keycode == '13'){
+		updateSearchResults();	
+	}
+ 
+});
+
 function updateSearchResults(serviceUriParams) {
 	var quoiqui = $("#quoiqui").val();
 	var ou = $("#ou").val();
@@ -51,8 +59,8 @@ function updateSearchResults(serviceUriParams) {
 	            		html += "<span style='font-size:small;'>" + description + "</span><br/>";
 	            	}
 	            	html += "<a href='" + itineraryUrl + "' target='_blank' style='font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Itinéraire</a>";
-	            	html += "<a onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\")' style='margin-left:200px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Partager</a>";
-	            	html += "<a id='discussion' style='margin-left: 300px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Ouvrir une discussion</a><br/>";
+	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\")' style='margin-left:200px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Partager</a>";
+	            	html += "<a href='#' id='discussion' style='margin-left: 300px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Ouvrir une discussion</a><br/>";
 	            	html += "________________________________________________________________________<br/>";
 	            }
 	            var prevPageUrl = result["context"]["pages"]["prev_page_url"];
@@ -70,12 +78,42 @@ function updateSearchResults(serviceUriParams) {
 }
 
 function shareSearchResult(merchantName, merchantUrl) {
+	$("#type").change(function(){
+		if ($("#type").val() != "user") {
+			$.ajax ({
+		        cache: true,
+		        url: "/rest/portal/social/spaces/mySpaces/show.json",
+		    })
+		    .fail (
+		        function () {
+		        }
+		    )
+		    .done (
+		        function (result) {
+		        	var spaces = result["spaces"];
+		        	var html = "";
+		        	if (spaces !== undefined && spaces.length > 0){
+		        		$("#bloc_espace").show();
+		        		for (i = 0; i < spaces.length; i++) {
+		        			html += "<option value='" + spaces[i]["name"] + "'>" + spaces[i]["displayName"]  + "</option>"
+		        		}
+		        		$("#espace").html(html);
+		        	}
+		        }
+		   );
+		}
+		else {
+			$("#espace").html("");
+			$("#bloc_espace").hide();
+		}
+	});
+	
 	$("#share-button").click(function(){
-		var type = $("#type").val();
-		var message = $("#message").val().length == 0 ? "j'ai trouvé le contenu suivant via la recherche PJ :": $("#message").val();
+		var espace = $("#espace").val();
+		var message = $("#message").val().length == 0 ? "J'ai trouvé le contenu suivant via la recherche PJ :": $("#message").val();
 		var postedMessage = "<b>" + message + "</b><br/>" + unescape(merchantName) + ": " + unescape(merchantUrl);
 	    var asMessage = new Object();
-	    asMessage.type = type;
+	    asMessage.espace = espace;
 	    asMessage.postedMessage = postedMessage;
 		$.ajax ({
 			type: "POST",
@@ -89,12 +127,21 @@ function shareSearchResult(merchantName, merchantUrl) {
 	    )
 	    .done (
 	    );
+		$("#message").val("");
+		$("#type").val("user");
+		$("#bloc_espace").hide();
+	});
+	
+	$("#cancel").click(function(){
+		$("#message").val("");
+		$("#type").val("user");
+		$("#bloc_espace").hide();
 	});
 
-	$('#inline').bPopup
+	$("#inline").bPopup
 	  ({
 	      follow: (true, true),
-	      position: ['auto', 100],
+	      position: ["auto", 100],
 	      modalClose: false
 	  });
 }

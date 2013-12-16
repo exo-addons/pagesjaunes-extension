@@ -21,18 +21,26 @@
 	<div id="inline">
 	    <form id="partage" method="post">
 	       <fieldset>
+	       	<div>
 		        <label for="type">Type</label>
 		        <select id="type" name="type"> 
 				  <option value="user" >Utilisateur</option>
 				  <option value="space" >Espace</option>
 				</select>
-		
-		        <br />
+			</div>
+		    <div id="bloc_espace" style="display: none;">
+		        <label for="espace">Espace</label>
+		        <select id="espace" name="espace"> 
+				</select>
+			</div>
+			<div>
 		        <label for="message">Message</label>
 		        <textarea name="message" id="message"></textarea>
-		
-		        <button id="share-button" class="b-close" style="background-color: purple; color: white;">Partager</button>
-		        <button id="annuler" type="button" class="b-close">Annuler</button>
+		    </div>
+		    <div style="text-align: center;">
+		        <button id="share-button" class="b-close">Partager</button>
+		        <button id="cancel" type="button" class="b-close">Annuler</button>
+		    </div>    
 	        </fieldset>
 	    </form>
 	</div>
@@ -67,7 +75,7 @@
 	  </form>
     </div>
     <div id="searchResults" >
-      <h2 style='text-align: center;font-weight:bold'>Bienvenue sur le gadget d'affichage des résulats Pages Jaunes<h2>
+      <h2 style="text-align: center;font-weight:bold">Bienvenue sur le gadget d'affichage des résulats Pages Jaunes<h2>
     </div>
 	
 	<link rel="stylesheet" type="text/css" media="all" href="skin/style.css">

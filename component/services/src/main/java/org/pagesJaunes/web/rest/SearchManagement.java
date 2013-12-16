@@ -105,17 +105,18 @@ public class SearchManagement implements ResourceContainer {
     @Path("shareSearchResult")
 	@Consumes(MediaType.APPLICATION_JSON)
     public Response shareSearchResult(@Context HttpServletRequest request, AsMessage asMessage) {
-		if (asMessage.getType().equals("user")) {
+		String espace = asMessage.getEspace();
+		if (espace != null ) {
+			Identity spaceIdentity = Utils.getIdentityManager().getOrCreateIdentity(SpaceIdentityProvider.NAME, espace, false);
+		    ExoSocialActivity activity = new ExoSocialActivityImpl(Utils.getUserIdentity(request.getRemoteUser(), false).getId(), SpaceService.SPACES_APP_ID, asMessage.getPostedMessage(), null);
+		    activity.setType(UIDefaultActivity.ACTIVITY_TYPE);
+		    Utils.getActivityManager().saveActivityNoReturn(spaceIdentity, activity);
+		}
+		else {
 			Identity ownerIdentity = Utils.getIdentityManager().getOrCreateIdentity(OrganizationIdentityProvider.NAME, request.getRemoteUser(), false);
 		    ExoSocialActivity activity = new ExoSocialActivityImpl(Utils.getUserIdentity(request.getRemoteUser(), false).getId(), PeopleService.PEOPLE_APP_ID, asMessage.getPostedMessage(), null);
 		    activity.setType(UIDefaultActivity.ACTIVITY_TYPE);
 		    Utils.getActivityManager().saveActivityNoReturn(ownerIdentity, activity);
-		}
-		else {
-			Identity spaceIdentity = Utils.getIdentityManager().getOrCreateIdentity(SpaceIdentityProvider.NAME, "test", false);
-		    ExoSocialActivity activity = new ExoSocialActivityImpl(Utils.getUserIdentity(request.getRemoteUser(), false).getId(), SpaceService.SPACES_APP_ID, asMessage.getPostedMessage(), null);
-		    activity.setType(UIDefaultActivity.ACTIVITY_TYPE);
-		    Utils.getActivityManager().saveActivityNoReturn(spaceIdentity, activity);
 		}
 		return Response.ok().entity("OK").build();
     }
