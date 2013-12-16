@@ -71,20 +71,23 @@ function updateSearchResults(serviceUriParams) {
 
 function shareSearchResult(merchantName, merchantUrl) {
 	$("#share-button").click(function(){
-		
 		var type = $("#type").val();
 		var message = $("#message").val().length == 0 ? "j'ai trouvé le contenu suivant via la recherche PJ :": $("#message").val();
 		var postedMessage = "<b>" + message + "</b><br/>" + unescape(merchantName) + ": " + unescape(merchantUrl);
+	    var asMessage = new Object();
+	    asMessage.type = type;
+	    asMessage.postedMessage = postedMessage;
 		$.ajax ({
+			type: "POST",
+	        contentType: "application/json",
+	        dataType: "json",
 	        cache: true,
-	        url: "/rest/searchManagement/shareSearchResult/" + postedMessage + "+" + type,
+	        url: "/rest/searchManagement/shareSearchResult",
+	        data: JSON.stringify(asMessage),
 	    })
 	    .fail (
 	    )
 	    .done (
-	    		function () {
-	    			alert("Votre résultat de recherche a été partagé avec succès");
-	    	    }
 	    );
 	});
 
