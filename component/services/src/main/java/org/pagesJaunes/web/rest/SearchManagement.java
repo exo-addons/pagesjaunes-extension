@@ -30,6 +30,7 @@ import org.exoplatform.social.core.identity.provider.SpaceIdentityProvider;
 import org.exoplatform.social.core.space.spi.SpaceService;
 import org.exoplatform.social.webui.Utils;
 import org.exoplatform.social.webui.activity.UIDefaultActivity;
+import org.jboss.util.property.PropertyManager;
 import org.json.JSONObject;
 
 @Path("/searchManagement/")
@@ -78,6 +79,9 @@ public class SearchManagement implements ResourceContainer {
     @Path("getSearchResults/{serviceUriParams : .+}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSearchResults(@PathParam("serviceUriParams") String serviceUriParams) {
+		if (serviceUriParams.split("&where=").length == 1){
+			serviceUriParams += PropertyManager.getProperty("entreprise.adresse");
+		}
     	String url = "http://api.apipagesjaunes.fr/v2/pro/find.json?" + serviceUriParams;
     	Response response;
     	String data = getData(url);

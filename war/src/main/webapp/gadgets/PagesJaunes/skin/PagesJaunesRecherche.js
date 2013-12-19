@@ -76,12 +76,15 @@ function shareSearchResult(merchantName, merchantUrl, i) {
 	});
 }
 
-function updateSearchResults(serviceUriParams) {
+function updateSearchResults(serviceUriParams, proximity) {
 	var quoiqui = $("#quoiqui").val();
 	var ou = $("#ou").val();
+	var prefs = new gadgets.Prefs();
+	var adresseEntreprise = prefs.getString("adresseEntreprise");
 	var uri = "/rest/searchManagement/getSearchResults/";
-	uri += serviceUriParams !== undefined ? serviceUriParams :"max=3&what="+ quoiqui + "&where=" + ou;
-	uri += "&proximity=false&return_urls=true&app_id=e74d895a&app_key=5050ac249e48f00795c39a06a8af7235";
+	uri += serviceUriParams !== undefined ? serviceUriParams : "max=3&what=" + quoiqui + "&where=" + ou;
+	uri += "&return_urls=true&app_id=e74d895a&app_key=5050ac249e48f00795c39a06a8af7235";
+	uri += proximity !== undefined ? "&proximity=" + proximity + "&where="+ adresseEntreprise : "";
 	var html = "<h2 style='text-align: center;font-weight:bold'>Aucun résultat</h2>";
 	$.ajax ({
         cache: true,
@@ -95,9 +98,13 @@ function updateSearchResults(serviceUriParams) {
     .done (
         function (result) {
         	var listings = result["search_results"]["listings"];
+        	var what = result["context"]["search"]["what"];
+        	var where = result["context"]["search"]["where"];
+        	$("#quoiqui").val(what);
+        	$("#ou").val(where);
         	if (listings !== undefined) {
 	        	var totalListing = result["context"]["results"]["total_listing"];
-	            html = "<h2 style='text-align: center;font-weight:bold'>" + quoiqui + " à " + ou + " : " + totalListing + " résultats" + "</h2>";
+	            html = "<h2 style='text-align: center;font-weight:bold'>" + what + " à " + where + " : " + totalListing + " résultats" + "</h2>";
 	            var thumbnailUrl;
 	            var merchantName;
 	            var inscriptions;
@@ -127,10 +134,10 @@ function updateSearchResults(serviceUriParams) {
 	            		html += "<b style='text-decoration:underline;font-size:small;'>" + merchantName + "</b>";
 	            	}
 	            	if (distance != null) {
-	            		html += "<span> à " + distance + "m</span><br/>";
+	            		html += "<span> à " + distance + "m</span>";
 	            	}
 	            	if (adressStreet != null) {
-	            		html += "<span style='color:grey;font-size:small;'>" + adressStreet + "</span><br/>";
+	            		html += "<br/><span style='color:grey;font-size:small;'>" + adressStreet + "</span><br/>";
 	            	}
 	            	description = listings[i]["description"];
 	            	if (description != null) {

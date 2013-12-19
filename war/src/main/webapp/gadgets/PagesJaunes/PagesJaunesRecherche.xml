@@ -12,7 +12,7 @@
   	<Require feature="dynamic-height"/>
 
   </ModulePrefs>
-
+  <UserPref name="adresseEntreprise" display_name="Adresse de l'entreprise" />
   <Content type="html">
 
   <![CDATA[
@@ -23,7 +23,7 @@
 	    </a>
     </div>
     
-    <div id="searchForm" style="background-color: yellow;padding-left: 300px;height: 100px">
+    <div id="searchForm" style="background-color: yellow;padding-left: 300px;height: 130px">
       <form method="post">
 		<table>
 			<tr>
@@ -42,8 +42,21 @@
 					<button style="background-color: purple; color: white;" onClick="updateSearchResults()" title="Trouver sur PagesJaunes" id="btnValidSearch" value="Trouver" type="button"><b>Trouver</b></button>
 				</td>
 				
-			</tr>		 
+			</tr>
 		</table>
+		<label for="autour_de_mon_entreprise"><b>Trouver en un click autour de mon entreprise</b></label><br/>
+					
+		<a href="#" onClick="updateSearchResults('max=3&what=resto','true')"><label for="resto"><b>RESTO</b></label></a>
+
+		<a href="#" onClick="updateSearchResults('max=3&what=medecin','true')"><label for="medecin"><b>MEDECIN</b></label></a>
+			
+		<a href="#" onClick="updateSearchResults('max=3&what=pharmacie','true')"><label for="pharmacie"><b>PHARMACIE</b></label></a>
+			
+		<a href="#" onClick="updateSearchResults('max=3&what=vetements','true')"><label for="vêtements"><b>VÊTEMENTS</b></label></a>
+				
+		<a href="#" onClick="updateSearchResults('max=3&what=fleuriste','true')"><label for="fleuriste"><b>FLEURISTE</b></label></a>
+			
+		<a href="#" onClick="updateSearchResults('max=3&what=coiffeur','true')"><label for="coiffeur"><b>COIFFEUR</b></label></a>
 	  </form>
     </div>
     <div id="searchResults" >
