@@ -106,7 +106,8 @@ public class SearchManagement implements ResourceContainer {
 	@Consumes(MediaType.APPLICATION_JSON)
     public Response shareSearchResult(@Context HttpServletRequest request, AsMessage asMessage) {
 		String espace = asMessage.getEspace();
-		if (espace != null ) {
+		String type = asMessage.getType();
+		if (type.equals("space") && espace != null ) {
 			Identity spaceIdentity = Utils.getIdentityManager().getOrCreateIdentity(SpaceIdentityProvider.NAME, espace, false);
 		    ExoSocialActivity activity = new ExoSocialActivityImpl(Utils.getUserIdentity(request.getRemoteUser(), false).getId(), SpaceService.SPACES_APP_ID, asMessage.getPostedMessage(), null);
 		    activity.setType(UIDefaultActivity.ACTIVITY_TYPE);

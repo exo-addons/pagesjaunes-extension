@@ -17,34 +17,6 @@
 
   <![CDATA[
   
-    <!-- hidden inline form -->
-	<div id="inline">
-	    <form id="partage" method="post">
-	       <fieldset>
-	       	<div>
-		        <label for="type">Type</label>
-		        <select id="type" name="type"> 
-				  <option value="user" >Utilisateur</option>
-				  <option value="space" >Espace</option>
-				</select>
-			</div>
-		    <div id="bloc_espace" style="display: none;">
-		        <label for="espace">Espace</label>
-		        <select id="espace" name="espace"> 
-				</select>
-			</div>
-			<div>
-		        <label for="message">Message</label>
-		        <textarea name="message" id="message"></textarea>
-		    </div>
-		    <div style="text-align: center;">
-		        <button id="share-button" class="b-close">Partager</button>
-		        <button id="cancel" type="button" class="b-close">Annuler</button>
-		    </div>    
-	        </fieldset>
-	    </form>
-	</div>
-	
     <div style="position: absolute;">
 	    <a href="http://www.pagesjaunes.fr" title="PagesJaunes, retour à l'accueil" class="idTag_RETOUR-HP">
 	        <img src="http://static.pagesjaunes.fr/ilo/static_4.2.0.5/images/logo-pagesjaunes.png" alt="PagesJaunes" height="100" width="100">

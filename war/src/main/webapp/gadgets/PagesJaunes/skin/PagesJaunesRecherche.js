@@ -9,9 +9,16 @@ function displayNumber(contactInfoHtml, i) {
 	$("#displayNumber" + i).html(contactInfoHtml);
 }
 
-function shareSearchResult(merchantName, merchantUrl) {
-	$("#type").change(function() {
-		if ($("#type").val() != "user") {
+function shareSearchResult(merchantName, merchantUrl, i) {
+	var html = "<form id='partage' method='post'><fieldset><div><label for='type'>Type</label>";
+	html += "<select id='type" + i + "' name='type'><option value='user' >Utilisateur</option><option value='space'>Espace</option></select>";
+	html += "</div><div id='bloc_espace" + i + "' style='display: none;'><label for='espace'>Espace</label><select id='espace" + i + "' name='espace'></select>";
+	html += "</div><div><label for='message'>Message</label><textarea name='message' id='message" + i + "'></textarea>";
+	html += "</div><div style='text-align: center;'><button id='share-button" + i + "' class='b-close'>Partager</button>";
+	html += "<button id='cancel" + i + "' type='button' class='b-close'>Annuler</button></div></fieldset></form>";
+	$("#inline" + i).html(html);
+	$("#type" + i).change(function() {
+		if ($("#type" + i).val() != "user") {
 			$.ajax ({
 		        cache: true,
 		        url: "/rest/portal/social/spaces/mySpaces/show.json",
@@ -25,26 +32,27 @@ function shareSearchResult(merchantName, merchantUrl) {
 		        	var spaces = result["spaces"];
 		        	var html = "";
 		        	if (spaces !== undefined && spaces.length > 0) {
-		        		$("#bloc_espace").show();
-		        		for (i = 0; i < spaces.length; i++) {
-		        			html += "<option value='" + spaces[i]["name"] + "'>" + spaces[i]["name"]  + "</option>"
+		        		$("#bloc_espace" + i).show();
+		        		for (j = 0; j < spaces.length; j++) {
+		        			html += "<option value='" + spaces[j]["name"] + "'>" + spaces[j]["name"]  + "</option>"
 		        		}
-		        		$("#espace").html(html);
+		        		$("#espace" + i).html(html);
 		        	}
 		        }
 		   );
 		}
 		else {
-			$("#espace").html("");
-			$("#bloc_espace").hide();
+			$("#bloc_espace" + i).hide();
 		}
 	});
 	
-	$("#share-button").click(function() {
-		var espace = $("#espace").val();
-		var message = $("#message").val().length == 0 ? "J'ai trouvé le contenu suivant via la recherche PJ :": $("#message").val();
+	$("#share-button" + i).click(function() {
+		var type = $("#type" + i).val();
+		var espace = $("#espace" + i).val();
+		var message = $("#message" + i).val().length == 0 ? "J'ai trouvé le contenu suivant via la recherche PJ :": $("#message" + i).val();
 		var postedMessage = "<b>" + message + "</b><br/>" + unescape(merchantName) + ": " + unescape(merchantUrl);
 	    var asMessage = new Object();
+	    asMessage.type = type;
 	    asMessage.espace = espace;
 	    asMessage.postedMessage = postedMessage;
 		$.ajax ({
@@ -59,18 +67,9 @@ function shareSearchResult(merchantName, merchantUrl) {
 	    )
 	    .done (
 	    );
-		$("#message").val("");
-		$("#type").val("user");
-		$("#bloc_espace").hide();
 	});
 	
-	$("#cancel").click(function() {
-		$("#message").val("");
-		$("#type").val("user");
-		$("#bloc_espace").hide();
-	});
-
-	$("#inline").bPopup ({
+	$("#inline" + i).bPopup ({
 		follow: (true, true),
 	    position: ["auto", 100],
 	    modalClose: false
@@ -82,7 +81,7 @@ function updateSearchResults(serviceUriParams) {
 	var ou = $("#ou").val();
 	var uri = "/rest/searchManagement/getSearchResults/";
 	uri += serviceUriParams !== undefined ? serviceUriParams :"max=3&what="+ quoiqui + "&where=" + ou;
-	uri += "&proximity=true&return_urls=true&app_id=e74d895a&app_key=5050ac249e48f00795c39a06a8af7235";
+	uri += "&proximity=false&return_urls=true&app_id=e74d895a&app_key=5050ac249e48f00795c39a06a8af7235";
 	var html = "<h2 style='text-align: center;font-weight:bold'>Aucun résultat</h2>";
 	$.ajax ({
         cache: true,
@@ -108,6 +107,7 @@ function updateSearchResults(serviceUriParams) {
 	            var itineraryUrl;
 	            var merchantUrl;
 	            var description;
+	            var currentPage = result["context"]["pages"]["current_page"];
 	            for (i = 0; i < listings.length; i++) {
 	            	thumbnailUrl = listings[i]["thumbnail_url"];
 	            	if (thumbnailUrl != null) {
@@ -141,11 +141,14 @@ function updateSearchResults(serviceUriParams) {
 	            		for (k = 0; k < contactInfo.length; k++) {
 	            			contactInfoHtml += "<b>" + contactInfo[k]["contact_type"] + "</b>: " + contactInfo[k]["contact_value"] + "<br/>";
             			}
-	            		html += "<span id='displayNumber" + i + "'><button onClick='displayNumber(\"" + contactInfoHtml + "\",\"" + i + "\")'>Afficher le numéro</button></span><br/>";
+	            		html += "<span id='displayNumber" + currentPage + i + "'><button onClick='displayNumber(\"" + contactInfoHtml + "\",\"" + currentPage + i + "\")'>Afficher le numéro</button></span><br/>";
 	            	}
 	            	html += "<a href='" + itineraryUrl + "' target='_blank' style='font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Itinéraire</a>";
-	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\")' style='margin-left:200px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Partager</a>";
+	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\")' style='margin-left:200px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Partager</a>";
 	            	html += "<a href='#' id='discussion' style='margin-left: 300px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Ouvrir une discussion</a><br/>";
+	            	if ($("#inline" + currentPage + i).length == 0){
+	            		html += "<div style='display:none' id='inline" + currentPage + i + "'></div>";
+	            	}
 	            	html += "________________________________________________________________________<br/>";
 	            }
 	            var prevPageUrl = result["context"]["pages"]["prev_page_url"];
