@@ -52,7 +52,7 @@
 			
 		<a href="#" onClick="updateSearchResults('max=3&what=pharmacie','true')"><label for="pharmacie"><b>PHARMACIE</b></label></a>
 			
-		<a href="#" onClick="updateSearchResults('max=3&what=vetements','true')"><label for="vêtements"><b>VÊTEMENTS</b></label></a>
+		<a href="#" onClick="updateSearchResults('max=3&what=vêtements','true')"><label for="vêtements"><b>VÊTEMENTS</b></label></a>
 				
 		<a href="#" onClick="updateSearchResults('max=3&what=fleuriste','true')"><label for="fleuriste"><b>FLEURISTE</b></label></a>
 			

@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -51,6 +52,8 @@ public class SearchManagement implements ResourceContainer {
 	private static final String FORUM_NAME = "forum.name";
 	private static final String FORUM_OWNER = "forum.owner";
 	private static final String FORUM_DESCRIPTION = "forum.description";
+	private static final String APP_ID = "app.id";
+	private static final String APP_KEY = "app.key";
 	
 	private String getData(String url) {
     	HttpURLConnection connection = null;
@@ -133,13 +136,18 @@ public class SearchManagement implements ResourceContainer {
     @Path("getSearchResults/{serviceUriParams : .+}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSearchResults(@PathParam("serviceUriParams") String serviceUriParams) {
-		if (serviceUriParams.split("&where=").length == 1){
-			serviceUriParams += PropertyManager.getProperty(ENTREPRISE_ADDRESS);
-		}
-    	String url = "http://api.apipagesjaunes.fr/v2/pro/find.json?" + serviceUriParams;
-    	Response response;
-    	String data = getData(url);
+		Response response;
 		try {
+			if (serviceUriParams.split("&where=&").length > 1) {
+				serviceUriParams = serviceUriParams.split("&where=&")[0] + "&where=" + PropertyManager.getProperty(ENTREPRISE_ADDRESS) + "&" + serviceUriParams.split("&where=&")[1];
+			}
+			String whereAttribute = serviceUriParams.split("&where=")[1].split("&")[0];
+			serviceUriParams = serviceUriParams.split(whereAttribute)[0] + URLEncoder.encode(whereAttribute, "utf-8") + serviceUriParams.split(whereAttribute)[1];
+			String whatAttribute = serviceUriParams.split("&what=")[1].split("&")[0];
+			serviceUriParams = serviceUriParams.split(whatAttribute)[0] + URLEncoder.encode(whatAttribute, "utf-8") + serviceUriParams.split(whatAttribute)[1];
+			serviceUriParams += "&app_id=" + PropertyManager.getProperty(APP_ID) + "&app_key=" +  PropertyManager.getProperty(APP_KEY);
+	    	String url = "http://api.apipagesjaunes.fr/v2/pro/find.json?" + serviceUriParams;
+	    	String data = getData(url);
 	    	if (data != null) {
 	            if (data.equalsIgnoreCase("null")) {
 	            	response = Response.status(200).entity(data).build();

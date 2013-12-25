@@ -118,9 +118,10 @@ function updateSearchResults(serviceUriParams, proximity) {
 	var prefs = new gadgets.Prefs();
 	var adresseEntreprise = prefs.getString("adresseEntreprise");
 	var uri = "/rest/searchManagement/getSearchResults/";
-	uri += serviceUriParams !== undefined ? serviceUriParams : "max=3&what=" + quoiqui + "&where=" + ou;
-	uri += "&return_urls=true&app_id=e74d895a&app_key=5050ac249e48f00795c39a06a8af7235";
-	uri += proximity !== undefined ? "&proximity=" + proximity + "&where="+ adresseEntreprise : "";
+	uri += serviceUriParams !== undefined ? serviceUriParams : "max=3&what=" + quoiqui + "&where=" + ou + "&return_urls=true";
+	uri += proximity !== undefined ? "&proximity=" + proximity + "&where="+ adresseEntreprise + "&return_urls=true": "";
+	var where = uri.split("&where=")[1].split("&")[0];
+	var what = uri.split("&what=")[1].split("&")[0];
 	var html = "<h2 style='text-align: center;font-weight:bold'>Aucun résultat</h2>";
 	$.ajax ({
         cache: true,
@@ -134,8 +135,7 @@ function updateSearchResults(serviceUriParams, proximity) {
     .done (
         function (result) {
         	var listings = result["search_results"]["listings"];
-        	var what = result["context"]["search"]["what"];
-        	var where = result["context"]["search"]["where"];
+        	where = where == "" ? result["context"]["search"]["where"] : where;
         	$("#quoiqui").val(what);
         	$("#ou").val(where);
         	if (listings !== undefined) {
@@ -200,9 +200,17 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            var prevPageUrl = result["context"]["pages"]["prev_page_url"];
 	            var nextPageUrl = result["context"]["pages"]["next_page_url"];
 	            if (prevPageUrl != null) {
+		            var whereAttribute = prevPageUrl.split("&where=")[1].split("&")[0];
+		            prevPageUrl = prevPageUrl.split(whereAttribute)[0] + where + prevPageUrl.split(whereAttribute)[1];
+		        	var whatAttribute = prevPageUrl.split("&what=")[1].split("&")[0];
+		        	prevPageUrl = prevPageUrl.split(whatAttribute)[0] + what + prevPageUrl.split(whatAttribute)[1];
 	            	html += "<a style='font-weight:bold;' href='#' onClick='updateSearchResults(\"" + prevPageUrl.split('?')[1] + "\")'>Page précédante</a>";
 	            }
 	            if (nextPageUrl != null) {
+	            	var whereAttribute = nextPageUrl.split("&where=")[1].split("&")[0];
+	            	nextPageUrl = nextPageUrl.split(whereAttribute)[0] + where + nextPageUrl.split(whereAttribute)[1];
+			        var whatAttribute = nextPageUrl.split("&what=")[1].split("&")[0];
+			        nextPageUrl = nextPageUrl.split(whatAttribute)[0] + what + nextPageUrl.split(whatAttribute)[1];
 	            	html += "<a style='font-weight:bold;float:right' href='#' onClick='updateSearchResults(\"" + nextPageUrl.split('?')[1] + "\")'>Page suivante</a>";
 	            }
             }    
