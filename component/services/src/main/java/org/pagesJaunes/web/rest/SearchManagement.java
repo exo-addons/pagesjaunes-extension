@@ -18,6 +18,12 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import org.exoplatform.container.ExoContainerContext;
+import org.exoplatform.forum.service.Category;
+import org.exoplatform.forum.service.Forum;
+import org.exoplatform.forum.service.ForumService;
+import org.exoplatform.forum.service.MessageBuilder;
+import org.exoplatform.forum.service.Topic;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
 import org.exoplatform.services.rest.resource.ResourceContainer;
@@ -36,6 +42,15 @@ import org.json.JSONObject;
 @Path("/searchManagement/")
 public class SearchManagement implements ResourceContainer {
 	private static final Log LOGGER = ExoLogger.getLogger("SearchManagement.class");
+	private static final String ENTREPRISE_ADDRESS = "entreprise.address";
+	private static final String CATEGORY_ID = "category.id";
+	private static final String CATEGORY_NAME = "category.name";
+	private static final String CATEGORY_OWNER = "category.owner";
+	private static final String CATEGORY_DESCRIPTION = "category.description";
+	private static final String FORUM_ID = "forum.id";
+	private static final String FORUM_NAME = "forum.name";
+	private static final String FORUM_OWNER = "forum.owner";
+	private static final String FORUM_DESCRIPTION = "forum.description";
 	
 	private String getData(String url) {
     	HttpURLConnection connection = null;
@@ -74,13 +89,52 @@ public class SearchManagement implements ResourceContainer {
         }
         return null;
     }
+	
+	@POST
+    @Path("addTopic")
+	@Consumes(MediaType.APPLICATION_JSON)
+    public Response addTopic(@Context HttpServletRequest request, ForumTopic forumTopic) {
+	    try {
+	    	ForumService forumService = (ForumService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(ForumService.class);
+	    	String categoryId = PropertyManager.getProperty(CATEGORY_ID);
+	    	String categoryName = PropertyManager.getProperty(CATEGORY_NAME);
+	    	Category category = forumService.getCategory(categoryId);
+	    	if (category ==  null) {
+	    		category = new Category(categoryId);
+		    	category.setCategoryName(categoryName);
+		    	category.setOwner(PropertyManager.getProperty(CATEGORY_OWNER));
+		    	category.setDescription(PropertyManager.getProperty(CATEGORY_DESCRIPTION));
+				forumService.saveCategory(category, true);
+	    	}
+	    	String forumId = PropertyManager.getProperty(FORUM_ID);
+	    	String forumName = PropertyManager.getProperty(FORUM_NAME);
+	    	Forum forum = forumService.getForum(categoryId, forumId);
+	    	if (forum ==  null) {
+	    		forum = new Forum();
+	    		forum.setId(forumId);
+	    		forum.setForumName(forumName);
+	    		forum.setOwner(PropertyManager.getProperty(FORUM_OWNER));
+	    		forum.setDescription(PropertyManager.getProperty(FORUM_DESCRIPTION));
+				forumService.saveForum(categoryId, forum, true);
+	    	}
+	    	Topic topic = new Topic();
+	    	topic.setTopicName(forumTopic.getTitre());
+	    	topic.setOwner(request.getRemoteUser());
+	    	topic.setDescription(forumTopic.getMessage());
+	    	topic.setIcon("uiIconForumTopic uiIconForumLightGray");
+	    	forumService.saveTopic(categoryId, forumId, topic, true, false, new MessageBuilder());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return Response.ok().entity("OK").build();
+    }
 
 	@GET
     @Path("getSearchResults/{serviceUriParams : .+}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getSearchResults(@PathParam("serviceUriParams") String serviceUriParams) {
 		if (serviceUriParams.split("&where=").length == 1){
-			serviceUriParams += PropertyManager.getProperty("entreprise.adresse");
+			serviceUriParams += PropertyManager.getProperty(ENTREPRISE_ADDRESS);
 		}
     	String url = "http://api.apipagesjaunes.fr/v2/pro/find.json?" + serviceUriParams;
     	Response response;

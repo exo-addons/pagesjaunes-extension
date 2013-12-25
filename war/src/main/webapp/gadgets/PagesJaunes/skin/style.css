@@ -1,12 +1,12 @@
-#partage {  }
+#popup {  }
 
-#partage fieldset {
+#popup fieldset {
     border: 1px solid #EEEEEE;
     padding: 20px;
     border-radius: 3px;
 }
 
-#partage legend {
+#popup legend {
     border: 1px solid #EEEEEE;
     color: #617797;
     margin-bottom: 0 !important;
@@ -15,7 +15,7 @@
     border-radius: 3px;
 }
 
-#partage label {
+#popup label {
     display: inline-block;
     float: left;
     font-size: 1em;
@@ -24,7 +24,7 @@
     width: 155px;
 }
 
-#partage input, #partage textarea, #partage select {
+#popup input, #popup textarea, #popup select {
     background: none repeat scroll 0 0 #F5F5F5;
     border: 1px solid #CCCCCC;
     color: #666666;
@@ -35,12 +35,12 @@
     border-radius: 3px;
 }
 
-#partage .button { border-radius: 3px; margin: 5px 20px 10px 155px; }
+#popup .button { border-radius: 3px; margin: 5px 20px 10px 155px; }
 
-#partage input:focus, #partage textarea:focus { border: 1px solid #eee; color: #444; background: #fff; }
+#popup input:focus, #popup textarea:focus { border: 1px solid #eee; color: #444; background: #fff; }
 
-#partage .error { border: 1px solid #973d3d; background: #f0bebe; color: #a35959; }
-#partage .error:focus { border: 1px solid #eee; color: #a35959; }
+#popup .error { border: 1px solid #973d3d; background: #f0bebe; color: #a35959; }
+#popup .error:focus { border: 1px solid #eee; color: #a35959; }
 .button {
     background-color: #222;
     background-image: -webkit-linear-gradient(hsla(0,0%,100%,.15), hsla(0,0%,0%,0));

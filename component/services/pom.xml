@@ -31,5 +31,10 @@
 			<artifactId>social-component-webui</artifactId>
 	        <version>4.0.3</version>
 	    </dependency>
+	    <dependency>
+			<groupId>org.exoplatform.forum</groupId>
+			<artifactId>forum-forum-service</artifactId>
+	        <version>4.0.3</version>
+	    </dependency>
     </dependencies>
 </project>

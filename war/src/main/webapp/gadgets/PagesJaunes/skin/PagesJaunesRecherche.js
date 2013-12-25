@@ -5,18 +5,54 @@ $(document).keypress(function(event) {
 	}
 });
 
+function addTopic(merchantName, merchantUrl, i) {
+	var html = "<form id='popup' method='post'><fieldset><div><label for='titre'>Titre</label>";
+	html += "<input id='titre" + i + "' type='text'></input>";
+	html += "</div><div><label for='message'>Message</label><textarea id='discussion-message" + i + "'></textarea>";
+	html += "</div><div style='text-align: center;'><button id='discussion-button" + i + "' class='b-close'>Ouvrir une discussion</button>";
+	html += "<button type='button' class='b-close'>Annuler</button></div></fieldset></form>";
+	$("#inline_discussion" + i).html(html);
+	
+	$("#discussion-button" + i).click(function() {
+		var titre = $("#titre" + i).val().length == 0 ? unescape(merchantName) : $("#titre" + i).val();
+		var message = $("#discussion-message" + i).val().length == 0 ? "J'ai trouvé le contenu suivant via la recherche PJ :": $("#discussion-message" + i).val(); 
+		message += "<br/>" + unescape(merchantUrl);
+	    var forumTopic = new Object();
+	    forumTopic.titre = titre;
+	    forumTopic.message = message;
+		$.ajax ({
+			type: "POST",
+	        contentType: "application/json",
+	        dataType: "json",
+	        cache: true,
+	        url: "/rest/searchManagement/addTopic",
+	        data: JSON.stringify(forumTopic),
+	    })
+	    .fail (
+	    )
+	    .done (
+	    );
+	});
+	
+	$("#inline_discussion" + i).bPopup ({
+		follow: (true, true),
+	    position: ["auto", 100],
+	    modalClose: false
+	});
+}
+
 function displayNumber(contactInfoHtml, i) {
 	$("#displayNumber" + i).html(contactInfoHtml);
 }
 
 function shareSearchResult(merchantName, merchantUrl, i) {
-	var html = "<form id='partage' method='post'><fieldset><div><label for='type'>Type</label>";
-	html += "<select id='type" + i + "' name='type'><option value='user' >Utilisateur</option><option value='space'>Espace</option></select>";
-	html += "</div><div id='bloc_espace" + i + "' style='display: none;'><label for='espace'>Espace</label><select id='espace" + i + "' name='espace'></select>";
-	html += "</div><div><label for='message'>Message</label><textarea name='message' id='message" + i + "'></textarea>";
+	var html = "<form id='popup' method='post'><fieldset><div><label for='type'>Type</label>";
+	html += "<select id='type" + i + "'><option value='user' >Utilisateur</option><option value='space'>Espace</option></select>";
+	html += "</div><div id='bloc_espace" + i + "' style='display: none;'><label for='espace'>Espace</label><select id='espace" + i + "'></select>";
+	html += "</div><div><label for='message'>Message</label><textarea id='message" + i + "'></textarea>";
 	html += "</div><div style='text-align: center;'><button id='share-button" + i + "' class='b-close'>Partager</button>";
-	html += "<button id='cancel" + i + "' type='button' class='b-close'>Annuler</button></div></fieldset></form>";
-	$("#inline" + i).html(html);
+	html += "<button type='button' class='b-close'>Annuler</button></div></fieldset></form>";
+	$("#inline_partage" + i).html(html);
 	$("#type" + i).change(function() {
 		if ($("#type" + i).val() != "user") {
 			$.ajax ({
@@ -69,7 +105,7 @@ function shareSearchResult(merchantName, merchantUrl, i) {
 	    );
 	});
 	
-	$("#inline" + i).bPopup ({
+	$("#inline_partage" + i).bPopup ({
 		follow: (true, true),
 	    position: ["auto", 100],
 	    modalClose: false
@@ -152,9 +188,12 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            	}
 	            	html += "<a href='" + itineraryUrl + "' target='_blank' style='font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Itinéraire</a>";
 	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\")' style='margin-left:200px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Partager</a>";
-	            	html += "<a href='#' id='discussion' style='margin-left: 300px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Ouvrir une discussion</a><br/>";
-	            	if ($("#inline" + currentPage + i).length == 0){
-	            		html += "<div style='display:none' id='inline" + currentPage + i + "'></div>";
+	            	html += "<a href='#' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\")' style='margin-left: 300px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Ouvrir une discussion</a><br/>";
+	            	if ($("#inline_partage" + currentPage + i).length == 0){
+	            		html += "<div style='display:none' id='inline_partage" + currentPage + i + "'></div>";
+	            	}
+	            	if ($("#inline_discussion" + currentPage + i).length == 0){
+	            		html += "<div style='display:none' id='inline_discussion" + currentPage + i + "'></div>";
 	            	}
 	            	html += "________________________________________________________________________<br/>";
 	            }
