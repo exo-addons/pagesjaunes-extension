@@ -39,24 +39,24 @@
 				
 				<td>
 					<br />
-					<button style="background-color: purple; color: white;" onClick="updateSearchResults()" title="Trouver sur PagesJaunes" id="btnValidSearch" value="Trouver" type="button"><b>Trouver</b></button>
+					<button style="background-color: purple; color: white;" onClick="updateSearchResults();return xt_click(this,'C','','Trouver::Trouver_HP','A');" title="Trouver sur PagesJaunes" id="btnValidSearch" value="Trouver" type="button"><b>Trouver</b></button>
 				</td>
 				
 			</tr>
 		</table>
 		<label for="autour_de_mon_entreprise"><b>Trouver en un click autour de mon entreprise</b></label><br/>
 					
-		<a href="#" onClick="updateSearchResults('max=3&what=resto','true')"><label for="resto"><b>RESTO</b></label></a>
+		<a href="#" onClick="updateSearchResults('max=3&what=resto','true');return xt_click(this,'C','','pictos::picto_resto','A');"><label for="resto"><b>RESTO</b></label></a>
 
-		<a href="#" onClick="updateSearchResults('max=3&what=medecin','true')"><label for="medecin"><b>MEDECIN</b></label></a>
+		<a href="#" onClick="updateSearchResults('max=3&what=medecin','true');return xt_click(this,'C','','pictos::picto_medecin','A');"><label for="medecin"><b>MEDECIN</b></label></a>
 			
-		<a href="#" onClick="updateSearchResults('max=3&what=pharmacie','true')"><label for="pharmacie"><b>PHARMACIE</b></label></a>
+		<a href="#" onClick="updateSearchResults('max=3&what=pharmacie','true');return xt_click(this,'C','','pictos::picto_pharmacie','A');"><label for="pharmacie"><b>PHARMACIE</b></label></a>
 			
-		<a href="#" onClick="updateSearchResults('max=3&what=vêtements','true')"><label for="vêtements"><b>VÊTEMENTS</b></label></a>
+		<a href="#" onClick="updateSearchResults('max=3&what=vêtements','true');return xt_click(this,'C','','pictos::picto_vetements','A');"><label for="vêtements"><b>VÊTEMENTS</b></label></a>
 				
-		<a href="#" onClick="updateSearchResults('max=3&what=fleuriste','true')"><label for="fleuriste"><b>FLEURISTE</b></label></a>
+		<a href="#" onClick="updateSearchResults('max=3&what=fleuriste','true');return xt_click(this,'C','','pictos::picto_fleuriste','A');"><label for="fleuriste"><b>FLEURISTE</b></label></a>
 			
-		<a href="#" onClick="updateSearchResults('max=3&what=coiffeur','true')"><label for="coiffeur"><b>COIFFEUR</b></label></a>
+		<a href="#" onClick="updateSearchResults('max=3&what=coiffeur','true');return xt_click(this,'C','','pictos::picto_coiffeur','A');"><label for="coiffeur"><b>COIFFEUR</b></label></a>
 	  </form>
     </div>
     <div id="searchResults" >
