@@ -33,13 +33,27 @@
   <packaging>pom</packaging>
   <name>Pages Jaunes Extension</name>
   <description>Pages Jaunes Extension</description>
+  <inceptionYear>2013</inceptionYear>
   <modules>
     <module>config</module>
     <module>war</module>
     <module>component/services</module>
     <module>ear</module>
   </modules>
+  <scm>
+    <connection>scm:git:git://github.com/exo-addons/pagesjaunes-extension.git</connection>
+    <developerConnection>scm:git:git@github.com:exo-addons/pagesjaunes-extension.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/exo-addons/pagesjaunes-extension/</url>
+  </scm>
   <properties>
+    <!-- **************************************** -->
+    <!-- Env settings                             -->
+    <!-- **************************************** -->
+    <jenkins.job.name>pagesjaunes-extension-master-ci</jenkins.job.name>
+    <!-- **************************************** -->
+    <!-- Dependencies version                     -->
+    <!-- **************************************** -->
     <!-- 3rd party libraries versions -->
     <exoplatform.version>4.0.3</exoplatform.version>
   </properties>
@@ -67,4 +81,32 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+  <profiles>
+    <profile>
+      <id>project-repositories</id>
+      <activation>
+        <property>
+          <name>!skip-project-repositories</name>
+        </property>
+      </activation>
+      <repositories>
+        <repository>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <id>repository.exoplatform.org</id>
+          <url>https://repository.exoplatform.org/public</url>
+        </repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <snapshots>
+            <enabled>true</enabled>
+          </snapshots>
+          <id>repository.exoplatform.org</id>
+          <url>https://repository.exoplatform.org/public</url>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
 </project>
