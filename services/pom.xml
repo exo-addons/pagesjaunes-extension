@@ -25,7 +25,6 @@
     <artifactId>pagesjaunes-extension</artifactId>
     <groupId>org.exoplatform.addons.pagesjaunes</groupId>
     <version>1.0-SNAPSHOT</version>
-    <relativePath>../../pom.xml</relativePath>
   </parent>
   <artifactId>pagesjaunes-component-services</artifactId>
   <packaging>jar</packaging>
