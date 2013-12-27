@@ -36,7 +36,7 @@
       <artifactId>pagesjaunes-extension-config</artifactId>
       <scope>provided</scope>
     </dependency>
-	<dependency>
+    <dependency>
       <groupId>org.exoplatform.addons.pagesjaunes</groupId>
       <artifactId>pagesjaunes-component-services</artifactId>
       <scope>provided</scope>

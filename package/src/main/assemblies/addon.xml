@@ -29,8 +29,9 @@
     <dependencySet>
       <outputDirectory>/${project.build.finalName}/lib</outputDirectory>
       <includes>
-        <include>*:*:jar</include>
+        <include>${project.groupId}:*:jar</include>
       </includes>
+      <useTransitiveDependencies>false</useTransitiveDependencies>
       <scope>provided</scope>
       <useProjectArtifact>false</useProjectArtifact>
     </dependencySet>
