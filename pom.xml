@@ -39,6 +39,7 @@
     <module>war</module>
     <module>services</module>
     <module>ear</module>
+    <module>package</module>
   </modules>
   <scm>
     <connection>scm:git:git://github.com/exo-addons/pagesjaunes-extension.git</connection>

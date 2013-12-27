@@ -19,48 +19,52 @@
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <artifactId>pagesjaunes-extension</artifactId>
     <groupId>org.exoplatform.addons.pagesjaunes</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>pagesjaunes-extension-ear</artifactId>
-  <packaging>ear</packaging>
-  <name>Pages Jaunes Ear</name>
-  <description>Widget Pages Jaunes Ear</description>
+  <artifactId>pagesjaunes-extension-package</artifactId>
+  <packaging>pom</packaging>
+  <name>Pages Jaunes Extension Package</name>
+  <description>Pages Jaunes Extension Package</description>
   <dependencies>
     <dependency>
       <groupId>org.exoplatform.addons.pagesjaunes</groupId>
       <artifactId>pagesjaunes-extension-config</artifactId>
+      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.exoplatform.addons.pagesjaunes</groupId>
       <artifactId>pagesjaunes-extension-war</artifactId>
       <type>war</type>
+      <scope>provided</scope>
     </dependency>
   </dependencies>
   <build>
-    <finalName>${project.artifactId}</finalName>
+    <!-- This name is used to bundle the extension -->
+    <finalName>pagesjaunes-addon</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-ear-plugin</artifactId>
-        <configuration>
-          <modules>
-            <jarModule>
-              <groupId>org.exoplatform.addons.pagesjaunes</groupId>
-              <artifactId>pagesjaunes-extension-config</artifactId>
-              <includeInApplicationXml>true</includeInApplicationXml>
-            </jarModule>
-            <webModule>
-              <groupId>org.exoplatform.addons.pagesjaunes</groupId>
-              <artifactId>pagesjaunes-extension-war</artifactId>
-              <contextRoot>pagesjaunes-extension</contextRoot>
-            </webModule>
-          </modules>
-        </configuration>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>package-extension</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+            <configuration>
+              <appendAssemblyId>false</appendAssemblyId>
+              <descriptors>
+                <descriptor>src/main/assemblies/addon.xml</descriptor>
+              </descriptors>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
