@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Copyright (C) 2003-2013 eXo Platform SAS.
@@ -21,10 +21,21 @@
 -->
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.exoplaform.org/xml/ns/kernel_1_2.xsd http://www.exoplaform.org/xml/ns/kernel_1_2.xsd"
 	xmlns="http://www.exoplaform.org/xml/ns/kernel_1_2.xsd">
-	
-	<!-- create Pages Jaunes application category -->
-    <import>war:/conf/pagesjaunes-extension/portal/application-registry-configuration.xml</import>
-    <!-- create Pages Jaunes nodetypes -->
-    <import>war:/conf/pagesjaunes-extension/portal/nodetypes-configuration.xml</import>
 
+	<external-component-plugins>
+  		<target-component>org.exoplatform.services.jcr.RepositoryService</target-component>
+  		<component-plugin>
+		    <name>pagesJaunes.nodeTypes</name>
+		    <set-method>addPlugin</set-method>
+		    <type>org.exoplatform.services.jcr.impl.AddNodeTypePlugin</type>
+		    <init-params>
+		    	<values-param>
+		        	<name>autoCreatedInNewRepository</name>
+		        	<description>Node types configuration file</description>
+		        	<value>war:/conf/pagesjaunes-extension/nodetypes.xml</value>
+		      	</values-param>
+		    </init-params>
+	  </component-plugin>
+  </external-component-plugins>
+  
 </configuration>

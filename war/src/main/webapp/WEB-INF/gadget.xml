@@ -26,19 +26,9 @@
 
     xmlns="http://www.gatein.org/xml/ns/gadgets_1_0">
 
-
-
     <gadget name="PagesJaunesRecherche">
 
         <path>/gadgets/PagesJaunes/PagesJaunesRecherche.xml</path>
-
-    </gadget>
-
-
-
-    <gadget name="PagesJaunesResultats">
-
-        <path>/gadgets/PagesJaunes/PagesJaunesResultat.xml</path>
 
     </gadget>
 

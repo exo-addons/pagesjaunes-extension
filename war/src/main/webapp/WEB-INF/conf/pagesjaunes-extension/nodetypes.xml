@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Copyright (C) 2003-2013 eXo Platform SAS.
@@ -19,33 +18,10 @@
     02110-1301 USA, or see the FSF site: http://www.fsf.org.
 
 -->
-
-<Module>
-
-  <ModulePrefs author="eXoPlatform" 
-
-               title="PagesJaunes Resulats"
-
-               directory_title="PagesJaunes Resulats"
-
-               description="PagesJaunes Affichage des resultats">
-
-  </ModulePrefs>
-
-  
-
-  <Content type="html">
-
-  <![CDATA[
-
-    <div id="searchResults">
-
-      Bienvenue sur le gadget d'affichage des résulats Pages Jaunes
-
-    </div>
-
-  ]]>
-
-  </Content>
-
-</Module>
+<nodeTypes xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:mix="http://www.jcp.org/jcr/mix/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0">
+    <nodeType name="exo:InstallStat" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+        <supertypes>
+            <supertype>nt:base</supertype>
+        </supertypes>
+    </nodeType>
+</nodeTypes>

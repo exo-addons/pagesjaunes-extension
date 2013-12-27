@@ -95,37 +95,6 @@
                                 </object>
 
                             </value>
-                            
-                            <value>
-
-                                <object type="org.exoplatform.application.registry.Application">
-
-                                    <field name="applicationName"><string>PagesJaunesResultats</string></field>
-
-                                    <field name="categoryName"><string>Annuaire</string></field>
-
-                                    <field name="displayName"><string>PagesJaunes - Résulats</string></field>
-
-                                    <field name="description"><string>PagesJaunes - Résulats</string></field>
-
-                                    <field name="type"><string>gadget</string></field>
-
-                                    <field name="contentId"><string>PagesJaunesResultats</string></field>
-
-                                    <field name="accessPermissions">
-
-                                        <collection type="java.util.ArrayList" item-type="java.lang.String">
-
-                                            <value><string>*:/platform/users</string></value>
-
-                                        </collection>
-
-                                    </field>
-
-                                </object>
-
-                            </value>
-
 
                         </collection>
 
