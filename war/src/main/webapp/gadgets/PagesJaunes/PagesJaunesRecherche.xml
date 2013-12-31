@@ -29,6 +29,7 @@
                directory_title="PagesJaunes Recherche"
 
                description="PagesJaunes - Recherche via l'utilisation des API">
+    <Locale messages="locale/default.xml" />           
   	<Require feature="dynamic-height"/>
 
   </ModulePrefs>
@@ -48,23 +49,23 @@
 		<table>
 			<tr>
 				<td>
-					<label for="quoiqui"><b>Quoi, qui ?</b></label><br/>
+					<label for="quoiqui"><b>__MSG_quoiqui__</b></label><br/>
 					<input size="50" type="text" name="quoiqui" id="quoiqui"/>
 				</td>
 						 
 				<td>
-					<label for="ou"><b>Où ?</b></label><br />
+					<label for="ou"><b>__MSG_ou__</b></label><br />
 					<input size="50" type="text" name="ou" id="ou"/>
 				</td>
 				
 				<td>
 					<br />
-					<button style="background-color: purple; color: white;" onClick="updateSearchResults();return xt_click(this,'C','','Trouver::Trouver_HP','A');" title="Trouver sur PagesJaunes" id="btnValidSearch" value="Trouver" type="button"><b>Trouver</b></button>
+					<button style="background-color: purple; color: white;" onClick="updateSearchResults();return xt_click(this,'C','','Trouver::Trouver_HP','A');" title="Trouver sur PagesJaunes" id="btnValidSearch" value="Trouver" type="button"><b>__MSG_trouver__</b></button>
 				</td>
 				
 			</tr>
 		</table>
-		<label for="autour_de_mon_entreprise"><b>Trouver en un click autour de mon entreprise</b></label><br/>
+		<label for="autour_de_mon_entreprise"><b>__MSG_monentreprise__</b></label><br/>
 					
 		<a href="#" onClick="updateSearchResults('max=3&what=resto','true');return xt_click(this,'C','','pictos::picto_resto','A');"><label for="resto"><b>RESTO</b></label></a>
 
@@ -80,7 +81,7 @@
 	  </form>
     </div>
     <div id="searchResults" >
-      <h2 style="text-align: center;font-weight:bold">Bienvenue sur le gadget d'affichage des résulats Pages Jaunes<h2>
+      <h2 style="text-align: center;font-weight:bold">__MSG_bienvenue__<h2>
     </div>
 	
 	<link rel="stylesheet" type="text/css" media="all" href="skin/style.css">
