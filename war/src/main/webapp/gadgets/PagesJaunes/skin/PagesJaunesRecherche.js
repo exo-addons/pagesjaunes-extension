@@ -16,11 +16,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+var xtkey;
 $(document).ready(function() {
 	var hpRandomNumber = Math.floor(Math.random()*1000000)
 	var hpStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&p=HP_PJ&rn=" + hpRandomNumber + "'>";
 	$("#searchForm").append(hpStatHtml);
-	var xtkey=false;
+	xtkey=false;
 	if(document.addEventListener) {
 		document.addEventListener('keydown',function() {xtkey=true},false);
 		document.addEventListener('keyup',function() {xtkey=false},false);
@@ -54,19 +55,16 @@ $(document).keypress(function(event) {
 
 function addTopic(merchantName, merchantUrl, i) {
 	var html = "<form id='popup' method='post'><fieldset><div><label for='titre'>Titre</label>";
-	html += "<input id='titre" + i + "' type='text'></input>";
-	html += "</div><div><label for='message'>Message</label><textarea id='discussion-message" + i + "'></textarea>";
+	html += "<input id='titre" + i + "' type='text' value='" + unescape(merchantName) + "'>";
+	html += "</div><div><label for='message'>Message</label><textarea id='discussion-message" + i + "'>J'ai trouvé le contenu suivant via la recherche PJ :</textarea>";
 	html += "</div><div style='text-align: center;'><button id='discussion-button" + i + "' class='b-close'>Ouvrir une discussion</button>";
 	html += "<button type='button' class='b-close'>Annuler</button></div></fieldset></form>";
 	$("#inline_discussion" + i).html(html);
 	
 	$("#discussion-button" + i).click(function() {
-		var titre = $("#titre" + i).val().length == 0 ? unescape(merchantName) : $("#titre" + i).val();
-		var message = $("#discussion-message" + i).val().length == 0 ? "J'ai trouvé le contenu suivant via la recherche PJ :": $("#discussion-message" + i).val(); 
-		message += "<br/>" + unescape(merchantUrl);
 	    var forumTopic = new Object();
-	    forumTopic.titre = titre;
-	    forumTopic.message = message;
+	    forumTopic.titre = $("#titre" + i).val();
+	    forumTopic.message = $("#discussion-message" + i).val() + "<br/>" + unescape(merchantUrl);
 		$.ajax ({
 			type: "POST",
 	        contentType: "application/json",
@@ -96,7 +94,7 @@ function shareSearchResult(merchantName, merchantUrl, i) {
 	var html = "<form id='popup' method='post'><fieldset><div><label for='type'>Type</label>";
 	html += "<select id='type" + i + "'><option value='user' >Utilisateur</option><option value='space'>Espace</option></select>";
 	html += "</div><div id='bloc_espace" + i + "' style='display: none;'><label for='espace'>Espace</label><select id='espace" + i + "'></select>";
-	html += "</div><div><label for='message'>Message</label><textarea id='message" + i + "'></textarea>";
+	html += "</div><div><label for='message'>Message</label><textarea id='message" + i + "'>J'ai trouvé le contenu suivant via la recherche PJ :</textarea>";
 	html += "</div><div style='text-align: center;'><button id='share-button" + i + "' class='b-close'>Partager</button>";
 	html += "<button type='button' class='b-close'>Annuler</button></div></fieldset></form>";
 	$("#inline_partage" + i).html(html);
@@ -132,8 +130,7 @@ function shareSearchResult(merchantName, merchantUrl, i) {
 	$("#share-button" + i).click(function() {
 		var type = $("#type" + i).val();
 		var espace = $("#espace" + i).val();
-		var message = $("#message" + i).val().length == 0 ? "J'ai trouvé le contenu suivant via la recherche PJ :": $("#message" + i).val();
-		var postedMessage = "<b>" + message + "</b><br/>" + unescape(merchantName) + ": " + unescape(merchantUrl);
+		var postedMessage = "<b>" + $("#message" + i).val() + "</b><br/>" + unescape(merchantName) + ": " + unescape(merchantUrl);
 	    var asMessage = new Object();
 	    asMessage.type = type;
 	    asMessage.espace = espace;
@@ -178,7 +175,7 @@ function updateSearchResults(serviceUriParams, proximity) {
         url: uri,
     })
     .fail (
-        function() {
+        function(result) {
         	html += lrStatHtml;
         	$("div#searchResults").html(html);
         }

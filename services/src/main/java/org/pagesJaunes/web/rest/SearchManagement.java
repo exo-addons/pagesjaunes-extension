@@ -198,7 +198,9 @@ public class SearchManagement implements ResourceContainer {
 			String whereAttribute = serviceUriParams.split("&where=")[1].split("&")[0];
 			serviceUriParams = serviceUriParams.split(whereAttribute)[0] + URLEncoder.encode(whereAttribute, "utf-8") + serviceUriParams.split(whereAttribute)[1];
 			String whatAttribute = serviceUriParams.split("&what=")[1].split("&")[0];
-			serviceUriParams = serviceUriParams.split(whatAttribute)[0] + URLEncoder.encode(whatAttribute, "utf-8") + serviceUriParams.split(whatAttribute)[1];
+			if (!whatAttribute.equals("")){
+				serviceUriParams = serviceUriParams.split(whatAttribute)[0] + URLEncoder.encode(whatAttribute, "utf-8") + serviceUriParams.split(whatAttribute)[1];
+			}
 			serviceUriParams += "&app_id=" + PropertyManager.getProperty(APP_ID) + "&app_key=" +  PropertyManager.getProperty(APP_KEY);
 	    	String url = "http://api.apipagesjaunes.fr/v2/pro/find.json?" + serviceUriParams;
 	    	String data = getData(url);
