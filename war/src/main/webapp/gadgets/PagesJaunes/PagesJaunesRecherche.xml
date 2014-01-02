@@ -85,6 +85,8 @@
     </div>
 	
 	<link rel="stylesheet" type="text/css" media="all" href="skin/style.css">
+	<script type="text/javascript" src="skin/globalize-4.0.1.js"></script>
+	<script type="text/javascript" src="skin/globalize.culture.fr.js"></script>
     <script type="text/javascript" src="skin/jquery.js"></script>
     <script type="text/javascript" src="skin/jquery.bpopup-0.9.4.min.js"></script>
     <script type="text/javascript" src="skin/PagesJaunesRecherche.js"></script>

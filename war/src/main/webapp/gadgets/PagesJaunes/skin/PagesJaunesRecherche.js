@@ -17,6 +17,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 var xtkey;
+Globalize.culture("fr");
 $(document).ready(function() {
 	var hpRandomNumber = Math.floor(Math.random()*1000000)
 	var hpStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&p=HP_PJ&rn=" + hpRandomNumber + "'>";
@@ -39,7 +40,7 @@ $(document).ready(function() {
     .done (
     	function(result) {
     		if (result == "true") {
-    			alert("PJ Addon installed");
+    			alert("Addon PJ installé");
     		}
     	}
     );
@@ -54,11 +55,11 @@ $(document).keypress(function(event) {
 });
 
 function addTopic(merchantName, merchantUrl, i) {
-	var html = "<form id='popup' method='post'><fieldset><div><label for='titre'>Titre</label>";
+	var html = "<form id='popup' method='post'><fieldset><div><label for='titre'>" + Globalize.localize("title") + "</label>";
 	html += "<input id='titre" + i + "' type='text' value='" + unescape(merchantName) + "'>";
-	html += "</div><div><label for='message'>Message</label><textarea id='discussion-message" + i + "'>J'ai trouvé le contenu suivant via la recherche PJ :</textarea>";
-	html += "</div><div style='text-align: center;'><button id='discussion-button" + i + "' class='b-close'>Ouvrir une discussion</button>";
-	html += "<button type='button' class='b-close'>Annuler</button></div></fieldset></form>";
+	html += "</div><div><label for='message'>" + Globalize.localize("message") + "</label><textarea id='discussion-message" + i + "'>" + Globalize.localize("defaultMessage") + "</textarea>";
+	html += "</div><div style='text-align: center;'><button id='discussion-button" + i + "' class='b-close'>" + Globalize.localize("discussion") + "</button>";
+	html += "<button type='button' class='b-close'>" + Globalize.localize("cancel") + "</button></div></fieldset></form>";
 	$("#inline_discussion" + i).html(html);
 	
 	$("#discussion-button" + i).click(function() {
@@ -91,12 +92,12 @@ function displayNumber(contactInfoHtml, i) {
 }
 
 function shareSearchResult(merchantName, merchantUrl, i) {
-	var html = "<form id='popup' method='post'><fieldset><div><label for='type'>Type</label>";
-	html += "<select id='type" + i + "'><option value='user' >Utilisateur</option><option value='space'>Espace</option></select>";
-	html += "</div><div id='bloc_espace" + i + "' style='display: none;'><label for='espace'>Espace</label><select id='espace" + i + "'></select>";
-	html += "</div><div><label for='message'>Message</label><textarea id='message" + i + "'>J'ai trouvé le contenu suivant via la recherche PJ :</textarea>";
-	html += "</div><div style='text-align: center;'><button id='share-button" + i + "' class='b-close'>Partager</button>";
-	html += "<button type='button' class='b-close'>Annuler</button></div></fieldset></form>";
+	var html = "<form id='popup' method='post'><fieldset><div><label for='type'>" + Globalize.localize("type") + "</label>";
+	html += "<select id='type" + i + "'><option value='user' >" + Globalize.localize("user") + "</option><option value='space'>" + Globalize.localize("space") + "</option></select>";
+	html += "</div><div id='bloc_espace" + i + "' style='display: none;'><label for='espace'>" + Globalize.localize("space") + "</label><select id='espace" + i + "'></select>";
+	html += "</div><div><label for='message'>" + Globalize.localize("message") + "</label><textarea id='message" + i + "'>" + Globalize.localize("defaultMessage") + "</textarea>";
+	html += "</div><div style='text-align: center;'><button id='share-button" + i + "' class='b-close'>" + Globalize.localize("share") + "</button>";
+	html += "<button type='button' class='b-close'>" + Globalize.localize("cancel") + "</button></div></fieldset></form>";
 	$("#inline_partage" + i).html(html);
 	$("#type" + i).change(function() {
 		if ($("#type" + i).val() != "user") {
@@ -163,10 +164,10 @@ function updateSearchResults(serviceUriParams, proximity) {
 	var adresseEntreprise = prefs.getString("adresseEntreprise");
 	var uri = "/rest/searchManagement/getSearchResults/";
 	uri += serviceUriParams !== undefined ? serviceUriParams : "max=3&what=" + quoiqui + "&where=" + ou + "&return_urls=true";
-	uri += proximity !== undefined ? "&proximity=" + proximity + "&where="+ adresseEntreprise + "&return_urls=true": "";
+	uri += proximity !== undefined ? "&proximity=" + proximity + "&where=" + adresseEntreprise + "&return_urls=true": "";
 	var where = uri.split("&where=")[1].split("&")[0];
 	var what = uri.split("&what=")[1].split("&")[0];
-	var html = "<h2 style='text-align: center;font-weight:bold'>Aucun résultat</h2>";
+	var html = "<h2 style='text-align: center;font-weight:bold'>" + Globalize.localize("NoResult") + "</h2>";
 	var lrRandomNumber = Math.floor(Math.random()*1000000)
 	var lrStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&p=LR_PJ&x1=<code_activite>&x2=<code_localite>&rn=" + lrRandomNumber + "'>";
 	
@@ -188,7 +189,7 @@ function updateSearchResults(serviceUriParams, proximity) {
         	$("#ou").val(where);
         	if (listings !== undefined) {
 	        	var totalListing = result["context"]["results"]["total_listing"];
-	            html = "<h2 style='text-align: center;font-weight:bold'>" + what + " à " + where + " : " + totalListing + " résultats" + "</h2>";
+	            html = "<h2 style='text-align: center;font-weight:bold'>" + what + Globalize.localize("in") + where + " : " + totalListing + Globalize.localize("results") + "</h2>";
 	            var thumbnailUrl;
 	            var merchantName;
 	            var inscriptions;
@@ -218,7 +219,7 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            		html += "<b style='text-decoration:underline;font-size:small;'>" + merchantName + "</b>";
 	            	}
 	            	if (distance != null) {
-	            		html += "<span> à " + distance + "m</span>";
+	            		html += "<span>" + Globalize.localize("in") + distance + Globalize.localize("meter") + "</span>";
 	            	}
 	            	if (adressStreet != null) {
 	            		html += "<br/><span style='color:grey;font-size:small;'>" + adressStreet + "</span><br/>";
@@ -232,11 +233,11 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            		for (k = 0; k < contactInfo.length; k++) {
 	            			contactInfoHtml += "<b>" + contactInfo[k]["contact_type"] + "</b>: " + contactInfo[k]["contact_value"] + "<br/>";
             			}
-	            		html += "<span id='displayNumber" + currentPage + i + "'><button onClick='displayNumber(\"" + contactInfoHtml + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::contact::afficher_numero\",\"A\");'>Afficher le numéro</button></span><br/>";
+	            		html += "<span id='displayNumber" + currentPage + i + "'><button onClick='displayNumber(\"" + contactInfoHtml + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::contact::afficher_numero\",\"A\");'>" + Globalize.localize("displayNumber") + "</button></span><br/>";
 	            	}
-	            	html += "<a onClick='return xt_click(this,\"C\",\"\",\"BI::contact::itineraire\",\"A\");' href='" + itineraryUrl + "' target='_blank' style='font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Itinéraire</a>";
-	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::partager\",\"A\");' style='margin-left:200px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Partager</a>";
-	            	html += "<a href='#' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' style='margin-left: 300px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>Ouvrir une discussion</a><br/>";
+	            	html += "<a onClick='return xt_click(this,\"C\",\"\",\"BI::contact::itineraire\",\"A\");' href='" + itineraryUrl + "' target='_blank' style='font-weight:bold;text-decoration:underline;font-size:small;color:blue'>" + Globalize.localize("itinerary") + "</a>";
+	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::partager\",\"A\");' style='margin-left:200px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>" + Globalize.localize("share") + "</a>";
+	            	html += "<a href='#' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' style='margin-left: 300px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>" + Globalize.localize("discussion") + "</a><br/>";
 	            	if ($("#inline_partage" + currentPage + i).length == 0) {
 	            		html += "<div style='display:none' id='inline_partage" + currentPage + i + "'></div>";
 	            	}
@@ -252,14 +253,14 @@ function updateSearchResults(serviceUriParams, proximity) {
 		            prevPageUrl = prevPageUrl.split(whereAttribute)[0] + where + prevPageUrl.split(whereAttribute)[1];
 		        	var whatAttribute = prevPageUrl.split("&what=")[1].split("&")[0];
 		        	prevPageUrl = prevPageUrl.split(whatAttribute)[0] + what + prevPageUrl.split(whatAttribute)[1];
-	            	html += "<a style='font-weight:bold;' href='#' onClick='updateSearchResults(\"" + prevPageUrl.split('?')[1] + "\")'>Page précédante</a>";
+	            	html += "<a style='font-weight:bold;' href='#' onClick='updateSearchResults(\"" + prevPageUrl.split('?')[1] + "\")'>" + Globalize.localize("prevPage") + "</a>";
 	            }
 	            if (nextPageUrl != null) {
 	            	var whereAttribute = nextPageUrl.split("&where=")[1].split("&")[0];
 	            	nextPageUrl = nextPageUrl.split(whereAttribute)[0] + where + nextPageUrl.split(whereAttribute)[1];
 			        var whatAttribute = nextPageUrl.split("&what=")[1].split("&")[0];
 			        nextPageUrl = nextPageUrl.split(whatAttribute)[0] + what + nextPageUrl.split(whatAttribute)[1];
-	            	html += "<a style='font-weight:bold;float:right' href='#' onClick='updateSearchResults(\"" + nextPageUrl.split('?')[1] + "\")'>Page suivante</a>";
+	            	html += "<a style='font-weight:bold;float:right' href='#' onClick='updateSearchResults(\"" + nextPageUrl.split('?')[1] + "\")'>" + Globalize.localize("nextPage") + "</a>";
 	            }
             }
         	html += lrStatHtml; 
