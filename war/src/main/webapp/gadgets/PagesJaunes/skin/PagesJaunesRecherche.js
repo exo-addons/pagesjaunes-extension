@@ -239,10 +239,10 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::partager\",\"A\");' style='margin-left:200px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>" + Globalize.localize("share") + "</a>";
 	            	html += "<a href='#' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' style='margin-left: 300px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>" + Globalize.localize("discussion") + "</a><br/>";
 	            	if ($("#inline_partage" + currentPage + i).length == 0) {
-	            		html += "<div style='display:none' id='inline_partage" + currentPage + i + "'></div>";
+	            		html += "<div class='inline' id='inline_partage" + currentPage + i + "'></div>";
 	            	}
 	            	if ($("#inline_discussion" + currentPage + i).length == 0) {
-	            		html += "<div style='display:none' id='inline_discussion" + currentPage + i + "'></div>";
+	            		html += "<div class='inline' id='inline_discussion" + currentPage + i + "'></div>";
 	            	}
 	            	html += "________________________________________________________________________<br/>";
 	            }

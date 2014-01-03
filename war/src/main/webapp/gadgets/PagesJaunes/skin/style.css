@@ -16,12 +16,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-#popup {  }
 
 #popup fieldset {
-    border: 1px solid #EEEEEE;
+    /*border: 1px solid #EEEEEE;*/
     padding: 20px;
-    border-radius: 3px;
+    border: none;
+    /*border-radius: 3px;*/
 }
 
 #popup legend {
@@ -43,7 +43,6 @@
 }
 
 #popup input, #popup textarea, #popup select {
-    background: none repeat scroll 0 0 #F5F5F5;
     border: 1px solid #CCCCCC;
     color: #666666;
     font: 1em "Dosis";
@@ -90,3 +89,14 @@
         color: #b6b6b6;
         padding: 16px 20px;
     }
+
+/* popup style */
+
+.b-modal {
+  background-color: transparent !important;
+}
+
+.inline {
+  display:none;
+  background-color: #F5F5F5;
+} 
