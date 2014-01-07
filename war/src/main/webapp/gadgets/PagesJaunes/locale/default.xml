@@ -26,7 +26,25 @@
   		Où ?
   	</msg>
     <msg name="trouver">
-  		Trouver
+  		TROUVER
+  	</msg>
+  	<msg name="resto">
+  		Resto
+  	</msg>
+  	<msg name="medecin">
+  		Medecin
+  	</msg>
+  	<msg name="pharmacie">
+  		Pharmacie
+  	</msg>
+  	<msg name="vetements">
+  		Vêtements
+  	</msg>
+  	<msg name="fleuriste">
+  		Fleuriste
+  	</msg>
+  	<msg name="coiffeur">
+  		Coiffeur
   	</msg>
 	<msg name="monentreprise">
   		Trouver en un click autour de mon entreprise

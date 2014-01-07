@@ -16,6 +16,228 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+ 
+/* General layout */
+
+body {
+  background: url("images/texture.jpg") repeat 0 0 transparent;
+}
+
+[class^="iconJaunes"] {
+  display: inline-block;
+  width: 55px;
+  height: 55px;
+  background-image: url('images/icons-jaunes.png');
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+.iconJaunesRestro {
+  background-position: 0 0;
+}
+.iconJaunesMedecin {
+  background-position: -60px 0;
+}
+.iconJaunesPhamaracie {
+  background-position: -120px 0;
+}
+.iconJaunesVetements {
+  background-position: -180px 0;
+}
+.iconJaunesFleuriste {
+  background-position: -240px 0;
+}
+.iconJaunesCoiffeur {
+  background-position: -300px 0;
+}
+#searchForm {
+  width: 1077px;
+  margin: 0  auto;
+  padding: 50px 0 0;
+}
+.yellowPageWrap {
+  margin: 50px 40px;
+}
+.yellowPageWrap .uiBox.mainBox {
+  margin-bottom: 30px;
+  background-color: #feeb50;
+  position: relative;
+}
+.yellowPageWrap .uiBox.mainBox .uiContentBox {
+  padding: 20px 11px;
+}
+.yellowPageWrap .uiBox.mainBox .logo {
+  position: absolute;
+  top: -23px;
+  left: -16px;
+  margin: 0;
+}
+.yellowPageWrap input[type="text"],
+.yellowPageWrap input[type="pass"],
+.yellowPageWrap textarea,
+.yellowPageWrap select {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  font-size: 16px;
+}
+.yellowPageWrap .centerBox {
+  width: 83%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.yellowPageWrap .searchBox {
+  margin-top: 83px;
+}
+.yellowPageWrap .searchBox .btn {
+  width: 99%;
+}
+.yellowPageWrap .btn {
+  height: 43px;
+  line-height: 31px;
+  font-size: 18px;
+}
+.yellowPageWrap .form-search {
+  margin-bottom: 9px;
+}
+.yellowPageWrap .form-search .btn {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.yellowPageWrap .form-search label {
+  font-size: 18px;
+  line-height: 24px;
+  margin-bottom: 13px;
+}
+.yellowPageWrap .form-search input[type="text"],
+.yellowPageWrap .form-search input[type="pass"] {
+  height: 43px;
+  width: 100%;
+  padding-top: 0\9;
+  padding-bottom: 0\9;
+  line-height: 39px\9;
+}
+.yellowPageWrap .form-search .btn {
+  margin-top: 37px;
+}
+.yellowPageWrap .form-search .col-left {
+  float: left;
+  width: 100%;
+}
+.yellowPageWrap .form-search .col-left > .inner {
+  margin-right: 120px;
+}
+.yellowPageWrap .form-search .col-right {
+  float: left;
+  width: 110px;
+  margin-left: -110px;
+}
+.yellowPageWrap .form-search .col {
+  float: left;
+}
+.yellowPageWrap .form-search .col.colSize1 {
+  width: 48%;
+}
+.yellowPageWrap .form-search .col.colSize2 {
+  width: 50%;
+  margin-left: 2%;
+}
+.yellowPageWrap .boxButtonBlue {
+  width: 662px;
+  margin: 0 auto;
+}
+.yellowPageWrap .boxButtonBlue .text-desc {
+  color: #333333;
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.yellowPageWrap .boxButtonBlue ul {
+  text-align: center;
+}
+.yellowPageWrap .boxButtonBlue ul > li {
+  display: inline-block;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+}
+.yellowPageWrap .boxButtonBlue ul > li > a {
+  text-align: center;
+  display: block;
+  width: 92px;
+  height: 92px;
+  background-color: #144d69;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  color: #fff;
+  line-height: 100%;
+}
+.yellowPageWrap .boxButtonBlue ul > li > a > i {
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+.yellowPageWrap .boxButtonBlue ul > li > a > span {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.yellowPageWrap .boxButtonBlue ul > li > a:hover {
+  background-color: #1b6d94;
+}
+.yellowPageWrap .boxButtonBlue ul > li + li {
+  margin-left: 18px;
+}
+.yellowPageWrap .countResult {
+  color: #333333;
+  margin: 0 0 27px;
+}
+.yellowPageWrap.large .searchBox {
+  margin-bottom: 52px;
+}
+.yellowPageWrap.large .uiBox.mainBox .uiContentBox {
+  padding-bottom: 15px;
+}
+.yellowPageWrap .resultBox .media > .pull-left {
+  width: 80px;
+  margin-right: 26px;
+}
+.yellowPageWrap .resultBox .title-text {
+  margin-bottom: 3px;
+}
+.yellowPageWrap .resultBox .title-text > a {
+  font-weight: bold;
+}
+.yellowPageWrap .resultBox .desc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 320px;
+}
+.yellowPageWrap .resultBox .address {
+  font-size: 12px;
+  color: #999;
+  margin-bottom: 7px;
+}
+.yellowPageWrap .resultBox .cont {
+  background: url('images/line-dotted.png') repeat-x 0 0 transparent;
+  padding: 10px 10px 0 0;
+  line-height: 22px;
+}
+.yellowPageWrap .resultBox .cont .btn {
+  min-width: 210px;
+  float: right;
+}
+.yellowPageWrap .resultBox .btn > i {
+  margin-right: 10px;
+  vertical-align: middle;
+}
+.yellowPageWrap .listResulPages > li {
+  padding: 20px 0 20px 20px;
+}
+.yellowPageWrap .listResulPages > li + li {
+  border-top: 1px solid #cfcfcf;
+}
+
+
+/* popups */
 
 #popup fieldset {
     /*border: 1px solid #EEEEEE;*/

@@ -265,6 +265,8 @@ function updateSearchResults(serviceUriParams, proximity) {
             }
         	html += lrStatHtml; 
         	$("div#searchResults").html(html);
+        	//var gadgetHeight = document.getElementById("searchForm").offsetHeight + document.getElementById("searchResults").offsetHeight; 
+        	gadgets.window.adjustHeight(1200);
         }
     );
 }

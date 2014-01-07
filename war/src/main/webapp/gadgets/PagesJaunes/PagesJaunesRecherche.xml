@@ -38,53 +38,54 @@
 
   <![CDATA[
   
-    <div style="position: absolute;">
-	    <a href="http://www.pagesjaunes.fr" title="PagesJaunes, retour à l'accueil" class="idTag_RETOUR-HP">
-	        <img src="http://static.pagesjaunes.fr/ilo/static_4.2.0.5/images/logo-pagesjaunes.png" alt="PagesJaunes" height="100" width="100">
-	    </a>
-    </div>
-    
-    <div id="searchForm" style="background-color: yellow;padding-left: 300px;height: 130px">
-      <form method="post">
-		<table>
-			<tr>
-				<td>
-					<label for="quoiqui"><b>__MSG_quoiqui__</b></label><br/>
-					<input size="50" type="text" name="quoiqui" id="quoiqui"/>
-				</td>
-						 
-				<td>
-					<label for="ou"><b>__MSG_ou__</b></label><br />
-					<input size="50" type="text" name="ou" id="ou"/>
-				</td>
-				
-				<td>
-					<br />
-					<button style="background-color: purple; color: white;" onClick="updateSearchResults();return xt_click(this,'C','','Trouver::Trouver_HP','A');" title="Trouver sur PagesJaunes" id="btnValidSearch" value="Trouver" type="button"><b>__MSG_trouver__</b></button>
-				</td>
-				
-			</tr>
-		</table>
-		<label for="autour_de_mon_entreprise"><b>__MSG_monentreprise__</b></label><br/>
-					
-		<a href="#" onClick="updateSearchResults('max=3&what=resto','true');return xt_click(this,'C','','pictos::picto_resto','A');"><label for="resto"><b>RESTO</b></label></a>
-
-		<a href="#" onClick="updateSearchResults('max=3&what=medecin','true');return xt_click(this,'C','','pictos::picto_medecin','A');"><label for="medecin"><b>MEDECIN</b></label></a>
-			
-		<a href="#" onClick="updateSearchResults('max=3&what=pharmacie','true');return xt_click(this,'C','','pictos::picto_pharmacie','A');"><label for="pharmacie"><b>PHARMACIE</b></label></a>
-			
-		<a href="#" onClick="updateSearchResults('max=3&what=vêtements','true');return xt_click(this,'C','','pictos::picto_vetements','A');"><label for="vêtements"><b>VÊTEMENTS</b></label></a>
-				
-		<a href="#" onClick="updateSearchResults('max=3&what=fleuriste','true');return xt_click(this,'C','','pictos::picto_fleuriste','A');"><label for="fleuriste"><b>FLEURISTE</b></label></a>
-			
-		<a href="#" onClick="updateSearchResults('max=3&what=coiffeur','true');return xt_click(this,'C','','pictos::picto_coiffeur','A');"><label for="coiffeur"><b>COIFFEUR</b></label></a>
-	  </form>
-    </div>
+	<div id="searchForm">
+		<div class="yellowPageWrap large">
+			<div class="uiBox mainBox">
+				<div class="uiContentBox">
+					<h2 class="logo"><img src="skin/images/logo-yellow.png" alt="Logo"></h2>
+					<div class="centerBox">
+						<div class="searchBox">
+							<form class="form-search clearfix">
+								<div class="col-left">
+									<div class="inner">
+										<div class="col colSize1">
+											<label>__MSG_quoiqui__</label>
+											<input type="text" name="quoiqui" id="quoiqui" placeholder="Restaurant, hotel, etc...">
+										</div>
+										<div class="col colSize2">
+											<label>__MSG_ou__</label>
+											<input type="text" name="ou" id="ou" placeholder="Lyon, Tour Eiffel, Rue de Vaugirard, ">
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-right"><button class="btn btn-primary" onClick="updateSearchResults();return xt_click(this,'C','','Trouver::Trouver_HP','A');" type="button">__MSG_trouver__</button></div>
+							</form>
+						</div>
+						<div class="boxButtonBlue">
+							<p class="text-desc">__MSG_monentreprise__</p>
+							<ul class="">
+								<li><a href="#" onClick="updateSearchResults('max=3&what=resto','true');return xt_click(this,'C','','pictos::picto_resto','A');"><i class="iconJaunesRestro"></i><span>__MSG_resto__</span></a></li>
+								<li><a href="#" onClick="updateSearchResults('max=3&what=medecin','true');return xt_click(this,'C','','pictos::picto_medecin','A');"><i class="iconJaunesMedecin"></i><span>__MSG_medecin__</span></a></li>
+								<li><a href="#" onClick="updateSearchResults('max=3&what=pharmacie','true');return xt_click(this,'C','','pictos::picto_pharmacie','A');"><i class="iconJaunesPhamaracie"></i><span>__MSG_pharmacie__</span></a></li>
+								<li><a href="#" onClick="updateSearchResults('max=3&what=vêtements','true');return xt_click(this,'C','','pictos::picto_vetements','A');"><i class="iconJaunesVetements"></i><span>__MSG_vetements__</span></a></li>
+								<li><a href="#" onClick="updateSearchResults('max=3&what=fleuriste','true');return xt_click(this,'C','','pictos::picto_fleuriste','A');"><i class="iconJaunesFleuriste"></i><span>__MSG_fleuriste__</span></a></li>
+								<li><a href="#" onClick="updateSearchResults('max=3&what=coiffeur','true');return xt_click(this,'C','','pictos::picto_coiffeur','A');"><i class="iconJaunesCoiffeur"></i><span>__MSG_coiffeur__</span></a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
     <div id="searchResults" >
       <h2 style="text-align: center;font-weight:bold">__MSG_bienvenue__<h2>
     </div>
 	
 	<link rel="stylesheet" type="text/css" media="all" href="skin/style.css">
+    <link rel="stylesheet" type="text/css" href="/eXoResources/skin/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="/eXoResources/skin/css/Core.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="/social-resources/skin/css/social.css">
 	<script type="text/javascript" src="skin/globalize-4.0.1.js"></script>
 	<script type="text/javascript" src="skin/globalize.culture.fr.js"></script>
     <script type="text/javascript" src="skin/jquery.js"></script>
