@@ -189,7 +189,7 @@ function updateSearchResults(serviceUriParams, proximity) {
         	$("#ou").val(where);
         	if (listings !== undefined) {
 	        	var totalListing = result["context"]["results"]["total_listing"];
-	            html = "<h2 style='text-align: center;font-weight:bold'>" + what + Globalize.localize("in") + where + " : " + totalListing + Globalize.localize("results") + "</h2>";
+	            html = "<h4 class='countResult'>" + what + Globalize.localize("in") + where + " : " + totalListing + Globalize.localize("results") + "</h4>";
 	            var thumbnailUrl;
 	            var merchantName;
 	            var inscriptions;
@@ -200,10 +200,12 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            var merchantUrl;
 	            var description;
 	            var currentPage = result["context"]["pages"]["current_page"];
+	            html += "<div class='uiBox resultBox'><ul class='listResulPages'>";
 	            for (i = 0; i < listings.length; i++) {
+	            	html += "<li><div class='media'>";
 	            	thumbnailUrl = listings[i]["thumbnail_url"];
 	            	if (thumbnailUrl != null) {
-	            		html += "<img src='" + thumbnailUrl + "'/>";
+	            		html += "<div class='pull-left'><a href='#'><img src='" + thumbnailUrl + "' alt='logo'></a></div>";
 	            	}
 	            	merchantName = listings[i]["merchant_name"];
 	            	inscriptions = listings[i]["inscriptions"];
@@ -215,37 +217,44 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            		merchantUrl = inscriptions[j]["urls"]["merchant_url"];
 	            		break;
 	            	}
+	            	html += "<div class='media-body'><div class='title-text'>";
 	            	if (merchantName != null) {
-	            		html += "<b style='text-decoration:underline;font-size:small;'>" + merchantName + "</b>";
+	            		html += "<a href='#'>" + merchantName + "</a>";
 	            	}
 	            	if (distance != null) {
-	            		html += "<span>" + Globalize.localize("in") + distance + Globalize.localize("meter") + "</span>";
+	            		html += Globalize.localize("in") + distance + Globalize.localize("meter");
 	            	}
+	            	html += "</div>";
 	            	if (adressStreet != null) {
-	            		html += "<br/><span style='color:grey;font-size:small;'>" + adressStreet + "</span><br/>";
+	            		html += "<div class='address'>" + adressStreet + "</div>";
 	            	}
+	            	html += "<div class='cont'><div class='row-fluid'><div class='span7'>";
 	            	description = listings[i]["description"];
 	            	if (description != null) {
-	            		html += "<span style='font-size:small;'>" + description + "</span>";
+	            		html += "<div class='desc'>" + description + "</div>";
 	            	}
+	            	html += "<div class='links'>";
+	            	html += "<a onClick='return xt_click(this,\"C\",\"\",\"BI::contact::itineraire\",\"A\");' href='" + itineraryUrl + "' target='_blank' >" + Globalize.localize("itinerary") + "</a> |";
+	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::partager\",\"A\");' >" + Globalize.localize("share") + "</a> |";
+	            	html += "<a href='#' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' >" + Globalize.localize("discussion") + "</a>";
+	            	html += "</div></div>";
 	            	if (contactInfo != null) {
 	            		var contactInfoHtml = "";
 	            		for (k = 0; k < contactInfo.length; k++) {
 	            			contactInfoHtml += "<b>" + contactInfo[k]["contact_type"] + "</b>: " + contactInfo[k]["contact_value"] + "<br/>";
             			}
-	            		html += "<span id='displayNumber" + currentPage + i + "'><button onClick='displayNumber(\"" + contactInfoHtml + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::contact::afficher_numero\",\"A\");'>" + Globalize.localize("displayNumber") + "</button></span><br/>";
+	            		html += "<div class='span5' id='displayNumber" + currentPage + i + "'><button class='btn btn-primary' onClick='displayNumber(\"" + contactInfoHtml + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::contact::afficher_numero\",\"A\");'><i class='uiIconSocPhone'></i>" + Globalize.localize("displayNumber") + "</button></div>";
 	            	}
-	            	html += "<a onClick='return xt_click(this,\"C\",\"\",\"BI::contact::itineraire\",\"A\");' href='" + itineraryUrl + "' target='_blank' style='font-weight:bold;text-decoration:underline;font-size:small;color:blue'>" + Globalize.localize("itinerary") + "</a>";
-	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::partager\",\"A\");' style='margin-left:200px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>" + Globalize.localize("share") + "</a>";
-	            	html += "<a href='#' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' style='margin-left: 300px;font-weight:bold;text-decoration:underline;font-size:small;color:blue'>" + Globalize.localize("discussion") + "</a><br/>";
+	            	html += "</div></div></div></div>"
 	            	if ($("#inline_partage" + currentPage + i).length == 0) {
 	            		html += "<div class='inline' id='inline_partage" + currentPage + i + "'></div>";
 	            	}
 	            	if ($("#inline_discussion" + currentPage + i).length == 0) {
 	            		html += "<div class='inline' id='inline_discussion" + currentPage + i + "'></div>";
 	            	}
-	            	html += "________________________________________________________________________<br/>";
+	            	html += "</li>";
 	            }
+	            html += "</ul>";
 	            var prevPageUrl = result["context"]["pages"]["prev_page_url"];
 	            var nextPageUrl = result["context"]["pages"]["next_page_url"];
 	            if (prevPageUrl != null) {
@@ -262,11 +271,12 @@ function updateSearchResults(serviceUriParams, proximity) {
 			        nextPageUrl = nextPageUrl.split(whatAttribute)[0] + what + nextPageUrl.split(whatAttribute)[1];
 	            	html += "<a style='font-weight:bold;float:right' href='#' onClick='updateSearchResults(\"" + nextPageUrl.split('?')[1] + "\")'>" + Globalize.localize("nextPage") + "</a>";
 	            }
+	            html += "</div>";
             }
         	html += lrStatHtml; 
         	$("div#searchResults").html(html);
-        	//var gadgetHeight = document.getElementById("searchForm").offsetHeight + document.getElementById("searchResults").offsetHeight; 
-        	gadgets.window.adjustHeight(1200);
+        	var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
+        	gadgets.window.adjustHeight(gadgetHeight + 1);
         }
     );
 }

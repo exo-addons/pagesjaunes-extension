@@ -76,12 +76,11 @@
 					</div>
 				</div>
 			</div>
+			<div id="searchResults" >
+		      <h2 style="text-align: center;font-weight:bold">__MSG_bienvenue__<h2>
+		    </div>
 		</div>
 	</div>
-    <div id="searchResults" >
-      <h2 style="text-align: center;font-weight:bold">__MSG_bienvenue__<h2>
-    </div>
-	
 	<link rel="stylesheet" type="text/css" media="all" href="skin/style.css">
     <link rel="stylesheet" type="text/css" href="/eXoResources/skin/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="/eXoResources/skin/css/Core.css" />
