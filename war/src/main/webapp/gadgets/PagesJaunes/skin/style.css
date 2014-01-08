@@ -81,17 +81,17 @@ body {
   font-size: 16px;
 }
 .yellowPageWrap .centerBox {
-  width: 83%;
+  width: 666px;
   margin-left: auto;
   margin-right: auto;
 }
 .yellowPageWrap .searchBox {
   margin-top: 83px;
 }
-.yellowPageWrap .searchBox .btn {
+.yellowPageWrap .searchBox .btn-supper {
   width: 99%;
 }
-.yellowPageWrap .btn {
+.yellowPageWrap .btn-supper {
   height: 43px;
   line-height: 31px;
   font-size: 18px;
@@ -141,14 +141,24 @@ body {
   width: 50%;
   margin-left: 2%;
 }
-.yellowPageWrap .boxButtonBlue {
-  width: 662px;
-  margin: 0 auto;
-}
-.yellowPageWrap .boxButtonBlue .text-desc {
+.yellowPageWrap .text-desc {
   color: #333333;
   font-size: 18px;
   margin-bottom: 16px;
+}
+.yellowPageWrap .linkSuggestion {
+  margin-top: 20px;
+  font-size: 18px;
+}
+.yellowPageWrap .linkSuggestion .text-desc {
+  margin-bottom: 10px;
+}
+.yellowPageWrap .linkSuggestion .listLink {
+  color: #2F5E92;
+}
+.yellowPageWrap .boxButtonBlue {
+  width: 662px;
+  margin: 0 auto;
 }
 .yellowPageWrap .boxButtonBlue ul {
   text-align: center;
@@ -218,24 +228,65 @@ body {
 }
 .yellowPageWrap .resultBox .cont {
   background: url('images/line-dotted.png') repeat-x 0 0 transparent;
-  padding: 10px 10px 0 0;
+  padding: 10px 0 0 0;
   line-height: 22px;
 }
-.yellowPageWrap .resultBox .cont .btn {
+.yellowPageWrap .resultBox .cont .btn-supper {
   min-width: 210px;
   float: right;
 }
-.yellowPageWrap .resultBox .btn > i {
+.yellowPageWrap .resultBox .btn-supper > i {
   margin-right: 10px;
   vertical-align: middle;
 }
+.yellowPageWrap .btnShowDetail {
+  float: right;
+  margin-top: 5px;
+}
 .yellowPageWrap .listResulPages > li {
-  padding: 20px 0 20px 20px;
+  padding: 20px 0 15px 20px;
 }
 .yellowPageWrap .listResulPages > li + li {
   border-top: 1px solid #cfcfcf;
 }
-
+.yellowPageWrap .listResulPages > li > .media .media-body {
+  padding-right: 20px;
+}
+.yellowPageWrap .flyBoxInfo {
+  position: relative;
+  right: -139px;
+  top: -60px;
+  width: 100%;
+}
+.yellowPageWrap .headResult > .pull-right {
+  width: 210px;
+}
+.yellowPageWrap .contactInfo {
+  float: right;	
+  padding-top: 5px;
+}
+.yellowPageWrap .contactInfo a {
+  color: #2F5E92;
+  font-size: 12px;
+  font-weight: bold;
+}
+.yellowPageWrap .contactInfo > li {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.yellowPageWrap .contactInfo > li i {
+  margin-right: 5px;
+}
+.yellowPageWrap .rowFluid .colRight {
+  position: relative;
+  float: right;
+  min-width: 212px;
+  margin-left: 20px;
+}
+.yellowPageWrap .rowFluid .colLeft {
+  overflow: auto;
+}
 
 /* popups */
 

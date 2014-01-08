@@ -88,7 +88,7 @@ function addTopic(merchantName, merchantUrl, i) {
 }
 
 function displayNumber(contactInfoHtml, i) {
-	$("#displayNumber" + i).html(contactInfoHtml);
+	$("#displayNumber" + i).html(unescape(contactInfoHtml));
 }
 
 function shareSearchResult(merchantName, merchantUrl, i) {
@@ -217,7 +217,7 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            		merchantUrl = inscriptions[j]["urls"]["merchant_url"];
 	            		break;
 	            	}
-	            	html += "<div class='media-body'><div class='title-text'>";
+	            	html += "<div class='media-body'><div class='headResult clearfix'><div class='pull-left'><div class='title-text'>";
 	            	if (merchantName != null) {
 	            		html += "<a href='#'>" + merchantName + "</a>";
 	            	}
@@ -228,7 +228,19 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            	if (adressStreet != null) {
 	            		html += "<div class='address'>" + adressStreet + "</div>";
 	            	}
-	            	html += "<div class='cont'><div class='row-fluid'><div class='span7'>";
+	            	html += "</div></div><div class='cont'><div class='row-fluid'><div class='colRight'>";
+	            	html += "<button class='btn btnShowDetail'>Afficher le détail <i class='uiIconArrowDown'></i></button>";
+	            	if (contactInfo != null) {
+	            		var contactInfoHtml = "";
+	            		contactInfoHtml += "<ul class='contactInfo'>";
+	            		for (k = 0; k < contactInfo.length; k++) {
+	            			var contactIcon = contactInfo[k]["contact_type"] == "MAIL" ? "uiIconMail uiIconLightGray" : "uiIconSocPhone uiIconSocLightGray"; 
+	            			contactInfoHtml += "<li><i class='" + contactIcon + "'></i><a href='#'>" + contactInfo[k]["contact_value"] + "</a></li>";
+            			}
+	            		contactInfoHtml += "</ul>";
+	            		html += "<div class='flyBoxInfo' id='displayNumber" + currentPage + i + "'><button class='btn btn-primary btn-supper' onClick='displayNumber(\"" + escape(contactInfoHtml) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::contact::afficher_numero\",\"A\");'><i class='uiIconSocPhone'></i>" + Globalize.localize("displayNumber") + "</button></div>";
+	            	}
+	            	html += "<div class='colLeft'>";
 	            	description = listings[i]["description"];
 	            	if (description != null) {
 	            		html += "<div class='desc'>" + description + "</div>";
@@ -238,13 +250,6 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::partager\",\"A\");' >" + Globalize.localize("share") + "</a> |";
 	            	html += "<a href='#' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' >" + Globalize.localize("discussion") + "</a>";
 	            	html += "</div></div>";
-	            	if (contactInfo != null) {
-	            		var contactInfoHtml = "";
-	            		for (k = 0; k < contactInfo.length; k++) {
-	            			contactInfoHtml += "<b>" + contactInfo[k]["contact_type"] + "</b>: " + contactInfo[k]["contact_value"] + "<br/>";
-            			}
-	            		html += "<div class='span5' id='displayNumber" + currentPage + i + "'><button class='btn btn-primary' onClick='displayNumber(\"" + contactInfoHtml + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::contact::afficher_numero\",\"A\");'><i class='uiIconSocPhone'></i>" + Globalize.localize("displayNumber") + "</button></div>";
-	            	}
 	            	html += "</div></div></div></div>"
 	            	if ($("#inline_partage" + currentPage + i).length == 0) {
 	            		html += "<div class='inline' id='inline_partage" + currentPage + i + "'></div>";
