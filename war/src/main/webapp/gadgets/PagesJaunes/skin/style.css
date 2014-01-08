@@ -263,7 +263,7 @@ body {
 }
 .yellowPageWrap .contactInfo {
   float: right;	
-  padding-top: 5px;
+  margin-top: -2px;
 }
 .yellowPageWrap .contactInfo a {
   color: #2F5E92;

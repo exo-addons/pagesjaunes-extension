@@ -157,6 +157,17 @@ function shareSearchResult(merchantName, merchantUrl, i) {
 	});
 }
 
+function showHideDetail(i) {
+	if ($("#desc" + i).is(":visible")) {
+		$("#desc" + i).hide();
+		$("#btnShowDetail" + i).html(Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i>");
+	}
+	else {
+		$("#desc" + i).show();
+		$("#btnShowDetail" + i).html(Globalize.localize("hideDetail") + "<i class='uiIconArrowUp'></i>");
+	}
+}
+
 function updateSearchResults(serviceUriParams, proximity) {
 	var quoiqui = $("#quoiqui").val();
 	var ou = $("#ou").val();
@@ -167,7 +178,7 @@ function updateSearchResults(serviceUriParams, proximity) {
 	uri += proximity !== undefined ? "&proximity=" + proximity + "&where=" + adresseEntreprise + "&return_urls=true": "";
 	var where = uri.split("&where=")[1].split("&")[0];
 	var what = uri.split("&what=")[1].split("&")[0];
-	var html = "<h2 style='text-align: center;font-weight:bold'>" + Globalize.localize("NoResult") + "</h2>";
+	var html = "<h2 style='text-align: center;font-weight:bold'>" + Globalize.localize("noResult") + "</h2>";
 	var lrRandomNumber = Math.floor(Math.random()*1000000)
 	var lrStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&p=LR_PJ&x1=<code_activite>&x2=<code_localite>&rn=" + lrRandomNumber + "'>";
 	
@@ -229,7 +240,7 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            		html += "<div class='address'>" + adressStreet + "</div>";
 	            	}
 	            	html += "</div></div><div class='cont'><div class='row-fluid'><div class='colRight'>";
-	            	html += "<button class='btn btnShowDetail'>Afficher le détail <i class='uiIconArrowDown'></i></button>";
+	            	html += "<button id='btnShowDetail" + currentPage + i + "' onClick='showHideDetail(\"" + currentPage + i + "\")' class='btn btnShowDetail'>Cacher le détail <i class='uiIconArrowUp'></i></button>";
 	            	if (contactInfo != null) {
 	            		var contactInfoHtml = "";
 	            		contactInfoHtml += "<ul class='contactInfo'>";
@@ -243,7 +254,7 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            	html += "<div class='colLeft'>";
 	            	description = listings[i]["description"];
 	            	if (description != null) {
-	            		html += "<div class='desc'>" + description + "</div>";
+	            		html += "<div id='desc" + currentPage + i + "' class='desc'>" + description + "</div>";
 	            	}
 	            	html += "<div class='links'>";
 	            	html += "<a onClick='return xt_click(this,\"C\",\"\",\"BI::contact::itineraire\",\"A\");' href='" + itineraryUrl + "' target='_blank' >" + Globalize.localize("itinerary") + "</a> |";
@@ -281,7 +292,7 @@ function updateSearchResults(serviceUriParams, proximity) {
         	html += lrStatHtml; 
         	$("div#searchResults").html(html);
         	var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
-        	gadgets.window.adjustHeight(gadgetHeight + 1);
+        	gadgets.window.adjustHeight(gadgetHeight + 20);
         }
     );
 }
