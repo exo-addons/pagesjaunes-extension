@@ -55,11 +55,13 @@ $(document).keypress(function(event) {
 });
 
 function addTopic(merchantName, merchantUrl, i) {
-	var html = "<form id='popup' method='post'><fieldset><div><label for='titre'>" + Globalize.localize("title") + "</label>";
-	html += "<input id='titre" + i + "' type='text' value=\"" + unescape(merchantName) + "\">";
-	html += "</div><div><label for='message'>" + Globalize.localize("message") + "</label><textarea id='discussion-message" + i + "'>" + Globalize.localize("defaultMessage") + "</textarea>";
-	html += "</div><div style='text-align: center;'><button id='discussion-button" + i + "' class='b-close'>" + Globalize.localize("discussion") + "</button>";
-	html += "<button type='button' class='b-close'>" + Globalize.localize("cancel") + "</button></div></fieldset></form>";
+	var html = "<div id='popup' class='UIPopupWindow uiPopup UIDragObject NormalStyle' style='width: 560px; position: relative; top: auto; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;'>";
+	html += "<div class='popupHeader ClearFix'><span class='PopupTitle popupTitle'>" + Globalize.localize("discussion") + "</span></div>";
+	html += "<div class='PopupContent popupContent'><div class='form-horizontal resizable'>";
+	html += "<div class='control-group'><label for='titre' class='control-label'>" + Globalize.localize("title") + "</label> <div class='controls'><input type='text' id='titre" + i + "' value=\"" + unescape(merchantName) + "\"></div></div>";
+	html += "<div class='control-group'><label for='message' class='control-label'>" + Globalize.localize("message") + "</label> <div class='controls'><textarea id='discussion-message" + i + "'>" + Globalize.localize("defaultMessage") + "</textarea></div></div>";
+	html += "</div><div class='uiAction uiActionBorder'><button id='discussion-button" + i + "' class='b-close btn' type='button'>" + Globalize.localize("discussion") + "</button>";
+	html += "<button class='b-close btn' type='button'>" + Globalize.localize("cancel") + "</button></div></div><span class='uiIconResize pull-right uiIconLightGray'></span></div>";
 	$("#inline_discussion" + i).html(html);
 	
 	$("#discussion-button" + i).click(function() {
@@ -82,22 +84,27 @@ function addTopic(merchantName, merchantUrl, i) {
 	
 	$("#inline_discussion" + i).bPopup ({
 		follow: (true, true),
-	    position: ["auto", 100],
+	    position: ["auto", 500],
 	    modalClose: false
 	});
 }
 
 function displayNumber(contactInfoHtml, i) {
 	$("#displayNumber" + i).html(unescape(contactInfoHtml));
+	var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
+	gadgets.window.adjustHeight(gadgetHeight + 1);
 }
 
 function shareSearchResult(merchantName, merchantUrl, i) {
-	var html = "<form id='popup' method='post'><fieldset><div><label for='type'>" + Globalize.localize("type") + "</label>";
-	html += "<select id='type" + i + "'><option value='user' >" + Globalize.localize("user") + "</option><option value='space'>" + Globalize.localize("space") + "</option></select>";
-	html += "</div><div id='bloc_espace" + i + "' style='display: none;'><label for='espace'>" + Globalize.localize("space") + "</label><select id='espace" + i + "'></select>";
-	html += "</div><div><label for='message'>" + Globalize.localize("message") + "</label><textarea id='message" + i + "'>" + Globalize.localize("defaultMessage") + "</textarea>";
-	html += "</div><div style='text-align: center;'><button id='share-button" + i + "' class='b-close'>" + Globalize.localize("share") + "</button>";
-	html += "<button type='button' class='b-close'>" + Globalize.localize("cancel") + "</button></div></fieldset></form>";
+	var html = "<div id='popup' class='UIPopupWindow uiPopup UIDragObject NormalStyle' style='width: 560px; position: relative; top: auto; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;'>";
+	html += "<div class='popupHeader ClearFix'><span class='PopupTitle popupTitle'>" + Globalize.localize("share") + "</span></div>";
+	html += "<div class='PopupContent popupContent'><div class='form-horizontal resizable'>";
+	html += "<div class='control-group'><label for='type' class='control-label'>" + Globalize.localize("type") + "</label> <div class='controls'>";
+	html += "<select id='type" + i + "'><option value='user'>" + Globalize.localize("user") + "</option><option value='space'>" + Globalize.localize("space") + "</option></select></div></div>";
+	html += "<div id='bloc_espace" + i + "' style='display: none;' class='control-group'><label for='espace' class='control-label'>" + Globalize.localize("space") + "</label><div class='controls'><select id='espace" + i + "'></select></div></div>";
+	html += "<div class='control-group'><label for='message' class='control-label'>" + Globalize.localize("message") + "</label> <div class='controls'><textarea id='message" + i + "'>" + Globalize.localize("defaultMessage") + "</textarea></div></div>";
+	html += "</div><div class='uiAction uiActionBorder'><button id='share-button" + i + "' class='b-close btn' type='button'>" + Globalize.localize("share") + "</button>";
+	html += "<button class='b-close btn' type='button'>" + Globalize.localize("cancel") + "</button></div></div><span class='uiIconResize pull-right uiIconLightGray'></span></div>";
 	$("#inline_partage" + i).html(html);
 	$("#type" + i).change(function() {
 		if ($("#type" + i).val() != "user") {
@@ -152,20 +159,22 @@ function shareSearchResult(merchantName, merchantUrl, i) {
 	
 	$("#inline_partage" + i).bPopup ({
 		follow: (true, true),
-	    position: ["auto", 100],
+	    position: ["auto", 500],
 	    modalClose: false
 	});
 }
 
 function showHideDetail(i) {
-	if ($("#desc" + i).is(":visible")) {
-		$("#desc" + i).hide();
-		$("#btnShowDetail" + i).html(Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i>");
-	}
-	else {
-		$("#desc" + i).show();
+	if ($("#desc" + i).hasClass("desc")) {
+		$("#desc" + i).removeClass("desc");
 		$("#btnShowDetail" + i).html(Globalize.localize("hideDetail") + "<i class='uiIconArrowUp'></i>");
 	}
+	else {
+		$("#desc" + i).addClass("desc");
+		$("#btnShowDetail" + i).html(Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i>");
+	}
+	var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
+	gadgets.window.adjustHeight(gadgetHeight + 1);
 }
 
 function updateSearchResults(serviceUriParams, proximity) {
@@ -240,7 +249,10 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            		html += "<div class='address'>" + adressStreet + "</div>";
 	            	}
 	            	html += "</div></div><div class='cont'><div class='row-fluid'><div class='colRight'>";
-	            	html += "<button id='btnShowDetail" + currentPage + i + "' onClick='showHideDetail(\"" + currentPage + i + "\")' class='btn btnShowDetail'>Cacher le détail <i class='uiIconArrowUp'></i></button>";
+	            	description = listings[i]["description"];
+	            	if (description != null) {
+	            		html += "<button id='btnShowDetail" + currentPage + i + "' onClick='showHideDetail(\"" + currentPage + i + "\")' class='btn btnShowDetail'>" + Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i></button>";
+	            	}
 	            	if (contactInfo != null) {
 	            		var contactInfoHtml = "";
 	            		contactInfoHtml += "<ul class='contactInfo'>";
@@ -260,10 +272,11 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            			contactInfoHtml += "<li><i class='" + contactIcon + "'></i><a href='#'>" + contactInfo[k]["contact_value"] + "</a></li>";
             			}
 	            		contactInfoHtml += "</ul>";
-	            		html += "<div class='flyBoxInfo' id='displayNumber" + currentPage + i + "'><button class='btn btn-primary btn-supper' onClick='displayNumber(\"" + escape(contactInfoHtml) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::contact::afficher_numero\",\"A\");'><i class='uiIconSocPhone'></i>" + Globalize.localize("displayNumber") + "</button></div>";
+	            		var displayNumberClass = "flyBoxInfo ";
+	            		displayNumberClass += description != null ? "detail" : "noDetail";
+	            		html += "<div class='" + displayNumberClass + "' id='displayNumber" + currentPage + i + "'><button class='btn btn-primary btn-supper' onClick='displayNumber(\"" + escape(contactInfoHtml) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::contact::afficher_numero\",\"A\");'><i class='uiIconSocPhone'></i>" + Globalize.localize("displayNumber") + "</button></div>";
 	            	}
-	            	html += "<div class='colLeft'>";
-	            	description = listings[i]["description"];
+	            	html += "</div><div class='colLeft'>";
 	            	if (description != null) {
 	            		html += "<div id='desc" + currentPage + i + "' class='desc'>" + description + "</div>";
 	            	}
@@ -303,7 +316,7 @@ function updateSearchResults(serviceUriParams, proximity) {
         	html += lrStatHtml; 
         	$("div#searchResults").html(html);
         	var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
-        	gadgets.window.adjustHeight(gadgetHeight + 20);
+        	gadgets.window.adjustHeight(gadgetHeight + 1);
         }
     );
 }

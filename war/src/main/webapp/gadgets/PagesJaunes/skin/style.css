@@ -254,9 +254,14 @@ body {
 }
 .yellowPageWrap .flyBoxInfo {
   position: relative;
-  right: -139px;
   top: -60px;
   width: 100%;
+}
+.yellowPageWrap .detail {
+  right: -134px;
+}
+.yellowPageWrap .noDetail {
+  right: 0;
 }
 .yellowPageWrap .headResult > .pull-right {
   width: 210px;
