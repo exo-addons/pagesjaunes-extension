@@ -56,7 +56,7 @@ $(document).keypress(function(event) {
 
 function addTopic(merchantName, merchantUrl, i) {
 	var html = "<form id='popup' method='post'><fieldset><div><label for='titre'>" + Globalize.localize("title") + "</label>";
-	html += "<input id='titre" + i + "' type='text' value='" + unescape(merchantName) + "'>";
+	html += "<input id='titre" + i + "' type='text' value=\"" + unescape(merchantName) + "\">";
 	html += "</div><div><label for='message'>" + Globalize.localize("message") + "</label><textarea id='discussion-message" + i + "'>" + Globalize.localize("defaultMessage") + "</textarea>";
 	html += "</div><div style='text-align: center;'><button id='discussion-button" + i + "' class='b-close'>" + Globalize.localize("discussion") + "</button>";
 	html += "<button type='button' class='b-close'>" + Globalize.localize("cancel") + "</button></div></fieldset></form>";
@@ -245,7 +245,18 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            		var contactInfoHtml = "";
 	            		contactInfoHtml += "<ul class='contactInfo'>";
 	            		for (k = 0; k < contactInfo.length; k++) {
-	            			var contactIcon = contactInfo[k]["contact_type"] == "MAIL" ? "uiIconMail uiIconLightGray" : "uiIconSocPhone uiIconSocLightGray"; 
+	            			var contactIcon;
+	            			switch (contactInfo[k]["contact_type"]) {
+		            			case "MAIL":
+		            				contactIcon = "uiIconMail uiIconLightGray";
+			            			break;
+		            			case "TELEPHONE":
+		            				contactIcon = "uiIconSocPhone uiIconSocLightGray";
+		            				break;
+		            			case "FAX":
+		            				contactIcon = "uiIconPrint uiIconLightGray";
+		            				break;
+	            			} 
 	            			contactInfoHtml += "<li><i class='" + contactIcon + "'></i><a href='#'>" + contactInfo[k]["contact_value"] + "</a></li>";
             			}
 	            		contactInfoHtml += "</ul>";
