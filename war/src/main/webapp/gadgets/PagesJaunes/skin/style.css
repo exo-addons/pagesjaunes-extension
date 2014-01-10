@@ -292,7 +292,13 @@ body {
 .yellowPageWrap .rowFluid .colLeft {
   overflow: auto;
 }
-
+.msNotResult {
+  text-align: center;
+  padding: 20px 0;
+}
+.msNotResult h3 {
+  color: #333333;
+}
 /* popups */
 
 #popup fieldset {

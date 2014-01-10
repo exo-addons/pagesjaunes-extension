@@ -187,7 +187,7 @@ function updateSearchResults(serviceUriParams, proximity) {
 	uri += proximity !== undefined ? "&proximity=" + proximity + "&where=" + adresseEntreprise + "&return_urls=true": "";
 	var where = uri.split("&where=")[1].split("&")[0];
 	var what = uri.split("&what=")[1].split("&")[0];
-	var html = "<h2 style='text-align: center;font-weight:bold'>" + Globalize.localize("noResult") + "</h2>";
+	var html = "<div class='uiBox resultBox'><div class='msNotResult'><h3>" + Globalize.localize("noResult") + "</h3></div></div>";
 	var lrRandomNumber = Math.floor(Math.random()*1000000)
 	var lrStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&p=LR_PJ&x1=<code_activite>&x2=<code_localite>&rn=" + lrRandomNumber + "'>";
 	
@@ -294,7 +294,7 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            	}
 	            	html += "</li>";
 	            }
-	            html += "</ul>";
+	            html += "</ul><div class='pagination pagination-centered uiPageIterator'><ul>";
 	            var prevPageUrl = result["context"]["pages"]["prev_page_url"];
 	            var nextPageUrl = result["context"]["pages"]["next_page_url"];
 	            if (prevPageUrl != null) {
@@ -302,14 +302,14 @@ function updateSearchResults(serviceUriParams, proximity) {
 		            prevPageUrl = prevPageUrl.split(whereAttribute)[0] + where + prevPageUrl.split(whereAttribute)[1];
 		        	var whatAttribute = prevPageUrl.split("&what=")[1].split("&")[0];
 		        	prevPageUrl = prevPageUrl.split(whatAttribute)[0] + what + prevPageUrl.split(whatAttribute)[1];
-	            	html += "<a style='font-weight:bold;' href='#' onClick='updateSearchResults(\"" + prevPageUrl.split('?')[1] + "\")'>" + Globalize.localize("prevPage") + "</a>";
+	            	html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("prevPage") + "' onClick='updateSearchResults(\"" + prevPageUrl.split('?')[1] + "\")'><i class='uiIconPrevArrow'></i></a></li>";
 	            }
 	            if (nextPageUrl != null) {
 	            	var whereAttribute = nextPageUrl.split("&where=")[1].split("&")[0];
 	            	nextPageUrl = nextPageUrl.split(whereAttribute)[0] + where + nextPageUrl.split(whereAttribute)[1];
 			        var whatAttribute = nextPageUrl.split("&what=")[1].split("&")[0];
 			        nextPageUrl = nextPageUrl.split(whatAttribute)[0] + what + nextPageUrl.split(whatAttribute)[1];
-	            	html += "<a style='font-weight:bold;float:right' href='#' onClick='updateSearchResults(\"" + nextPageUrl.split('?')[1] + "\")'>" + Globalize.localize("nextPage") + "</a>";
+			        html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("nextPage") + "' onClick='updateSearchResults(\"" + nextPageUrl.split('?')[1] + "\")'><i class='uiIconNextArrow'></i></a></li>";
 	            }
 	            html += "</div>";
             }
