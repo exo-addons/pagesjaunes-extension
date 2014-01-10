@@ -239,7 +239,7 @@ function updateSearchResults(serviceUriParams, proximity) {
 	            	}
 	            	html += "<div class='media-body'><div class='headResult clearfix'><div class='pull-left'><div class='title-text'>";
 	            	if (merchantName != null) {
-	            		html += "<a href='#'>" + merchantName + "</a>";
+	            		html += "<a target='_blank' href=\"" + merchantUrl + "\">" + merchantName + "</a>";
 	            	}
 	            	if (distance != null) {
 	            		html += Globalize.localize("in") + distance + Globalize.localize("meter");
