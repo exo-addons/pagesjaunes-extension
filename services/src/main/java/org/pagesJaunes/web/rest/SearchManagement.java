@@ -203,7 +203,7 @@ public class SearchManagement implements ResourceContainer {
             companyAddress = userProfile.getAttribute(COMPANY_ADDRESS);
         } 
         catch (Exception e) {
-            e.printStackTrace();
+        	LOGGER.error("User name cannot be null");
         }
 		return companyAddress;
     }

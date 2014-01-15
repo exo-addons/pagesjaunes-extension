@@ -218,6 +218,8 @@ function showHideDetail(i) {
 	gadgets.window.adjustHeight(gadgetHeight + 1);
 }
 
+
+
 function updateSearchResults(serviceUriParams, proximity) {
 	$.ajax ({
 		cache: true,
@@ -270,6 +272,7 @@ function updateSearchResults(serviceUriParams, proximity) {
         	            var merchantUrl;
         	            var description;
         	            var currentPage = result["context"]["pages"]["current_page"];
+        	            var pageCount = result["context"]["pages"]["page_count"];
         	            html += "<div class='uiBox resultBox'><ul class='listResulPages'>";
         	            for (i = 0; i < listings.length; i++) {
         	            	html += "<li><div class='media'>";
@@ -344,24 +347,73 @@ function updateSearchResults(serviceUriParams, proximity) {
         	            	}
         	            	html += "</li>";
         	            }
-        	            html += "</ul><div class='pagination pagination-centered uiPageIterator'><ul>";
-        	            var prevPageUrl = result["context"]["pages"]["prev_page_url"];
-        	            var nextPageUrl = result["context"]["pages"]["next_page_url"];
-        	            if (prevPageUrl != null) {
-        		            var whereAttribute = prevPageUrl.split("&where=")[1].split("&")[0];
-        		            prevPageUrl = prevPageUrl.split(whereAttribute)[0] + where + prevPageUrl.split(whereAttribute)[1];
-        		        	var whatAttribute = prevPageUrl.split("&what=")[1].split("&")[0];
-        		        	prevPageUrl = prevPageUrl.split(whatAttribute)[0] + what + prevPageUrl.split(whatAttribute)[1];
-        	            	html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("prevPage") + "' onClick='updateSearchResults(\"" + prevPageUrl.split('?')[1] + "\")'><i class='uiIconPrevArrow'></i></a></li>";
+        	            html += "</ul><div class='pagination pagination-right uiPageIterator'><ul>";
+        	            
+        	            if (pageCount > 1) {
+        	            	html += "<ul class='pull-right'>";
+            	            var prevPageUrl = result["context"]["pages"]["prev_page_url"];
+            	            var nextPageUrl = result["context"]["pages"]["next_page_url"];
+            	            var currentPageUrl = result["context"]["pages"]["current_page_url"];
+            	            var splittedCurrentPageUrl = currentPageUrl.split('?')[1].split("page=" + currentPage);
+            	            
+            	            if (prevPageUrl != null) {
+            		            var whereAttribute = prevPageUrl.split("&where=")[1].split("&")[0];
+            		            prevPageUrl = prevPageUrl.split(whereAttribute)[0] + where + prevPageUrl.split(whereAttribute)[1];
+            		        	var whatAttribute = prevPageUrl.split("&what=")[1].split("&")[0];
+            		        	prevPageUrl = prevPageUrl.split(whatAttribute)[0] + what + prevPageUrl.split(whatAttribute)[1];
+            	            	html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("prevPage") + "' onClick='updateSearchResults(\"" + prevPageUrl.split('?')[1] + "\")'><i class='uiIconPrevArrow'></i></a></li>";
+            	            }
+            	            else {
+            	            	html += "<li class='disabled'><a data-placement='bottom' rel='tooltip' data-original-title='" + Globalize.localize("prevPage") + "'><i class='uiIconPrevArrow'></i></a></li>";
+            	            }
+            	            var min = 1;
+            	            var max = pageCount;
+            	            var dot1 = -1;
+            	            var dot2 = -1;
+            	            if (pageCount > 5) {
+            	              if (currentPage < 4) {
+            	                 max = 3;
+            	                 dot1 = 4;
+            	              } else if (currentPage >= pageCount - 2) {
+            	                 min = pageCount - 2;
+            	                 dot1 = min - 1;
+            	              } else {
+            	                 min = currentPage - 1;
+            	                 max = currentPage + 1;
+            	                 dot1 = 2;
+            	                 dot2 = pageCount - 1;
+            	              }
+            	            }
+            	            var classActive;
+            	            for( i = 1 ; i <= pageCount; i++) {
+            	                if (i == 1 && min > 1) {
+            	                	classActive = currentPage == 1 ? "active" : "";
+            	                	html += "<li class='" + classActive + "'><a href='#' onClick='updateSearchResults(\"" + splittedCurrentPageUrl[0] + (splittedCurrentPageUrl[1] != undefined ? "page=1" + splittedCurrentPageUrl[1] : "&page=1") + "\")'>1</a></li>";
+            	                }	
+            	                else if (i == min) {
+            	                	for (j = min; j <= max; j++) {
+            	                		classActive = currentPage == j ? "active" : "";
+            	                	    html += "<li class='" + classActive + "'><a href='#' onClick='updateSearchResults(\"" + splittedCurrentPageUrl[0] + (splittedCurrentPageUrl[1] != undefined ? "page=" + j + splittedCurrentPageUrl[1] : "&page=" + j) + "\")'>" + j + "</a></li>";
+            	                    }
+            	                } else if (i == dot1 || i == dot2) {
+            	                	html += "<li class='disabled'><a href='#'>...</a></li>";
+            	                } else if (i == pageCount && max < pageCount) {
+               	                	classActive = currentPage == pageCount ? "active" : "";
+            	                	html += "<li class='" + classActive + "'><a href='#' onClick='updateSearchResults(\"" + splittedCurrentPageUrl[0] + (splittedCurrentPageUrl[1] != undefined ? "page=" + pageCount + splittedCurrentPageUrl[1] : "&page=" + pageCount) + "\")'>" + pageCount + "</a></li>";
+            	                }
+            	            }
+            	            if (nextPageUrl != null) {
+            	            	var whereAttribute = nextPageUrl.split("&where=")[1].split("&")[0];
+            	            	nextPageUrl = nextPageUrl.split(whereAttribute)[0] + where + nextPageUrl.split(whereAttribute)[1];
+            			        var whatAttribute = nextPageUrl.split("&what=")[1].split("&")[0];
+            			        nextPageUrl = nextPageUrl.split(whatAttribute)[0] + what + nextPageUrl.split(whatAttribute)[1];
+            			        html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("nextPage") + "' onClick='updateSearchResults(\"" + nextPageUrl.split('?')[1] + "\")'><i class='uiIconNextArrow'></i></a></li>";
+            	            }
+            	            else {
+            	            	html += "<li class='disabled'><a data-placement='bottom' rel='tooltip' data-original-title='" + Globalize.localize("nextPage") + "'><i class='uiIconNextArrow'></i></a></li>";
+            	            }
         	            }
-        	            if (nextPageUrl != null) {
-        	            	var whereAttribute = nextPageUrl.split("&where=")[1].split("&")[0];
-        	            	nextPageUrl = nextPageUrl.split(whereAttribute)[0] + where + nextPageUrl.split(whereAttribute)[1];
-        			        var whatAttribute = nextPageUrl.split("&what=")[1].split("&")[0];
-        			        nextPageUrl = nextPageUrl.split(whatAttribute)[0] + what + nextPageUrl.split(whatAttribute)[1];
-        			        html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("nextPage") + "' onClick='updateSearchResults(\"" + nextPageUrl.split('?')[1] + "\")'><i class='uiIconNextArrow'></i></a></li>";
-        	            }
-        	            html += "</div>";
+        	            html += "</ul><p class='pull-right'><span>" + Globalize.localize("totalPage") + "</span><span class='pagesTotalNumber'>" + pageCount + "</span></p></div>"
                     }
                 	html += lrStatHtml; 
                 	$("div#searchResults").html(html);

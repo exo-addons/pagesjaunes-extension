@@ -44,6 +44,7 @@ Globalize.addCultureInfo( "fr", "default", {
 		"discussion" : "Ouvrir une discussion",
 		"prevPage" : "Page précédante",
 		"nextPage" : "Page suivante",
+		"totalPage" : "Nombre total de pages:",
 		"message" : "Message",
 		"defaultMessage" : "J'ai trouvé le contenu suivant via la recherche PJ: ",
 		"space" : "Espace",
