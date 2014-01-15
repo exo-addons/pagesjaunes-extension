@@ -37,7 +37,9 @@
   <Content type="html">
 
   <![CDATA[
-  
+    <div id="editMode">
+    	<div style="float:right;"><button onClick="edit();" type="button">__MSG_editer__</button></div>
+    </div>
 	<div id="searchForm">
 		<div class="yellowPageWrap large">
 			<div class="uiBox mainBox">

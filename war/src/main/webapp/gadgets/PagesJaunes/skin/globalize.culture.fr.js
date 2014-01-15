@@ -45,11 +45,14 @@ Globalize.addCultureInfo( "fr", "default", {
 		"prevPage" : "Page précédante",
 		"nextPage" : "Page suivante",
 		"message" : "Message",
-		"defaultMessage" : "J'ai trouvé le contenu suivant via la recherche PJ :",
+		"defaultMessage" : "J'ai trouvé le contenu suivant via la recherche PJ: ",
 		"space" : "Espace",
 		"user" : "Utilisateur",
 		"type" : "Type",
 		"title" : "Titre",
+		"edit" : "Editer",
+		"companyAddress" : "Adresse de l'entreprise: ",
+	    "save" : "Enregistrer",
 	}
 });
 

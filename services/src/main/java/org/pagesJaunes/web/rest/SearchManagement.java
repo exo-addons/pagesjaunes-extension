@@ -41,6 +41,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.exoplatform.container.ExoContainerContext;
+import org.exoplatform.container.PortalContainer;
+import org.exoplatform.container.component.RequestLifeCycle;
 import org.exoplatform.forum.service.Category;
 import org.exoplatform.forum.service.Forum;
 import org.exoplatform.forum.service.ForumService;
@@ -51,6 +53,9 @@ import org.exoplatform.services.jcr.config.RepositoryConfigurationException;
 import org.exoplatform.services.jcr.core.ManageableRepository;
 import org.exoplatform.services.log.ExoLogger;
 import org.exoplatform.services.log.Log;
+import org.exoplatform.services.organization.OrganizationService;
+import org.exoplatform.services.organization.UserProfile;
+import org.exoplatform.services.organization.UserProfileHandler;
 import org.exoplatform.services.rest.resource.ResourceContainer;
 import org.exoplatform.social.core.activity.model.ExoSocialActivity;
 import org.exoplatform.social.core.activity.model.ExoSocialActivityImpl;
@@ -72,6 +77,7 @@ public class SearchManagement implements ResourceContainer {
 	private static final String CATEGORY_NAME = "category.name";
 	private static final String CATEGORY_OWNER = "category.owner";
 	private static final String CATEGORY_DESCRIPTION = "category.description";
+	private static final String COMPANY_ADDRESS = "companyAddress";
 	private static final String ENTREPRISE_ADDRESS = "entreprise.address";
 	private static final String FORUM_ID = "forum.id";
 	private static final String FORUM_NAME = "forum.name";
@@ -185,6 +191,22 @@ public class SearchManagement implements ResourceContainer {
 		}
 		return Response.ok().entity("OK").build();
     }
+	
+	@GET
+    @Path("getCompanyAddress")
+    public String getCompanyAddress(@Context HttpServletRequest request) {
+		String companyAddress = null;
+		try {
+    	    OrganizationService organizationService = (OrganizationService) PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
+            UserProfileHandler userProfileHandler = organizationService.getUserProfileHandler();
+            UserProfile userProfile = userProfileHandler.findUserProfileByName(request.getRemoteUser());
+            companyAddress = userProfile.getAttribute(COMPANY_ADDRESS);
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+		return companyAddress;
+    }
 
 	@GET
     @Path("getSearchResults/{serviceUriParams : .+}")
@@ -242,5 +264,23 @@ public class SearchManagement implements ResourceContainer {
 		    Utils.getActivityManager().saveActivityNoReturn(ownerIdentity, activity);
 		}
 		return Response.ok().entity("OK").build();
+    }
+	
+	@POST
+    @Path("saveCompanyAddress")
+	@Consumes(MediaType.APPLICATION_JSON)
+    public void saveCompanyAddress(@Context HttpServletRequest request, CompanyAddress companyAddress) {
+		try {
+            RequestLifeCycle.begin(PortalContainer.getInstance());
+            OrganizationService organizationService = (OrganizationService) PortalContainer.getInstance().getComponentInstanceOfType(OrganizationService.class);
+            UserProfileHandler userProfileHandler = organizationService.getUserProfileHandler();
+            UserProfile userProfile = userProfileHandler.findUserProfileByName(request.getRemoteUser());
+            userProfile.setAttribute(COMPANY_ADDRESS, companyAddress.getAddress());
+            userProfileHandler.saveUserProfile(userProfile, false);
+            RequestLifeCycle.end();
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

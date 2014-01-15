@@ -19,6 +19,9 @@
 
 -->
 <messagebundle>
+ 	<msg name="editer">
+  		Editer
+  	</msg>
 	<msg name="quoiqui">
   		Quoi, qui ?
   	</msg>

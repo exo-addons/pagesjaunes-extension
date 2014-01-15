@@ -95,6 +95,47 @@ function displayNumber(contactInfoHtml, i) {
 	gadgets.window.adjustHeight(gadgetHeight + 1);
 }
 
+function edit() {
+	var formHtml = "<div><div><span>" + Globalize.localize("companyAddress") + "</span><input id='adresse_entreprise'></div><div><button id='save' type='button'>" + Globalize.localize("save") + "</button><button id='cancel' type='button'>" + Globalize.localize("cancel") + "</button></div></div>"
+	$("#editMode").html(formHtml);
+	$.ajax ({
+		cache: true,
+		url: "/rest/searchManagement/getCompanyAddress",
+    })
+    .fail (
+    	function() {
+        }
+    )
+    .done (
+        function(result) {
+        	if (result != null) {
+        		$("#adresse_entreprise").val(result);
+        	}
+        }
+   );
+   var editHtml = "<div style='float:right;'><button onClick='edit();' type='button'>" + Globalize.localize("edit") + "</button></div>";
+   $("#save").click(function() {
+	   var companyAddress = new Object();
+	   companyAddress.address = $("#adresse_entreprise").val();
+	   $.ajax ({
+		   type: "POST",
+		   contentType: "application/json",
+		   dataType: "json",
+		   cache: true,
+		   url: "/rest/searchManagement/saveCompanyAddress",
+		   data: JSON.stringify(companyAddress),
+	   })
+	   .fail (
+	   )
+	   .done (
+	   );
+	   location.reload();
+   });
+   $("#cancel").click(function() {
+	   $("#editMode").html(editHtml);
+   });	
+}
+
 function shareSearchResult(merchantName, merchantUrl, i) {
 	var html = "<div id='popup' class='UIPopupWindow uiPopup UIDragObject NormalStyle' style='width: 560px; position: relative; top: auto; left: auto; margin: 0 auto 20px; z-index: 1; max-width: 100%;'>";
 	html += "<div class='popupHeader ClearFix'><span class='PopupTitle popupTitle'>" + Globalize.localize("share") + "</span></div>";
@@ -178,147 +219,159 @@ function showHideDetail(i) {
 }
 
 function updateSearchResults(serviceUriParams, proximity) {
-	var quoiqui = $("#quoiqui").val();
-	var ou = $("#ou").val();
-	var prefs = new gadgets.Prefs();
-	var adresseEntreprise = prefs.getString("adresseEntreprise");
-	var uri = "/rest/searchManagement/getSearchResults/";
-	uri += serviceUriParams !== undefined ? serviceUriParams : "max=3&what=" + quoiqui + "&where=" + ou + "&return_urls=true";
-	uri += proximity !== undefined ? "&proximity=" + proximity + "&where=" + adresseEntreprise + "&return_urls=true": "";
-	var where = uri.split("&where=")[1].split("&")[0];
-	var what = uri.split("&what=")[1].split("&")[0];
-	var html = "<div class='uiBox resultBox'><div class='msNotResult'><h3>" + Globalize.localize("noResult") + "</h3></div></div>";
-	var lrRandomNumber = Math.floor(Math.random()*1000000)
-	var lrStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&p=LR_PJ&x1=<code_activite>&x2=<code_localite>&rn=" + lrRandomNumber + "'>";
-	
 	$.ajax ({
-        cache: true,
-        url: uri,
+		cache: true,
+		url: "/rest/searchManagement/getCompanyAddress",
     })
     .fail (
-        function(result) {
-        	html += lrStatHtml;
-        	$("div#searchResults").html(html);
+    	function() {
         }
     )
     .done (
-        function (result) {
-        	var listings = result["search_results"]["listings"];
-        	where = where == "" ? result["context"]["search"]["where"] : where;
-        	$("#quoiqui").val(what);
-        	$("#ou").val(where);
-        	if (listings !== undefined) {
-	        	var totalListing = result["context"]["results"]["total_listing"];
-	            html = "<h4 class='countResult'>" + what + Globalize.localize("in") + where + " : " + totalListing + Globalize.localize("results") + "</h4>";
-	            var thumbnailUrl;
-	            var merchantName;
-	            var inscriptions;
-	            var adressStreet;
-	            var distance;
-	            var contactInfo;
-	            var itineraryUrl;
-	            var merchantUrl;
-	            var description;
-	            var currentPage = result["context"]["pages"]["current_page"];
-	            html += "<div class='uiBox resultBox'><ul class='listResulPages'>";
-	            for (i = 0; i < listings.length; i++) {
-	            	html += "<li><div class='media'>";
-	            	thumbnailUrl = listings[i]["thumbnail_url"];
-	            	if (thumbnailUrl != null) {
-	            		html += "<div class='pull-left'><a href='#'><img src='" + thumbnailUrl + "' alt='logo'></a></div>";
-	            	}
-	            	merchantName = listings[i]["merchant_name"];
-	            	inscriptions = listings[i]["inscriptions"];
-	            	for (j = 0; j < inscriptions.length; j++) {
-	            		adressStreet = inscriptions[j]["adress_street"];
-	            		distance = inscriptions[j]["distance"];
-	            		contactInfo = inscriptions[j]["contact_info"];
-	            		itineraryUrl = inscriptions[j]["urls"]["itinerary_url"];
-	            		merchantUrl = inscriptions[j]["urls"]["merchant_url"];
-	            		break;
-	            	}
-	            	html += "<div class='media-body'><div class='headResult clearfix'><div class='pull-left'><div class='title-text'>";
-	            	if (merchantName != null) {
-	            		html += "<a target='_blank' href=\"" + merchantUrl + "\">" + merchantName + "</a>";
-	            	}
-	            	if (distance != null) {
-	            		html += Globalize.localize("in") + distance + Globalize.localize("meter");
-	            	}
-	            	html += "</div>";
-	            	if (adressStreet != null) {
-	            		html += "<div class='address'>" + adressStreet + "</div>";
-	            	}
-	            	html += "</div></div><div class='cont'><div class='row-fluid'><div class='colRight'>";
-	            	description = listings[i]["description"];
-	            	if (description != null) {
-	            		html += "<button id='btnShowDetail" + currentPage + i + "' onClick='showHideDetail(\"" + currentPage + i + "\")' class='btn btnShowDetail'>" + Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i></button>";
-	            	}
-	            	if (contactInfo != null) {
-	            		var contactInfoHtml = "";
-	            		contactInfoHtml += "<ul class='contactInfo'>";
-	            		for (k = 0; k < contactInfo.length; k++) {
-	            			var contactIcon;
-	            			switch (contactInfo[k]["contact_type"]) {
-		            			case "MAIL":
-		            				contactIcon = "uiIconMail uiIconLightGray";
-			            			break;
-		            			case "TELEPHONE":
-		            				contactIcon = "uiIconSocPhone uiIconSocLightGray";
-		            				break;
-		            			case "FAX":
-		            				contactIcon = "uiIconPrint uiIconLightGray";
-		            				break;
-	            			} 
-	            			contactInfoHtml += "<li><i class='" + contactIcon + "'></i><a href='#'>" + contactInfo[k]["contact_value"] + "</a></li>";
-            			}
-	            		contactInfoHtml += "</ul>";
-	            		var displayNumberClass = "flyBoxInfo ";
-	            		displayNumberClass += description != null ? "detail" : "noDetail";
-	            		html += "<div class='" + displayNumberClass + "' id='displayNumber" + currentPage + i + "'><button class='btn btn-primary btn-supper' onClick='displayNumber(\"" + escape(contactInfoHtml) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::contact::afficher_numero\",\"A\");'><i class='uiIconSocPhone'></i>" + Globalize.localize("displayNumber") + "</button></div>";
-	            	}
-	            	html += "</div><div class='colLeft'>";
-	            	if (description != null) {
-	            		html += "<div id='desc" + currentPage + i + "' class='desc'>" + description + "</div>";
-	            	}
-	            	html += "<div class='links'>";
-	            	html += "<a onClick='return xt_click(this,\"C\",\"\",\"BI::contact::itineraire\",\"A\");' href='" + itineraryUrl + "' target='_blank' >" + Globalize.localize("itinerary") + "</a> |";
-	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::partager\",\"A\");' >" + Globalize.localize("share") + "</a> |";
-	            	html += "<a href='#' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' >" + Globalize.localize("discussion") + "</a>";
-	            	html += "</div></div>";
-	            	html += "</div></div></div></div>"
-	            	if ($("#inline_partage" + currentPage + i).length == 0) {
-	            		html += "<div class='inline' id='inline_partage" + currentPage + i + "'></div>";
-	            	}
-	            	if ($("#inline_discussion" + currentPage + i).length == 0) {
-	            		html += "<div class='inline' id='inline_discussion" + currentPage + i + "'></div>";
-	            	}
-	            	html += "</li>";
-	            }
-	            html += "</ul><div class='pagination pagination-centered uiPageIterator'><ul>";
-	            var prevPageUrl = result["context"]["pages"]["prev_page_url"];
-	            var nextPageUrl = result["context"]["pages"]["next_page_url"];
-	            if (prevPageUrl != null) {
-		            var whereAttribute = prevPageUrl.split("&where=")[1].split("&")[0];
-		            prevPageUrl = prevPageUrl.split(whereAttribute)[0] + where + prevPageUrl.split(whereAttribute)[1];
-		        	var whatAttribute = prevPageUrl.split("&what=")[1].split("&")[0];
-		        	prevPageUrl = prevPageUrl.split(whatAttribute)[0] + what + prevPageUrl.split(whatAttribute)[1];
-	            	html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("prevPage") + "' onClick='updateSearchResults(\"" + prevPageUrl.split('?')[1] + "\")'><i class='uiIconPrevArrow'></i></a></li>";
-	            }
-	            if (nextPageUrl != null) {
-	            	var whereAttribute = nextPageUrl.split("&where=")[1].split("&")[0];
-	            	nextPageUrl = nextPageUrl.split(whereAttribute)[0] + where + nextPageUrl.split(whereAttribute)[1];
-			        var whatAttribute = nextPageUrl.split("&what=")[1].split("&")[0];
-			        nextPageUrl = nextPageUrl.split(whatAttribute)[0] + what + nextPageUrl.split(whatAttribute)[1];
-			        html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("nextPage") + "' onClick='updateSearchResults(\"" + nextPageUrl.split('?')[1] + "\")'><i class='uiIconNextArrow'></i></a></li>";
-	            }
-	            html += "</div>";
-            }
-        	html += lrStatHtml; 
-        	$("div#searchResults").html(html);
-        	var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
-        	gadgets.window.adjustHeight(gadgetHeight + 1);
+        function(response) {
+        	var quoiqui = $("#quoiqui").val();
+        	var ou = $("#ou").val();
+        	var adresseEntreprise = response != null ? response : "";
+        	var uri = "/rest/searchManagement/getSearchResults/";
+        	uri += serviceUriParams !== undefined ? serviceUriParams : "max=3&what=" + quoiqui + "&where=" + ou + "&return_urls=true";
+        	uri += proximity !== undefined ? "&proximity=" + proximity + "&where=" + adresseEntreprise + "&return_urls=true": "";
+        	var where = uri.split("&where=")[1].split("&")[0];
+        	var what = uri.split("&what=")[1].split("&")[0];
+        	var html = "<div class='uiBox resultBox'><div class='msNotResult'><h3>" + Globalize.localize("noResult") + "</h3></div></div>";
+        	var lrRandomNumber = Math.floor(Math.random()*1000000)
+        	var lrStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&p=LR_PJ&x1=<code_activite>&x2=<code_localite>&rn=" + lrRandomNumber + "'>";
+        	
+        	$.ajax ({
+                cache: true,
+                url: uri,
+            })
+            .fail (
+                function(result) {
+                	html += lrStatHtml;
+                	$("div#searchResults").html(html);
+                }
+            )
+            .done (
+                function (result) {
+                	var listings = result["search_results"]["listings"];
+                	where = where == "" ? result["context"]["search"]["where"] : where;
+                	$("#quoiqui").val(what);
+                	$("#ou").val(where);
+                	if (listings !== undefined) {
+        	        	var totalListing = result["context"]["results"]["total_listing"];
+        	            html = "<h4 class='countResult'>" + what + Globalize.localize("in") + where + " : " + totalListing + Globalize.localize("results") + "</h4>";
+        	            var thumbnailUrl;
+        	            var merchantName;
+        	            var inscriptions;
+        	            var adressStreet;
+        	            var distance;
+        	            var contactInfo;
+        	            var itineraryUrl;
+        	            var merchantUrl;
+        	            var description;
+        	            var currentPage = result["context"]["pages"]["current_page"];
+        	            html += "<div class='uiBox resultBox'><ul class='listResulPages'>";
+        	            for (i = 0; i < listings.length; i++) {
+        	            	html += "<li><div class='media'>";
+        	            	thumbnailUrl = listings[i]["thumbnail_url"];
+        	            	if (thumbnailUrl != null) {
+        	            		html += "<div class='pull-left'><a href='#'><img src='" + thumbnailUrl + "' alt='logo'></a></div>";
+        	            	}
+        	            	merchantName = listings[i]["merchant_name"];
+        	            	inscriptions = listings[i]["inscriptions"];
+        	            	for (j = 0; j < inscriptions.length; j++) {
+        	            		adressStreet = inscriptions[j]["adress_street"];
+        	            		distance = inscriptions[j]["distance"];
+        	            		contactInfo = inscriptions[j]["contact_info"];
+        	            		itineraryUrl = inscriptions[j]["urls"]["itinerary_url"];
+        	            		merchantUrl = inscriptions[j]["urls"]["merchant_url"];
+        	            		break;
+        	            	}
+        	            	html += "<div class='media-body'><div class='headResult clearfix'><div class='pull-left'><div class='title-text'>";
+        	            	if (merchantName != null) {
+        	            		html += "<a target='_blank' href=\"" + merchantUrl + "\">" + merchantName + "</a>";
+        	            	}
+        	            	if (distance != null) {
+        	            		html += Globalize.localize("in") + distance + Globalize.localize("meter");
+        	            	}
+        	            	html += "</div>";
+        	            	if (adressStreet != null) {
+        	            		html += "<div class='address'>" + adressStreet + "</div>";
+        	            	}
+        	            	html += "</div></div><div class='cont'><div class='row-fluid'><div class='colRight'>";
+        	            	description = listings[i]["description"];
+        	            	if (description != null) {
+        	            		html += "<button id='btnShowDetail" + currentPage + i + "' onClick='showHideDetail(\"" + currentPage + i + "\")' class='btn btnShowDetail'>" + Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i></button>";
+        	            	}
+        	            	if (contactInfo != null) {
+        	            		var contactInfoHtml = "";
+        	            		contactInfoHtml += "<ul class='contactInfo'>";
+        	            		for (k = 0; k < contactInfo.length; k++) {
+        	            			var contactIcon;
+        	            			switch (contactInfo[k]["contact_type"]) {
+        		            			case "MAIL":
+        		            				contactIcon = "uiIconMail uiIconLightGray";
+        			            			break;
+        		            			case "TELEPHONE":
+        		            				contactIcon = "uiIconSocPhone uiIconSocLightGray";
+        		            				break;
+        		            			case "FAX":
+        		            				contactIcon = "uiIconPrint uiIconLightGray";
+        		            				break;
+        	            			} 
+        	            			contactInfoHtml += "<li><i class='" + contactIcon + "'></i><a href='#'>" + contactInfo[k]["contact_value"] + "</a></li>";
+                    			}
+        	            		contactInfoHtml += "</ul>";
+        	            		var displayNumberClass = "flyBoxInfo ";
+        	            		displayNumberClass += description != null ? "detail" : "noDetail";
+        	            		html += "<div class='" + displayNumberClass + "' id='displayNumber" + currentPage + i + "'><button class='btn btn-primary btn-supper' onClick='displayNumber(\"" + escape(contactInfoHtml) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::contact::afficher_numero\",\"A\");'><i class='uiIconSocPhone'></i>" + Globalize.localize("displayNumber") + "</button></div>";
+        	            	}
+        	            	html += "</div><div class='colLeft'>";
+        	            	if (description != null) {
+        	            		html += "<div id='desc" + currentPage + i + "' class='desc'>" + description + "</div>";
+        	            	}
+        	            	html += "<div class='links'>";
+        	            	html += "<a onClick='return xt_click(this,\"C\",\"\",\"BI::contact::itineraire\",\"A\");' href='" + itineraryUrl + "' target='_blank' >" + Globalize.localize("itinerary") + "</a> |";
+        	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::partager\",\"A\");' >" + Globalize.localize("share") + "</a> |";
+        	            	html += "<a href='#' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' >" + Globalize.localize("discussion") + "</a>";
+        	            	html += "</div></div>";
+        	            	html += "</div></div></div></div>"
+        	            	if ($("#inline_partage" + currentPage + i).length == 0) {
+        	            		html += "<div class='inline' id='inline_partage" + currentPage + i + "'></div>";
+        	            	}
+        	            	if ($("#inline_discussion" + currentPage + i).length == 0) {
+        	            		html += "<div class='inline' id='inline_discussion" + currentPage + i + "'></div>";
+        	            	}
+        	            	html += "</li>";
+        	            }
+        	            html += "</ul><div class='pagination pagination-centered uiPageIterator'><ul>";
+        	            var prevPageUrl = result["context"]["pages"]["prev_page_url"];
+        	            var nextPageUrl = result["context"]["pages"]["next_page_url"];
+        	            if (prevPageUrl != null) {
+        		            var whereAttribute = prevPageUrl.split("&where=")[1].split("&")[0];
+        		            prevPageUrl = prevPageUrl.split(whereAttribute)[0] + where + prevPageUrl.split(whereAttribute)[1];
+        		        	var whatAttribute = prevPageUrl.split("&what=")[1].split("&")[0];
+        		        	prevPageUrl = prevPageUrl.split(whatAttribute)[0] + what + prevPageUrl.split(whatAttribute)[1];
+        	            	html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("prevPage") + "' onClick='updateSearchResults(\"" + prevPageUrl.split('?')[1] + "\")'><i class='uiIconPrevArrow'></i></a></li>";
+        	            }
+        	            if (nextPageUrl != null) {
+        	            	var whereAttribute = nextPageUrl.split("&where=")[1].split("&")[0];
+        	            	nextPageUrl = nextPageUrl.split(whereAttribute)[0] + where + nextPageUrl.split(whereAttribute)[1];
+        			        var whatAttribute = nextPageUrl.split("&what=")[1].split("&")[0];
+        			        nextPageUrl = nextPageUrl.split(whatAttribute)[0] + what + nextPageUrl.split(whatAttribute)[1];
+        			        html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("nextPage") + "' onClick='updateSearchResults(\"" + nextPageUrl.split('?')[1] + "\")'><i class='uiIconNextArrow'></i></a></li>";
+        	            }
+        	            html += "</div>";
+                    }
+                	html += lrStatHtml; 
+                	$("div#searchResults").html(html);
+                	var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
+                	gadgets.window.adjustHeight(gadgetHeight + 1);
+                }
+            );
         }
     );
+	
 }
 
 function xt_click(obj,type,section,page,x1,x2,x3,x4,x5) {             
