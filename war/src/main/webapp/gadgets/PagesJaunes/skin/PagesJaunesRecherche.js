@@ -40,7 +40,7 @@ $(document).ready(function() {
     .done (
     	function(result) {
     		if (result == "true") {
-    			alert("Addon PJ installé");
+    			//alert("Addon PJ installé");
     		}
     	}
     );
