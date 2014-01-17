@@ -76,10 +76,13 @@ function addTopic(merchantName, merchantUrl, i) {
 	        url: "/rest/searchManagement/addTopic",
 	        data: JSON.stringify(forumTopic),
 	    })
+	    .done(function(result) {
+	    	var currentUrl = window.top.location.href;
+	    	var redirect = currentUrl.split("//")[0] + "//" + currentUrl.split("//")[1].split("/")[0] + "/" + currentUrl.split("//")[1].split("/")[1] + "/" + (currentUrl.split("//")[1].split("/")[2] != "u" ? currentUrl.split("//")[1].split("/")[2] : "intranet") + "/forum/topic/" + result["topicId"];
+	    	window.top.location.href = redirect;
+	    })
 	    .fail (
 	    )
-	    .done (
-	    );
 	});
 	
 	$("#inline_discussion" + i).bPopup ({
@@ -103,8 +106,6 @@ function edit() {
 		url: "/rest/searchManagement/getCompanyAddress",
     })
     .fail (
-    	function() {
-        }
     )
     .done (
         function(result) {

@@ -89,7 +89,6 @@ public class SearchManagement implements ResourceContainer {
 	private static final String REPOSITORY = "repository";
 	private static final String SYSTEM_WORKSPACE = "system";
 	
-	
 	private String getData(String url) {
     	HttpURLConnection connection = null;
         StringBuilder searchResults = null;
@@ -157,6 +156,7 @@ public class SearchManagement implements ResourceContainer {
     @Path("addTopic")
 	@Consumes(MediaType.APPLICATION_JSON)
     public Response addTopic(@Context HttpServletRequest request, ForumTopic forumTopic) {
+		JSONObject json = new JSONObject();
 	    try {
 	    	ForumService forumService = (ForumService) ExoContainerContext.getCurrentContainer().getComponentInstanceOfType(ForumService.class);
 	    	String categoryId = PropertyManager.getProperty(CATEGORY_ID);
@@ -186,10 +186,12 @@ public class SearchManagement implements ResourceContainer {
 	    	topic.setDescription(forumTopic.getMessage());
 	    	topic.setIcon("uiIconForumTopic uiIconForumLightGray");
 	    	forumService.saveTopic(categoryId, forumId, topic, true, false, new MessageBuilder());
+	    	json.put("topicId", topic.getId());
+	    	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Response.ok().entity("OK").build();
+		return Response.ok(json.toString(), MediaType.APPLICATION_JSON).build();
     }
 	
 	@GET
@@ -248,7 +250,7 @@ public class SearchManagement implements ResourceContainer {
 	@POST
     @Path("shareSearchResult")
 	@Consumes(MediaType.APPLICATION_JSON)
-    public Response shareSearchResult(@Context HttpServletRequest request, AsMessage asMessage) {
+    public void shareSearchResult(@Context HttpServletRequest request, AsMessage asMessage) {
 		String espace = asMessage.getEspace();
 		String type = asMessage.getType();
 		if (type.equals("space") && espace != null ) {
@@ -263,7 +265,6 @@ public class SearchManagement implements ResourceContainer {
 		    activity.setType(UIDefaultActivity.ACTIVITY_TYPE);
 		    Utils.getActivityManager().saveActivityNoReturn(ownerIdentity, activity);
 		}
-		return Response.ok().entity("OK").build();
     }
 	
 	@POST
