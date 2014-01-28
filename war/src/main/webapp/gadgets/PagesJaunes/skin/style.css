@@ -214,6 +214,7 @@ body {
 }
 .yellowPageWrap .resultBox .title-text > a {
   font-weight: bold;
+  font-size: 16px;
 }
 .yellowPageWrap .resultBox .desc {
   overflow: hidden;
