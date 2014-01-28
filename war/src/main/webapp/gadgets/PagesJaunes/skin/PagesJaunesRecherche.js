@@ -304,9 +304,11 @@ function updateSearchResults(serviceUriParams, proximity) {
         	            	}
         	            	html += "</div></div><div class='cont'><div class='row-fluid'><div class='colRight'>";
         	            	description = listings[i]["description"];
-        	            	//--if (description != null) {
-        	            	//	html += "<button id='btnShowDetail" + currentPage + i + "' onClick='showHideDetail(\"" + currentPage + i + "\")' class='btn btnShowDetail'>" + Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i></button>";
-        	            	//}
+        	            	//disable description
+        	            	description = null;
+        	            	if (description != null) {
+        	            		html += "<button id='btnShowDetail" + currentPage + i + "' onClick='showHideDetail(\"" + currentPage + i + "\")' class='btn btnShowDetail'>" + Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i></button>";
+        	            	}
         	            	if (contactInfo != null) {
         	            		var contactInfoHtml = "";
         	            		contactInfoHtml += "<ul class='contactInfo'>";
