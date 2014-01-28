@@ -236,7 +236,7 @@ function updateSearchResults(serviceUriParams, proximity) {
         	var ou = $("#ou").val();
         	var adresseEntreprise = response != null ? response : "";
         	var uri = "/rest/searchManagement/getSearchResults/";
-        	uri += serviceUriParams !== undefined ? serviceUriParams : "max=3&what=" + quoiqui + "&where=" + ou + "&return_urls=true";
+        	uri += serviceUriParams !== undefined ? serviceUriParams : "max=20&what=" + quoiqui + "&where=" + ou + "&return_urls=true";
         	uri += proximity !== undefined ? "&proximity=" + proximity + "&where=" + adresseEntreprise + "&return_urls=true": "";
         	var where = uri.split("&where=")[1].split("&")[0];
         	var what = uri.split("&what=")[1].split("&")[0];
@@ -262,7 +262,7 @@ function updateSearchResults(serviceUriParams, proximity) {
                 	$("#ou").val(where);
                 	if (listings !== undefined) {
         	        	var totalListing = result["context"]["results"]["total_listing"];
-        	            html = "<h4 class='countResult'>" + what + Globalize.localize("in") + where + " : " + totalListing + Globalize.localize("results") + "</h4>";
+        	            html = "<h4 class='countResult'>" + what + Globalize.localize("in") + where + " : " + totalListing.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + Globalize.localize("results") + "</h4>";
         	            var thumbnailUrl;
         	            var merchantName;
         	            var inscriptions;
@@ -416,7 +416,7 @@ function updateSearchResults(serviceUriParams, proximity) {
             	            	html += "<li class='disabled'><a data-placement='bottom' rel='tooltip' data-original-title='" + Globalize.localize("nextPage") + "'><i class='uiIconNextArrow'></i></a></li>";
             	            }
         	            }
-        	            html += "</ul><p class='pull-right'><span>" + Globalize.localize("totalPage") + "</span><span class='pagesTotalNumber'>" + pageCount + "</span></p></div>"
+        	            html += "</ul><p class='pull-right'><span>" + Globalize.localize("totalPage") + "</span><span class='pagesTotalNumber'>" + pageCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span></p></div>"
                     }
                 	html += lrStatHtml; 
                 	$("div#searchResults").html(html);
