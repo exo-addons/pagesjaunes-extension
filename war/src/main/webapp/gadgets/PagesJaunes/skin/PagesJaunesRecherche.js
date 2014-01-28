@@ -304,9 +304,9 @@ function updateSearchResults(serviceUriParams, proximity) {
         	            	}
         	            	html += "</div></div><div class='cont'><div class='row-fluid'><div class='colRight'>";
         	            	description = listings[i]["description"];
-        	            	if (description != null) {
-        	            		html += "<button id='btnShowDetail" + currentPage + i + "' onClick='showHideDetail(\"" + currentPage + i + "\")' class='btn btnShowDetail'>" + Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i></button>";
-        	            	}
+        	            	//--if (description != null) {
+        	            	//	html += "<button id='btnShowDetail" + currentPage + i + "' onClick='showHideDetail(\"" + currentPage + i + "\")' class='btn btnShowDetail'>" + Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i></button>";
+        	            	//}
         	            	if (contactInfo != null) {
         	            		var contactInfoHtml = "";
         	            		contactInfoHtml += "<ul class='contactInfo'>";
@@ -335,8 +335,8 @@ function updateSearchResults(serviceUriParams, proximity) {
         	            		html += "<div id='desc" + currentPage + i + "' class='desc'>" + description + "</div>";
         	            	}
         	            	html += "<div class='links'>";
-        	            	html += "<a onClick='return xt_click(this,\"C\",\"\",\"BI::contact::itineraire\",\"A\");' href='" + itineraryUrl + "' target='_blank' >" + Globalize.localize("itinerary") + "</a> |";
-        	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::partager\",\"A\");' >" + Globalize.localize("share") + "</a> |";
+        	            	html += "<a onClick='return xt_click(this,\"C\",\"\",\"BI::contact::itineraire\",\"A\");' href='" + itineraryUrl + "' target='_blank' >" + Globalize.localize("itinerary") + "</a> | ";
+        	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::partager\",\"A\");' >" + Globalize.localize("share") + "</a> | ";
         	            	html += "<a href='#' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' >" + Globalize.localize("discussion") + "</a>";
         	            	html += "</div></div>";
         	            	html += "</div></div></div></div>"
