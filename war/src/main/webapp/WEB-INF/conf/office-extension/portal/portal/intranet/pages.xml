@@ -680,7 +680,7 @@
     </page>
     <page>
         <name>pagesjaunes</name>
-        <title>Pages Jaunes</title>
+        <title>PagesJaunes</title>
         <access-permissions>*:/platform/users</access-permissions>
         <edit-permission>*:/platform/administrators</edit-permission>
         <portlet-application>

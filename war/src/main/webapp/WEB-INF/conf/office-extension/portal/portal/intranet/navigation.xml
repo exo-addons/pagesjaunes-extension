@@ -98,7 +98,7 @@
 		<node>
             <uri>pagesjaunes</uri>
             <name>pagesjaunes</name>
-            <label>Pages Jaunes</label>
+            <label>PagesJaunes</label>
             <page-reference>portal::intranet::pagesjaunes</page-reference>
         </node>
 
