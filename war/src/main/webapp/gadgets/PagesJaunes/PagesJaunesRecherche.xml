@@ -61,7 +61,7 @@
 									</div>
 								</div>
 								
-								<div class="col-right"><button class="btn btn-primary btn-supper" onClick="updateSearchResults();return xt_click(this,'C','','Trouver::Trouver_HP','A');" type="button">__MSG_trouver__</button></div>
+								<div class="col-right"><button class="btn btn-primary btn-supper" id="pj_trouver" onClick="updateSearchResults();changeOnClickFunction();return xt_click(this,'C','','Trouver::Trouver_HP','A');" type="button">__MSG_trouver__</button></div>
 							</form>
 						</div>
 						<div class="boxButtonBlue">

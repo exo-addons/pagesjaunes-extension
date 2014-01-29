@@ -293,7 +293,7 @@ function updateSearchResults(serviceUriParams, proximity) {
         	            	}
         	            	html += "<div class='media-body'><div class='headResult clearfix'><div class='pull-left'><div class='title-text'>";
         	            	if (merchantName != null) {
-        	            		html += "<a target='_blank' href=\"" + merchantUrl + "\">" + merchantName + "</a>";
+        	            		html += "<a onClick='return xt_click(this,\"C\",\"\",\"BI::raison_sociale\",\"A\");' target='_blank' href=\"" + merchantUrl + "\">" + merchantName + "</a>";
         	            	}
         	            	if (distance != null) {
         	            		html += Globalize.localize("in") + distance + Globalize.localize("meter");
@@ -305,31 +305,34 @@ function updateSearchResults(serviceUriParams, proximity) {
         	            	html += "</div></div><div class='cont'><div class='row-fluid'><div class='colRight'>";
         	            	description = listings[i]["description"];
         	            	//disable description
-        	            	description = null;
-        	            	if (description != null) {
-        	            		html += "<button id='btnShowDetail" + currentPage + i + "' onClick='showHideDetail(\"" + currentPage + i + "\")' class='btn btnShowDetail'>" + Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i></button>";
-        	            	}
+        	            	//if (description != null) {
+        	            		//html += "<button id='btnShowDetail" + currentPage + i + "' onClick='showHideDetail(\"" + currentPage + i + "\")' class='btn btnShowDetail'>" + Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i></button>";
+        	            	//}
         	            	if (contactInfo != null) {
         	            		var contactInfoHtml = "";
         	            		contactInfoHtml += "<ul class='contactInfo'>";
         	            		for (k = 0; k < contactInfo.length; k++) {
         	            			var contactIcon;
         	            			switch (contactInfo[k]["contact_type"]) {
-        		            			case "MAIL":
-        		            				contactIcon = "uiIconMail uiIconLightGray";
-        			            			break;
+        		            			// hide mail
+        		            			//case "MAIL":
+        		            			//	contactIcon = "uiIconMail uiIconLightGray";
+        		            			//    contactInfoHtml += "<li><i class='" + contactIcon + "'></i><a href='#'>" + contactInfo[k]["contact_value"] + "</a></li>";
+        			            		//	break;
         		            			case "TELEPHONE":
         		            				contactIcon = "uiIconSocPhone uiIconSocLightGray";
+        		            				contactInfoHtml += "<li><i class='" + contactIcon + "'></i><a href='#'>" + contactInfo[k]["contact_value"] + "</a></li>";
         		            				break;
-        		            			case "FAX":
-        		            				contactIcon = "uiIconPrint uiIconLightGray";
-        		            				break;
+        		            			//case "FAX":
+        		            			//	contactIcon = "uiIconPrint uiIconLightGray";
+        		            			//  contactInfoHtml += "<li><i class='" + contactIcon + "'></i><a href='#'>" + contactInfo[k]["contact_value"] + "</a></li>";
+        		            			//	break;
         	            			} 
-        	            			contactInfoHtml += "<li><i class='" + contactIcon + "'></i><a href='#'>" + contactInfo[k]["contact_value"] + "</a></li>";
                     			}
         	            		contactInfoHtml += "</ul>";
         	            		var displayNumberClass = "flyBoxInfo ";
-        	            		displayNumberClass += description != null ? "detail" : "noDetail";
+        	            		//disable description
+        	            		//displayNumberClass += description != null ? "detail" : "noDetail";
         	            		html += "<div class='" + displayNumberClass + "' id='displayNumber" + currentPage + i + "'><button class='btn btn-primary btn-supper' onClick='displayNumber(\"" + escape(contactInfoHtml) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::contact::afficher_numero\",\"A\");'><i class='uiIconSocPhone'></i>" + Globalize.localize("displayNumber") + "</button></div>";
         	            	}
         	            	html += "</div><div class='colLeft'>";
@@ -364,10 +367,10 @@ function updateSearchResults(serviceUriParams, proximity) {
             		            prevPageUrl = prevPageUrl.split(whereAttribute)[0] + where + prevPageUrl.split(whereAttribute)[1];
             		        	var whatAttribute = prevPageUrl.split("&what=")[1].split("&")[0];
             		        	prevPageUrl = prevPageUrl.split(whatAttribute)[0] + what + prevPageUrl.split(whatAttribute)[1];
-            	            	html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("prevPage") + "' onClick='updateSearchResults(\"" + prevPageUrl.split('?')[1] + "\")'><i class='uiIconPrevArrow'></i></a></li>";
+            	            	html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("prevPage") + "' onClick='updateSearchResults(\"" + prevPageUrl.split('?')[1] + "\")'><i class='uiIconPrevArrow uiIconPJPrevArrow'></i></a></li>";
             	            }
             	            else {
-            	            	html += "<li class='disabled'><a data-placement='bottom' rel='tooltip' data-original-title='" + Globalize.localize("prevPage") + "'><i class='uiIconPrevArrow'></i></a></li>";
+            	            	html += "<li class='disabled'><a data-placement='bottom' rel='tooltip' data-original-title='" + Globalize.localize("prevPage") + "'><i class='uiIconPrevArrow uiIconPJPrevArrow'></i></a></li>";
             	            }
             	            var min = 1;
             	            var max = pageCount;
@@ -410,10 +413,10 @@ function updateSearchResults(serviceUriParams, proximity) {
             	            	nextPageUrl = nextPageUrl.split(whereAttribute)[0] + where + nextPageUrl.split(whereAttribute)[1];
             			        var whatAttribute = nextPageUrl.split("&what=")[1].split("&")[0];
             			        nextPageUrl = nextPageUrl.split(whatAttribute)[0] + what + nextPageUrl.split(whatAttribute)[1];
-            			        html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("nextPage") + "' onClick='updateSearchResults(\"" + nextPageUrl.split('?')[1] + "\")'><i class='uiIconNextArrow'></i></a></li>";
+            			        html += "<li><a data-placement='bottom' href='#' rel='tooltip' data-original-title='" + Globalize.localize("nextPage") + "' onClick='updateSearchResults(\"" + nextPageUrl.split('?')[1] + "\")'><i class='uiIconNextArrow uiIconPJNextArrow'></i></a></li>";
             	            }
             	            else {
-            	            	html += "<li class='disabled'><a data-placement='bottom' rel='tooltip' data-original-title='" + Globalize.localize("nextPage") + "'><i class='uiIconNextArrow'></i></a></li>";
+            	            	html += "<li class='disabled'><a data-placement='bottom' rel='tooltip' data-original-title='" + Globalize.localize("nextPage") + "'><i class='uiIconNextArrow uiIconPJNextArrow'></i></a></li>";
             	            }
         	            }
         	            html += "</ul><p class='pull-right'><span>" + Globalize.localize("totalPage") + "</span><span class='pagesTotalNumber'>" + pageCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + "</span></p></div>"
@@ -485,3 +488,9 @@ function xt_click(obj,type,section,page,x1,x2,x3,x4,x5) {
 	xtkey=false;
 	return true;
 }
+
+function changeOnClickFunction()
+{
+	Alert("changeOnClickFunction()");
+	$("#pj_trouver").click(function(){ updateSearchResults();return xt_click(this,'C','','Trouver::Trouver_LR','A');});
+}	

@@ -220,7 +220,7 @@ body {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  max-width: 320px;
+  max-width: 550px;
 }
 .yellowPageWrap .resultBox .address {
   font-size: 12px;
@@ -385,3 +385,11 @@ body {
   display:none;
   background-color: #F5F5F5;
 } 
+
+.uiIconPJPrevArrow {
+margin-top: 4px;
+}
+
+.uiIconPJNextArrow {
+margin-top: 4px;
+}
