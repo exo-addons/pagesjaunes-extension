@@ -491,6 +491,5 @@ function xt_click(obj,type,section,page,x1,x2,x3,x4,x5) {
 
 function changeOnClickFunction()
 {
-	Alert("changeOnClickFunction()");
 	$("#pj_trouver").click(function(){ updateSearchResults();return xt_click(this,'C','','Trouver::Trouver_LR','A');});
 }	
