@@ -44,15 +44,15 @@ Globalize.addCultureInfo( "fr", "default", {
 		"discussion" : "Ouvrir une discussion",
 		"prevPage" : "Page précédante",
 		"nextPage" : "Page suivante",
-		"totalPage" : "Nombre total de pages:",
+		"totalPage" : "Nombre total de pages : ",
 		"message" : "Message",
-		"defaultMessage" : "J'ai trouvé le contenu suivant via la recherche PJ: ",
+		"defaultMessage" : "Voici la fiche du professionnel PagesJaunes : ",
 		"space" : "Espace",
 		"user" : "Utilisateur",
 		"type" : "Type",
 		"title" : "Titre",
 		"edit" : "Editer",
-		"companyAddress" : "Adresse de l'entreprise: ",
+		"companyAddress" : "Adresse de l'entreprise : ",
 	    "save" : "Enregistrer",
 	}
 });
