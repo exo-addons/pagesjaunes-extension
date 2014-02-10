@@ -59,7 +59,7 @@ function addTopic(merchantName, merchantUrl, i) {
 	html += "<div class='popupHeader ClearFix'><span class='PopupTitle popupTitle'>" + Globalize.localize("discussion") + "</span></div>";
 	html += "<div class='PopupContent popupContent'><div class='form-horizontal resizable'>";
 	html += "<div class='control-group'><label for='titre' class='control-label'>" + Globalize.localize("title") + "</label> <div class='controls'><input type='text' id='titre" + i + "' value=\"" + unescape(merchantName) + "\"></div></div>";
-	html += "<div class='control-group'><label for='message' class='control-label'>" + Globalize.localize("message") + "</label> <div class='controls'><textarea id='discussion-message" + i + "'>" + Globalize.localize("defaultMessage") + "</textarea></div></div>";
+	html += "<div class='control-group'><label for='message' class='control-label'>" + Globalize.localize("message") + "</label> <div class='controls'><textarea id='discussion-message" + i + "'>" + Globalize.localize("defaultMessage") + " " + unescape(merchantName) + "</textarea></div></div>";
 	html += "</div><div class='uiAction uiActionBorder'><button id='discussion-button" + i + "' class='b-close btn' type='button'>" + Globalize.localize("discussion") + "</button>";
 	html += "<button class='b-close btn' type='button'>" + Globalize.localize("cancel") + "</button></div></div><span class='uiIconResize pull-right uiIconLightGray'></span></div>";
 	$("#inline_discussion" + i).html(html);
@@ -67,7 +67,7 @@ function addTopic(merchantName, merchantUrl, i) {
 	$("#discussion-button" + i).click(function() {
 	    var forumTopic = new Object();
 	    forumTopic.titre = $("#titre" + i).val();
-	    forumTopic.message = $("#discussion-message" + i).val() + "<br/>" + unescape(merchantUrl);
+	    forumTopic.message = $("#discussion-message" + i).val() + '<br/><a target="_blank" href="' + unescape(merchantUrl)+'">'+unescape(merchantUrl)+"</a>";
 		$.ajax ({
 			type: "POST",
 	        contentType: "application/json",
@@ -491,5 +491,5 @@ function xt_click(obj,type,section,page,x1,x2,x3,x4,x5) {
 
 function changeOnClickFunction()
 {
-	$("#pj_trouver").click(function(){ updateSearchResults();return xt_click(this,'C','','Trouver::Trouver_LR','A');});
+	$("#pj_trouver").attr("onclick","updateSearchResults();return xt_click(this,'C','','Trouver::Trouver_LR','A');");
 }	

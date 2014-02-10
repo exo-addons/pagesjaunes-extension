@@ -67,12 +67,12 @@
 						<div class="boxButtonBlue">
 							<p class="text-desc">__MSG_monentreprise__</p>
 							<ul class="">
-								<li><a href="#" onClick="updateSearchResults('max=20&what=resto','true');return xt_click(this,'C','','pictos::picto_resto','A');changeOnClickFunction();"><i class="iconJaunesRestro"></i><span>__MSG_resto__</span></a></li>
-								<li><a href="#" onClick="updateSearchResults('max=20&what=medecin','true');return xt_click(this,'C','','pictos::picto_medecin','A');changeOnClickFunction();"><i class="iconJaunesMedecin"></i><span>__MSG_medecin__</span></a></li>
-								<li><a href="#" onClick="updateSearchResults('max=20&what=pharmacie','true');return xt_click(this,'C','','pictos::picto_pharmacie','A');changeOnClickFunction();"><i class="iconJaunesPhamaracie"></i><span>__MSG_pharmacie__</span></a></li>
-								<li><a href="#" onClick="updateSearchResults('max=20&what=vêtements','true');return xt_click(this,'C','','pictos::picto_vetements','A');changeOnClickFunction();"><i class="iconJaunesVetements"></i><span>__MSG_vetements__</span></a></li>
-								<li><a href="#" onClick="updateSearchResults('max=20&what=fleuriste','true');return xt_click(this,'C','','pictos::picto_fleuriste','A');changeOnClickFunction();"><i class="iconJaunesFleuriste"></i><span>__MSG_fleuriste__</span></a></li>
-								<li><a href="#" onClick="updateSearchResults('max=20&what=coiffeur','true');return xt_click(this,'C','','pictos::picto_coiffeur','A');changeOnClickFunction();"><i class="iconJaunesCoiffeur"></i><span>__MSG_coiffeur__</span></a></li>
+								<li><a href="#" onClick="updateSearchResults('max=20&what=resto','true');changeOnClickFunction();return xt_click(this,'C','','pictos::picto_resto','A');"><i class="iconJaunesRestro"></i><span>__MSG_resto__</span></a></li>
+								<li><a href="#" onClick="updateSearchResults('max=20&what=medecin','true');changeOnClickFunction();return xt_click(this,'C','','pictos::picto_medecin','A');"><i class="iconJaunesMedecin"></i><span>__MSG_medecin__</span></a></li>
+								<li><a href="#" onClick="updateSearchResults('max=20&what=pharmacie','true');changeOnClickFunction();return xt_click(this,'C','','pictos::picto_pharmacie','A');"><i class="iconJaunesPhamaracie"></i><span>__MSG_pharmacie__</span></a></li>
+								<li><a href="#" onClick="updateSearchResults('max=20&what=vêtements','true');changeOnClickFunction();return xt_click(this,'C','','pictos::picto_vetements','A');"><i class="iconJaunesVetements"></i><span>__MSG_vetements__</span></a></li>
+								<li><a href="#" onClick="updateSearchResults('max=20&what=fleuriste','true');changeOnClickFunction();return xt_click(this,'C','','pictos::picto_fleuriste','A');"><i class="iconJaunesFleuriste"></i><span>__MSG_fleuriste__</span></a></li>
+								<li><a href="#" onClick="updateSearchResults('max=20&what=coiffeur','true');changeOnClickFunction();return xt_click(this,'C','','pictos::picto_coiffeur','A');"><i class="iconJaunesCoiffeur"></i><span>__MSG_coiffeur__</span></a></li>
 							</ul>
 						</div>
 					</div>
