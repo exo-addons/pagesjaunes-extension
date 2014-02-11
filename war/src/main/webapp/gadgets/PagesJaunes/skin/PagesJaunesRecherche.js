@@ -346,8 +346,8 @@ function updateSearchResults(serviceUriParams, proximity) {
         	            	}
         	            	html += "<div class='links'>";
         	            	html += "<a onClick='return xt_click(this,\"C\",\"\",\"BI::contact::itineraire\",\"A\");' href='" + itineraryUrl + "' target='_blank' >" + Globalize.localize("itinerary") + "</a> | ";
-        	            	html += "<a href='#' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::partager\",\"A\");' >" + Globalize.localize("share") + "</a> | ";
-        	            	html += "<a href='#' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' >" + Globalize.localize("discussion") + "</a>";
+        	            	html += "<a href='javascript:void(0)' onClick='shareSearchResult(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::partager\",\"A\");' >" + Globalize.localize("share") + "</a> | ";
+        	            	html += "<a href='javascript:void(0)' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' >" + Globalize.localize("discussion") + "</a>";
         	            	html += "</div></div>";
         	            	html += "</div></div></div></div>"
         	            	if ($("#inline_partage" + currentPage + i).length == 0) {
