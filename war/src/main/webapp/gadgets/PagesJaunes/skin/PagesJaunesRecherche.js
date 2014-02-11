@@ -62,6 +62,7 @@ function addTopic(merchantName, merchantUrl, i) {
 	html += "<div class='control-group'><label for='message' class='control-label'>" + Globalize.localize("message") + "</label> <div class='controls'><textarea id='discussion-message" + i + "'>" + Globalize.localize("defaultMessage") + " " + unescape(merchantName) + "</textarea></div></div>";
 	html += "</div><div class='uiAction uiActionBorder'><button id='discussion-button" + i + "' class='b-close btn' type='button'>" + Globalize.localize("discussion") + "</button>";
 	html += "<button class='b-close btn' type='button'>" + Globalize.localize("cancel") + "</button></div></div><span class='uiIconResize pull-right uiIconLightGray'></span></div>";
+	
 	$("#inline_discussion" + i).html(html);
 	
 	$("#discussion-button" + i).click(function() {
@@ -85,17 +86,19 @@ function addTopic(merchantName, merchantUrl, i) {
 	    )
 	});
 	
+	var offset = $("#displayNumber" + i).offset();
+	
 	$("#inline_discussion" + i).bPopup ({
 		follow: (true, true),
-	    position: ["auto", 500],
+	    position: ["auto", offset.top-100],
 	    modalClose: false
-	});
+	});	
 }
 
 function displayNumber(contactInfoHtml, i) {
 	$("#displayNumber" + i).html(unescape(contactInfoHtml));
-	var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
-	gadgets.window.adjustHeight(gadgetHeight + 1);
+	//var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
+	//gadgets.window.adjustHeight(gadgetHeight + 1);
 }
 
 function edit() {
@@ -199,9 +202,11 @@ function shareSearchResult(merchantName, merchantUrl, i) {
 	    );
 	});
 	
+	var offset = $("#displayNumber" + i).offset();
+	
 	$("#inline_partage" + i).bPopup ({
 		follow: (true, true),
-	    position: ["auto", 500],
+	    position: ["auto", offset.top-100],
 	    modalClose: false
 	});
 }
@@ -215,8 +220,8 @@ function showHideDetail(i) {
 		$("#desc" + i).addClass("desc");
 		$("#btnShowDetail" + i).html(Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i>");
 	}
-	var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
-	gadgets.window.adjustHeight(gadgetHeight + 1);
+	//var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
+	//gadgets.window.adjustHeight(gadgetHeight + 1);
 }
 
 
@@ -423,8 +428,8 @@ function updateSearchResults(serviceUriParams, proximity) {
                     }
                 	html += lrStatHtml; 
                 	$("div#searchResults").html(html);
-                	var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
-                	gadgets.window.adjustHeight(gadgetHeight + 1);
+                	//var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
+                	gadgets.window.adjustHeight();
                 }
             );
         }
