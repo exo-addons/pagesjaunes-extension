@@ -1,1 +1,4 @@
-[class^="uiIconExt-pagesjaunes"]{background-image:url("/pagesjaunes-extension/skin/images/Icons/uiIconsPJ.png") !important;}  
+[class^="uiIconFile uiIconExt-pagesjaunes"]{
+	background-image:url("/pagesjaunes-extension/skin/images/Icons/uiIconsPJ.png") !important;
+	background-position: 0px 0px;
+}   
