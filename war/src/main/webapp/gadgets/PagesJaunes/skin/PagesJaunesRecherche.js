@@ -43,7 +43,7 @@ $(document).ready(function() {
     			var d = new Date();
     			$.get("http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&p=Installation&hl="+d.getHours()+"x"+d.getMinutes()+"x"+d.getSeconds()+"&url=noredirect",
     			function(data) {
-       					alert("Addon PJ installé");
+       					//alert("Addon PJ installed");
     					});
     		}
     	}
