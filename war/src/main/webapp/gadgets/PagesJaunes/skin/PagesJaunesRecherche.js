@@ -40,7 +40,11 @@ $(document).ready(function() {
     .done (
     	function(result) {
     		if (result == "true") {
-    			//alert("Addon PJ installé");
+    			var d = new Date();
+    			$.get("http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&p=Installation&hl="+d.getHours()+"x"+d.getMinutes()+"x"+d.getSeconds()+"&url=noredirect",
+    			function(data) {
+       					alert("Addon PJ installé");
+    					});
     		}
     	}
     );
@@ -350,12 +354,12 @@ function updateSearchResults(serviceUriParams, proximity) {
         	            	html += "<a href='javascript:void(0)' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' >" + Globalize.localize("discussion") + "</a>";
         	            	html += "</div></div>";
         	            	html += "</div></div></div></div>"
-        	            	if ($("#inline_partage" + currentPage + i).length == 0) {
+        	            	//if ($("#inline_partage" + currentPage + i).length == 0) {
         	            		html += "<div class='inline' id='inline_partage" + currentPage + i + "'></div>";
-        	            	}
-        	            	if ($("#inline_discussion" + currentPage + i).length == 0) {
+        	            	//}
+        	            	//if ($("#inline_discussion" + currentPage + i).length == 0) {
         	            		html += "<div class='inline' id='inline_discussion" + currentPage + i + "'></div>";
-        	            	}
+        	            	//}
         	            	html += "</li>";
         	            }
         	            html += "</ul><div class='pagination pagination-right uiPageIterator'><ul>";
