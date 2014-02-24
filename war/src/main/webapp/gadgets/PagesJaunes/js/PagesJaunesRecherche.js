@@ -17,10 +17,23 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 var xtkey;
+var statid = null;
 Globalize.culture("fr");
 $(document).ready(function() {
-	var hpRandomNumber = Math.floor(Math.random()*1000000)
-	var hpStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&p=HP_PJ&rn=" + hpRandomNumber + "'>";
+	var hpRandomNumber = Math.floor(Math.random()*1000000);
+	$.ajax ({
+        cache: true,
+        url: "/rest/searchManagement/getStatId",
+    })
+    .fail (
+    )
+    .done (
+    	function(result) {
+    		statid = result;
+    	}
+    );
+	
+	var hpStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s="+statid+"&p=HP_PJ&rn=" + hpRandomNumber + "'>";
 	$("#searchForm").append(hpStatHtml);
 	xtkey=false;
 	if(document.addEventListener) {
@@ -41,9 +54,8 @@ $(document).ready(function() {
     	function(result) {
     		if (result == "true") {
     			var d = new Date();
-    			$.get("http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&p=Installation&hl="+d.getHours()+"x"+d.getMinutes()+"x"+d.getSeconds()+"&url=noredirect",
+    			$.get("http://logc258.at.pagesjaunes.fr/hit.xiti?s="+statid+"&p=Installation&hl="+d.getHours()+"x"+d.getMinutes()+"x"+d.getSeconds()+"&url="+document.URL,
     			function(data) {
-       					//alert("Addon PJ installed");
     					});
     		}
     	}
@@ -101,8 +113,6 @@ function addTopic(merchantName, merchantUrl, i) {
 
 function displayNumber(contactInfoHtml, i) {
 	$("#displayNumber" + i).html(unescape(contactInfoHtml));
-	//var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
-	//gadgets.window.adjustHeight(gadgetHeight + 1);
 }
 
 function edit() {
@@ -224,19 +234,23 @@ function showHideDetail(i) {
 		$("#desc" + i).addClass("desc");
 		$("#btnShowDetail" + i).html(Globalize.localize("showDetail") + "<i class='uiIconArrowDown'></i>");
 	}
-	//var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
-	//gadgets.window.adjustHeight(gadgetHeight + 1);
 }
 
 
 
 function updateSearchResults(serviceUriParams, proximity) {
+	$("#resultLoading").bPopup ({
+		follow: (true, true),
+	    modalClose: false
+	});	
+
 	$.ajax ({
 		cache: true,
 		url: "/rest/searchManagement/getCompanyAddress",
     })
     .fail (
     	function() {
+    		$("#resultLoading").bPopup().close();
         }
     )
     .done (
@@ -251,7 +265,7 @@ function updateSearchResults(serviceUriParams, proximity) {
         	var what = uri.split("&what=")[1].split("&")[0];
         	var html = "<div class='uiBox resultBox'><div class='msNotResult'><h3>" + Globalize.localize("noResult") + "</h3></div></div>";
         	var lrRandomNumber = Math.floor(Math.random()*1000000)
-        	var lrStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&p=LR_PJ&x1=<code_activite>&x2=<code_localite>&rn=" + lrRandomNumber + "'>";
+        	var lrStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s="+statid+"&p=LR_PJ&x1=<code_activite>&x2=<code_localite>&rn=" + lrRandomNumber + "'>";
         	
         	$.ajax ({
                 cache: true,
@@ -261,6 +275,7 @@ function updateSearchResults(serviceUriParams, proximity) {
                 function(result) {
                 	html += lrStatHtml;
                 	$("div#searchResults").html(html);
+                	$("#resultLoading").bPopup().close();
                 }
             )
             .done (
@@ -354,12 +369,8 @@ function updateSearchResults(serviceUriParams, proximity) {
         	            	html += "<a href='javascript:void(0)' onClick='addTopic(\"" + escape(merchantName)  + "\",\"" + escape(merchantUrl) + "\",\"" + currentPage + i + "\");return xt_click(this,\"C\",\"\",\"BI::discussion\",\"A\");' >" + Globalize.localize("discussion") + "</a>";
         	            	html += "</div></div>";
         	            	html += "</div></div></div></div>"
-        	            	//if ($("#inline_partage" + currentPage + i).length == 0) {
-        	            		html += "<div class='inline' id='inline_partage" + currentPage + i + "'></div>";
-        	            	//}
-        	            	//if ($("#inline_discussion" + currentPage + i).length == 0) {
-        	            		html += "<div class='inline' id='inline_discussion" + currentPage + i + "'></div>";
-        	            	//}
+        	            	html += "<div class='inline' id='inline_partage" + currentPage + i + "'></div>";
+        	            	html += "<div class='inline' id='inline_discussion" + currentPage + i + "'></div>";
         	            	html += "</li>";
         	            }
         	            html += "</ul><div class='pagination pagination-right uiPageIterator'><ul>";
@@ -434,6 +445,7 @@ function updateSearchResults(serviceUriParams, proximity) {
                 	$("div#searchResults").html(html);
                 	//var gadgetHeight = document.getElementById("searchForm").offsetHeight; 
                 	gadgets.window.adjustHeight();
+                	$("#resultLoading").bPopup().close();
                 }
             );
         }
@@ -443,7 +455,7 @@ function updateSearchResults(serviceUriParams, proximity) {
 
 function xt_click(obj,type,section,page,x1,x2,x3,x4,x5) {             
 	var xtImg=new Image(),xtDate=new Date(),xtScr=window.screen,xtNav=window.navigator,xtObj=null;         
-	var xtSrc='http://logc258.at.pagesjaunes.fr/hit.xiti?s=540649&s2='+section+'&p='+page+((type=='F')?'':(type=='M')?'&a='+x1+'&m1='+x2+'&m2='+x3+'&m3='+x4+'&m4='+x5:'&clic='+x1)+'&hl='+xtDate.getHours()+'x'+xtDate.getMinutes()+'x'+xtDate.getSeconds();               
+	var xtSrc='http://logc258.at.pagesjaunes.fr/hit.xiti?s="+statid+"&s2='+section+'&p='+page+((type=='F')?'':(type=='M')?'&a='+x1+'&m1='+x2+'&m2='+x3+'&m3='+x4+'&m4='+x5:'&clic='+x1)+'&hl='+xtDate.getHours()+'x'+xtDate.getMinutes()+'x'+xtDate.getSeconds();               
 	if(parseFloat(xtNav.appVersion)>=4) {
 		xtSrc+='&r='+xtScr.width+'x'+xtScr.height+'x'+xtScr.pixelDepth+'x'+xtScr.colorDepth;
 	}

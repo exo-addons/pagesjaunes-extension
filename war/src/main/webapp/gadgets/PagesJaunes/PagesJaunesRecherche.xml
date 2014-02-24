@@ -80,17 +80,20 @@
 			</div>
 			<div id="searchResults" >
 		    </div>
+		     <div class="resultLoading" id="resultLoading" style="display: none;">
+  						__MSG_loading__
+  			</div>
 		</div>
 	</div>
 	<link rel="stylesheet" type="text/css" media="all" href="skin/style.css">
     <link rel="stylesheet" type="text/css" href="/eXoResources/skin/bootstrap/css/bootstrap.css" />
     <link rel="stylesheet" type="text/css" href="/eXoResources/skin/css/Core.css" />
 	<link rel="stylesheet" type="text/css" media="all" href="/social-resources/skin/css/social.css">
-	<script type="text/javascript" src="skin/globalize-4.0.1.js"></script>
-	<script type="text/javascript" src="skin/globalize.culture.fr.js"></script>
-    <script type="text/javascript" src="skin/jquery.js"></script>
-    <script type="text/javascript" src="skin/jquery.bpopup-0.9.4.min.js"></script>
-    <script type="text/javascript" src="skin/PagesJaunesRecherche.js"></script>
+	<script type="text/javascript" src="js/globalize-4.0.1.js"></script>
+	<script type="text/javascript" src="js/globalize.culture.fr.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery.bpopup-0.9.4.min.js"></script>
+    <script type="text/javascript" src="js/PagesJaunesRecherche.js"></script>
   ]]>
 
   </Content>

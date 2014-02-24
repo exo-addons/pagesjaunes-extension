@@ -71,8 +71,9 @@ import org.json.JSONObject;
 
 @Path("/searchManagement/")
 public class SearchManagement implements ResourceContainer {
-	private static final String APP_ID = "app.id";
-	private static final String APP_KEY = "app.key";
+	private static final String APP_ID = "e74d895a";
+	private static final String APP_KEY = "5050ac249e48f00795c39a06a8af7235";
+	private static final String STAT_ID = "540649";
 	private static final String CATEGORY_ID = "category.id";
 	private static final String CATEGORY_NAME = "category.name";
 	private static final String CATEGORY_OWNER = "category.owner";
@@ -209,6 +210,12 @@ public class SearchManagement implements ResourceContainer {
         }
 		return companyAddress;
     }
+    
+    @GET
+    @Path("getStatId")
+    public String getStatId() {
+		return STAT_ID;
+    }
 
 	@GET
     @Path("getSearchResults/{serviceUriParams : .+}")
@@ -225,7 +232,7 @@ public class SearchManagement implements ResourceContainer {
 			if (!whatAttribute.equals("")){
 				serviceUriParams = serviceUriParams.split(whatAttribute)[0] + URLEncoder.encode(whatAttribute, "utf-8") + serviceUriParams.split(whatAttribute)[1];
 			}
-			serviceUriParams += "&app_id=" + PropertyManager.getProperty(APP_ID) + "&app_key=" +  PropertyManager.getProperty(APP_KEY);
+			serviceUriParams += "&app_id=" + APP_ID + "&app_key=" +  APP_KEY;
 	    	String url = "http://api.apipagesjaunes.fr/v2/pro/find.json?" + serviceUriParams;
 	    	String data = getData(url);
 	    	if (data != null) {

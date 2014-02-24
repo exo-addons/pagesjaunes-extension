@@ -52,5 +52,7 @@
 	<msg name="monentreprise">
   		Trouver en un clic autour de mon entreprise
   	</msg>
-	
+  	<msg name="loading">
+  		Recherche en cours...
+  	</msg>
 </messagebundle>
