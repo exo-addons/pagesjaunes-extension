@@ -30,36 +30,37 @@ $(document).ready(function() {
     .done (
     	function(result) {
     		statid = result;
-    	}
-    );
-	
-	var hpStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s="+statid+"&p=HP_PJ&rn=" + hpRandomNumber + "'>";
-	$("#searchForm").append(hpStatHtml);
-	xtkey=false;
-	if(document.addEventListener) {
-		document.addEventListener('keydown',function() {xtkey=true},false);
-		document.addEventListener('keyup',function() {xtkey=false},false);
-	}
-	else if(document.attachEvent) {
-		document.attachEvent('onkeydown',function() {xtkey=true});
-		document.attachEvent('onkeyup',function() {xtkey=false});
-	}
-	$.ajax ({
-        cache: true,
-        url: "/rest/searchManagement/addInstallStatNode",
-    })
-    .fail (
-    )
-    .done (
-    	function(result) {
-    		if (result == "true") {
-    			var d = new Date();
-    			$.get("http://logc258.at.pagesjaunes.fr/hit.xiti?s="+statid+"&p=Installation&hl="+d.getHours()+"x"+d.getMinutes()+"x"+d.getSeconds()+"&url="+document.URL,
-    			function(data) {
+    		var hpStatHtml = "<img alt='' src='http://logc258.at.pagesjaunes.fr/hit.xiti?s="+statid+"&p=HP_PJ&rn=" + hpRandomNumber + "'>";
+			$("#searchForm").append(hpStatHtml);
+			xtkey=false;
+			if(document.addEventListener) {
+				document.addEventListener('keydown',function() {xtkey=true},false);
+				document.addEventListener('keyup',function() {xtkey=false},false);
+			}
+			else if(document.attachEvent) {
+				document.attachEvent('onkeydown',function() {xtkey=true});
+				document.attachEvent('onkeyup',function() {xtkey=false});
+			}
+			$.ajax ({
+        		cache: true,
+        		url: "/rest/searchManagement/addInstallStatNode",
+    		})
+    		.fail (
+    		)
+    		.done (
+    			function(result) {
+    				if (result == "true") {
+    					var d = new Date();
+    						$.get("http://logc258.at.pagesjaunes.fr/hit.xiti?s="+statid+"&p=Installation&hl="+d.getHours()+"x"+d.getMinutes()+"x"+d.getSeconds()+"&url="+document.URL,
+    						function(data) {
     					});
     		}
     	}
     );
+
+    	}
+    );
+	
 });
 
 $(document).keypress(function(event) {
@@ -455,7 +456,7 @@ function updateSearchResults(serviceUriParams, proximity) {
 
 function xt_click(obj,type,section,page,x1,x2,x3,x4,x5) {             
 	var xtImg=new Image(),xtDate=new Date(),xtScr=window.screen,xtNav=window.navigator,xtObj=null;         
-	var xtSrc='http://logc258.at.pagesjaunes.fr/hit.xiti?s="+statid+"&s2='+section+'&p='+page+((type=='F')?'':(type=='M')?'&a='+x1+'&m1='+x2+'&m2='+x3+'&m3='+x4+'&m4='+x5:'&clic='+x1)+'&hl='+xtDate.getHours()+'x'+xtDate.getMinutes()+'x'+xtDate.getSeconds();               
+	var xtSrc='http://logc258.at.pagesjaunes.fr/hit.xiti?s='+statid+'&s2='+section+'&p='+page+((type=='F')?'':(type=='M')?'&a='+x1+'&m1='+x2+'&m2='+x3+'&m3='+x4+'&m4='+x5:'&clic='+x1)+'&hl='+xtDate.getHours()+'x'+xtDate.getMinutes()+'x'+xtDate.getSeconds();               
 	if(parseFloat(xtNav.appVersion)>=4) {
 		xtSrc+='&r='+xtScr.width+'x'+xtScr.height+'x'+xtScr.pixelDepth+'x'+xtScr.colorDepth;
 	}
