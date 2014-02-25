@@ -34,7 +34,7 @@ A partir d'une version fraichement compilée
     cp webapp/target/pagesjaunes-extension.war tomcat/webapp
     
 
-A partir la version télécharger sur sourceforge (http:// )
+A partir la version télécharger sur [sourceforge](http://sourceforge.net/projects/exo/files/Addons/PagesJaunes/PagesJaunes-v1.0.0.zip/download)
 ----------------------------------------------------------
 
 Dézipper le contenu dans le répertoire tomcat/extensions
