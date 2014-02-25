@@ -34,8 +34,8 @@ A partir d'une version fraichement compilée
     cp webapp/target/pagesjaunes-extension.war tomcat/webapp
     
 
-A partir la version télécharger sur sourceforge (http:// ) et en utilisant l'extension manager d'eXo Platform
-------------------------------------------------------------------------------------------------------------------
+A partir la version télécharger sur sourceforge (http:// )
+----------------------------------------------------------
 
 Dézipper le contenu dans le répertoire tomcat/extensions
 
