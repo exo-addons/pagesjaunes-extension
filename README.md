@@ -83,7 +83,7 @@ Ajouter les propriétés suivantes dans le fichier de configuration d'eXo Platfo
 # Add-on PagesJaunes
 #
 
-pagesjaunes.entreprise.address=2 rue provost, 59430 Saint-Pol sur mer
+pagesjaunes.entreprise.address=mon adresse
 pagesjaunes.category.id=forumCategoryAnnuaire
 pagesjaunes.category.name=Annuaire
 pagesjaunes.category.owner=root
