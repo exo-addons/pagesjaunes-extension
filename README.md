@@ -34,7 +34,7 @@ A partir d'une version fraichement compilée
     cp webapp/target/pagesjaunes-extension.war tomcat/webapp
     
 
-A partir la version télécharger sur [sourceforge](http://sourceforge.net/projects/exo/files/Addons/PagesJaunes/PagesJaunes-v1.0.0.zip/download)
+A partir la version téléchargée sur [sourceforge](http://sourceforge.net/projects/exo/files/Addons/PagesJaunes/PagesJaunes-v1.0.0.zip/download)
 ----------------------------------------------------------
 
 Dézipper le contenu dans le répertoire tomcat/extensions
@@ -77,26 +77,36 @@ addon.sh -i exo-pagesjaunes permet d'installer l'add-on PagesJaunes
 Configuration
 ===============
 
-Ajouter les propriétés suivantes dans le fichier de configuration d'eXo Platform (tomcat/gatein/conf/configuration.properties):
+Ajouter les propriétés suivantes dans le fichier de configuration d'eXo Platform (tomcat/gatein/conf/configuration.properties).
 
-#
-# Add-on PagesJaunes
-#
+1 - pagesjaunes.entreprise.address défini l'adresse utilisée lors de la recherche autour de mon entreprise:
 
-pagesjaunes.entreprise.address=mon adresse
-pagesjaunes.category.id=forumCategoryAnnuaire
-pagesjaunes.category.name=Annuaire
-pagesjaunes.category.owner=root
-pagesjaunes.category.description=Annuaire des pages jaunes
+	pagesjaunes.entreprise.address=mon adresse
 
-pagesjaunes.forum.id=forumPagesJaunes
-pagesjaunes.forum.name=Pages Jaunes
-pagesjaunes.forum.owner=root
-pagesjaunes.forum.description=Pages Jaunes
 
-pagesjaunes.entreprise.address défini l'adresse utilisée lors de la recherche autour de mon entreprise.
-pagesjaunes.category.* permet de définir le nom, l'owner et la description de la gadget PagesJaunes dans le registre application
-pagesjaunes.forum;* permet de configurer le forum utilisé lors de l'ouverture d'une discussion
+
+2- pagesjaunes.category.* permet de définir le nom, l'owner et la description de la gadget PagesJaunes dans le registre application :
+
+	pagesjaunes.category.id=forumCategoryAnnuaire
+
+	pagesjaunes.category.name=Annuaire
+
+	pagesjaunes.category.owner=root
+
+	pagesjaunes.category.description=Annuaire des pages jaunes
+
+
+
+3-  pagesjaunes.forum.* permet de configurer le forum utilisé lors de l'ouverture d'une discussion
+
+	pagesjaunes.forum.id=forumPagesJaunes
+
+	pagesjaunes.forum.name=Pages Jaunes
+
+	pagesjaunes.forum.owner=root
+
+	pagesjaunes.forum.description=Pages Jaunes
+
 
  
 Démarrage
