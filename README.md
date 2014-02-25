@@ -79,7 +79,6 @@ Configuration
 
 Ajouter les propriétés suivantes dans le fichier de configuration d'eXo Platform (tomcat/gatein/conf/configuration.properties):
 
-###########################
 #
 # Add-on PagesJaunes
 #
