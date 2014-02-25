@@ -84,7 +84,6 @@ Ajouter les propriétés suivantes dans le fichier de configuration d'eXo Platfo
 #
 
 pagesjaunes.entreprise.address=2 rue provost, 59430 Saint-Pol sur mer
-
 pagesjaunes.category.id=forumCategoryAnnuaire
 pagesjaunes.category.name=Annuaire
 pagesjaunes.category.owner=root
@@ -94,7 +93,6 @@ pagesjaunes.forum.id=forumPagesJaunes
 pagesjaunes.forum.name=Pages Jaunes
 pagesjaunes.forum.owner=root
 pagesjaunes.forum.description=Pages Jaunes
-
 
 pagesjaunes.entreprise.address défini l'adresse utilisée lors de la recherche autour de mon entreprise.
 pagesjaunes.category.* permet de définir le nom, l'owner et la description de la gadget PagesJaunes dans le registre application
@@ -109,7 +107,7 @@ Utiliser le script de démarrage d'eXo :
     cd tomcat 
     ./start_eXo.sh
 
-Ouvrir un navigateur et aller à [http://localhost:8080/portal/intranet/pagesjaunes] et authentifiez vous avec `john/gtn`
+Ouvrir un navigateur et aller à (http://localhost:8080/portal/intranet/pagesjaunes) et authentifiez vous avec `john/gtn`
 
 Désinstallation
 ===============
