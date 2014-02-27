@@ -71,8 +71,8 @@ import org.json.JSONObject;
 
 @Path("/searchManagement/")
 public class SearchManagement implements ResourceContainer {
-	private static final String APP_ID = "e74d895a";
-	private static final String APP_KEY = "5050ac249e48f00795c39a06a8af7235";
+	private static final String APP_ID = "e1bbc9ae";
+	private static final String APP_KEY = "4359f640c830a46d5a1c1116b1970b50";
 	private static final String STAT_ID = "540650";
 	private static final String CATEGORY_ID = "pagesjaunes.category.id";
 	private static final String CATEGORY_NAME = "pagesjaunes.category.name";
